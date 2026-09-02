@@ -1,4 +1,4 @@
-# Chess Kingdom Defense (working title)
+# Welcome to Chess Kingdom Defense!
 
 A roguelite tower-defense game where your chess pieces defend the King from an endless tide of shadow chess pieces. Think *chess*, but every piece shoots, moves, and fights on its own — and the enemy is coming from every direction, not just one lane.
 
