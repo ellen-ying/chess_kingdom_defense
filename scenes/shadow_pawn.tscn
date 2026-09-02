@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://bv1spags8kgb"]
+
+[ext_resource type="Script" uid="uid://daqk78fkfkvm6" path="res://scripts/shadow_pawn.gd" id="1_qg3dk"]
+
+[node name="ShadowPawn" type="Node2D" unique_id=1035474012]
+script = ExtResource("1_qg3dk")
+metadata/_custom_type_script = "uid://beeljddqrtw35"

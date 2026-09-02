@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://cnopnvfnpxpw0"]
+
+[ext_resource type="Script" uid="uid://cg4411x2innau" path="res://scripts/main.gd" id="1_jyhfs"]
+[ext_resource type="Script" uid="uid://eflb2k1r3d63" path="res://scripts/board.gd" id="1_o5qli"]
+[ext_resource type="Script" uid="uid://6ap5ikwf4xbk" path="res://scripts/enemy_manager.gd" id="2_0wfyh"]
+[ext_resource type="Script" uid="uid://dwe255c2k4w0s" path="res://scripts/piece_manager.gd" id="3_sugp2"]
+[ext_resource type="PackedScene" uid="uid://dg5axfkcycn7h" path="res://scenes/king.tscn" id="3_tipki"]
+[ext_resource type="PackedScene" uid="uid://dq3poopyh4me1" path="res://scenes/projectile.tscn" id="6_ya4ey"]
+
+[node name="Main" type="Node2D" unique_id=1813833294]
+script = ExtResource("1_jyhfs")
+test_enemy_mode = "Rook"
+
+[node name="Board" type="Node2D" parent="." unique_id=1994042262]
+script = ExtResource("1_o5qli")
+
+[node name="King" parent="." unique_id=1733295763 instance=ExtResource("3_tipki")]
+
+[node name="Pieces" type="Node2D" parent="." unique_id=88102896]
+
+[node name="Enemies" type="Node2D" parent="." unique_id=1121363049]
+
+[node name="Projectiles" type="Node2D" parent="." unique_id=940425623]
+
+[node name="Projectile" parent="Projectiles" unique_id=569306720 instance=ExtResource("6_ya4ey")]
+
+[node name="PieceManager" type="Node2D" parent="." unique_id=345930921]
+script = ExtResource("3_sugp2")
+
+[node name="EnemyManager" type="Node2D" parent="." unique_id=1835741007]
+script = ExtResource("2_0wfyh")
+
+[node name="SpawnTimer" type="Timer" parent="EnemyManager" unique_id=396514157]
+wait_time = 2.0
+
+[node name="UILayer" type="Control" parent="." unique_id=26452059]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="StatusLabel" type="Label" parent="UILayer" unique_id=110542390]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="GameOverLabel" type="Label" parent="UILayer" unique_id=173903754]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[connection signal="timeout" from="EnemyManager/SpawnTimer" to="EnemyManager" method="_on_spawn_timer_timeout"]

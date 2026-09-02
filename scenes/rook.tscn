@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dqqjkloh6bj6h"]
+
+[ext_resource type="Script" uid="uid://cmw6u3dnrkpwe" path="res://scripts/rook.gd" id="1_fdtut"]
+
+[node name="Rook" type="Node2D" unique_id=1347690504]
+script = ExtResource("1_fdtut")

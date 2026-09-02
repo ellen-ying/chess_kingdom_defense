@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://b1m3fspo10w10"]
+
+[ext_resource type="Script" uid="uid://xgc4uvxp8y0n" path="res://scripts/shadow_rook.gd" id="1_0xpsf"]
+
+[node name="ShadowRook" type="Node2D" unique_id=1191498084]
+script = ExtResource("1_0xpsf")

@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bx3okwd0m565k"]
+
+[ext_resource type="Script" uid="uid://dhwxb57ath584" path="res://scripts/shadow_bishop.gd" id="1_ggu08"]
+
+[node name="ShadowBishop" type="Node2D" unique_id=498854822]
+script = ExtResource("1_ggu08")

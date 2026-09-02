@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://d12whhrwphxuj"]
+
+[ext_resource type="Script" uid="uid://cbkhykywa1vsd" path="res://scripts/shadow_knight.gd" id="1_gbeer"]
+
+[node name="ShadowKnight" type="Node2D" unique_id=1323960820]
+script = ExtResource("1_gbeer")
+metadata/_custom_type_script = "uid://beeljddqrtw35"

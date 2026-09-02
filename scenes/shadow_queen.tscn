@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://cyip71ymcfh84"]
+
+[ext_resource type="Script" uid="uid://dnhlj6k0pvvvm" path="res://scripts/shadow_queen.gd" id="1_1tfln"]
+
+[node name="ShadowQueen" type="Node2D" unique_id=1284157142]
+script = ExtResource("1_1tfln")

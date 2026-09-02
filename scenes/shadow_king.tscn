@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dc4i0gmy4pc56"]
+
+[ext_resource type="Script" uid="uid://bvfjo4kep4ko1" path="res://scripts/shadow_king.gd" id="1_1o7uw"]
+
+[node name="ShadowKing" type="Node2D" unique_id=1010911768]
+script = ExtResource("1_1o7uw")
