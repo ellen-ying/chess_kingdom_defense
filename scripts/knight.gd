@@ -1,8 +1,8 @@
-extends Node2D
+extends BasePiece
 
 const FIRE_INTERVAL := 0.5
 
-const KNIGHT_ATTACK_OFFSETS := [
+const KNIGHT_ATTACK_OFFSETS: Array[Vector2i] = [
 	Vector2i(-1, -2),
 	Vector2i(1, -2),
 	Vector2i(-2, -1),
@@ -81,6 +81,20 @@ func find_closest_enemy():
 	# All knight attack cells are sqrt(5) away,
 	# so if several enemies exist, simply use the first one.
 	return possible_targets[0]
+	
+func get_attack_tiles_for_cell(
+	origin_cell: Vector2i,
+	board: Node
+) -> Array[Vector2i]:
+	var result: Array[Vector2i] = []
+
+	for offset in KNIGHT_ATTACK_OFFSETS:
+		var cell = origin_cell + offset
+
+		if board.is_valid_cell(cell):
+			result.append(cell)
+
+	return result
 
 
 func _draw() -> void:

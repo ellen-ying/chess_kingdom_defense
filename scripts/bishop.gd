@@ -1,8 +1,8 @@
-extends Node2D
+extends BasePiece
 
 const FIRE_INTERVAL := 0.5
 
-const BISHOP_ATTACK_DIRECTIONS := [
+const BISHOP_ATTACK_DIRECTIONS: Array[Vector2i] = [
 	Vector2i(-1, -1),
 	Vector2i(1, -1),
 	Vector2i(-1, 1),
@@ -94,6 +94,16 @@ func find_closest_enemy():
 			best_target = target
 
 	return best_target
+	
+func get_attack_tiles_for_cell(
+	origin_cell: Vector2i,
+	board: Node
+) -> Array[Vector2i]:
+	return get_ray_tiles(
+		origin_cell,
+		board,
+		BISHOP_ATTACK_DIRECTIONS
+	)
 
 
 func _draw() -> void:

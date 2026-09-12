@@ -1,8 +1,8 @@
-extends Node2D
+extends BasePiece
 
 const FIRE_INTERVAL := 0.5
 
-const ROOK_ATTACK_DIRECTIONS := [
+const ROOK_ATTACK_DIRECTIONS: Array[Vector2i] = [
 	Vector2i(-1, 0),
 	Vector2i(1, 0),
 	Vector2i(0, -1),
@@ -90,6 +90,16 @@ func find_closest_enemy():
 			best_target = target
 
 	return best_target
+	
+func get_attack_tiles_for_cell(
+	origin_cell: Vector2i,
+	board: Node
+) -> Array[Vector2i]:
+	return get_ray_tiles(
+		origin_cell,
+		board,
+		ROOK_ATTACK_DIRECTIONS
+	)
 
 
 func _draw() -> void:

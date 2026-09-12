@@ -1,8 +1,8 @@
-extends Node2D
+extends BasePiece
 
 const FIRE_INTERVAL := 0.5
 
-const QUEEN_DIRECTIONS := [
+const QUEEN_ATTACK_DIRECTIONS: Array[Vector2i] = [
 	Vector2i(-1, 0),
 	Vector2i(1, 0),
 	Vector2i(0, -1),
@@ -65,7 +65,7 @@ func attempt_attack() -> void:
 func find_closest_enemy():
 	var candidates := []
 
-	for direction in QUEEN_DIRECTIONS:
+	for direction in QUEEN_ATTACK_DIRECTIONS:
 		var cell = current_cell + direction
 
 		while game.board.is_valid_cell(cell):
@@ -98,6 +98,15 @@ func find_closest_enemy():
 
 	return best_target
 
+func get_attack_tiles_for_cell(
+	origin_cell: Vector2i,
+	board: Node
+) -> Array[Vector2i]:
+	return get_ray_tiles(
+		origin_cell,
+		board,
+		QUEEN_ATTACK_DIRECTIONS
+	)
 
 func _draw() -> void:
 	var alpha := 0.65 if dragging else 1.0

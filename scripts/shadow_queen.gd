@@ -129,7 +129,11 @@ func take_damage(amount: int) -> void:
 	hp -= amount
 
 	if hp <= 0:
-		game.enemy_destroyed(self) # TODO: Can be deleted
+		var reward := CurrencyManager.get_piece_value("Queen")
+		CurrencyManager.add_currency(reward)
+		game.shop_ui.show_currency_reward(global_position, reward)
+		
+		game.enemy_destroyed(self) 
 		queue_free()
 
 	queue_redraw()

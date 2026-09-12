@@ -6,6 +6,8 @@
 [ext_resource type="Script" uid="uid://dwe255c2k4w0s" path="res://scripts/piece_manager.gd" id="3_sugp2"]
 [ext_resource type="PackedScene" uid="uid://dg5axfkcycn7h" path="res://scenes/king.tscn" id="3_tipki"]
 [ext_resource type="PackedScene" uid="uid://dq3poopyh4me1" path="res://scenes/projectile.tscn" id="6_ya4ey"]
+[ext_resource type="Script" uid="uid://bkg874dujg7s1" path="res://scripts/placement_controller.gd" id="7_o6xl0"]
+[ext_resource type="PackedScene" uid="uid://c122gebecncm8" path="res://scenes/shop_ui.tscn" id="8_tipki"]
 
 [node name="Main" type="Node2D" unique_id=1813833294]
 script = ExtResource("1_jyhfs")
@@ -33,6 +35,9 @@ script = ExtResource("2_0wfyh")
 [node name="SpawnTimer" type="Timer" parent="EnemyManager" unique_id=396514157]
 wait_time = 2.0
 
+[node name="PlacementController" type="Node2D" parent="." unique_id=1792770738]
+script = ExtResource("7_o6xl0")
+
 [node name="UILayer" type="Control" parent="." unique_id=26452059]
 layout_mode = 3
 anchors_preset = 0
@@ -48,5 +53,41 @@ offset_bottom = 23.0
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
+
+[node name="CurrencyLabel" type="Label" parent="UILayer" unique_id=1105622849]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 930.0
+offset_right = 1086.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 24
+text = "MATERIALS: 5"
+horizontal_alignment = 2
+
+[node name="ShopUI" parent="UILayer" unique_id=1807039670 instance=ExtResource("8_tipki")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 556.0
+offset_top = 570.0
+offset_right = 556.0
+offset_bottom = 570.0
+grow_vertical = 2
+
+[node name="FloatingRewards" type="Control" parent="UILayer" unique_id=1374242408]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
 [connection signal="timeout" from="EnemyManager/SpawnTimer" to="EnemyManager" method="_on_spawn_timer_timeout"]

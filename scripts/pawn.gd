@@ -1,6 +1,13 @@
-extends Node2D
+extends BasePiece
 
 const FIRE_INTERVAL := 0.5
+
+const PAWN_ATTACK_OFFSET: Array[Vector2i] = [
+	Vector2i(-1, -1),
+	Vector2i(1, -1),
+	Vector2i(-1, 1),
+	Vector2i(1, 1)
+]
 
 var game: Node
 var current_cell: Vector2i
@@ -50,18 +57,11 @@ func attempt_attack() -> void:
 
 
 func find_closest_enemy():
-	# Four diagonal directions.
-	var directions := [
-		Vector2i(-1, -1),
-		Vector2i(1, -1),
-		Vector2i(-1, 1),
-		Vector2i(1, 1)
-	]
 	var target_cell: Vector2i
 
 	# We check one square before two squares.
 	for distance in [1, 2]:
-		for direction in directions:
+		for direction in PAWN_ATTACK_OFFSET:
 			target_cell = current_cell + direction * distance
 			
 			if not game.board.is_valid_cell(target_cell):
@@ -73,6 +73,21 @@ func find_closest_enemy():
 				return enemy
 
 	return null
+	
+func get_attack_tiles_for_cell(
+	origin_cell: Vector2i,
+	board: Node
+) -> Array[Vector2i]:
+	var result: Array[Vector2i] = []
+
+	for distance in [1, 2]:
+		for direction in PAWN_ATTACK_OFFSET:
+			var cell = origin_cell + direction * distance
+
+			if board.is_valid_cell(cell):
+				result.append(cell)
+
+	return result
 
 
 func _draw() -> void:

@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://bvk4cge6glmco"]
+
+[ext_resource type="Script" uid="uid://chy3nyq7ajvmj" path="res://scripts/shop_slot.gd" id="1"]
+
+[node name="ShopSlot" type="PanelContainer" unique_id=1435734684]
+custom_minimum_size = Vector2(120, 82)
+script = ExtResource("1")
+
+[node name="VBox" type="VBoxContainer" parent="." unique_id=606456782]
+layout_mode = 2
+
+[node name="IconLabel" type="Label" parent="VBox" unique_id=338386567]
+custom_minimum_size = Vector2(0, 38)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "P"
+horizontal_alignment = 1
+
+[node name="InfoLabel" type="Label" parent="VBox" unique_id=1121766319]
+layout_mode = 2
+text = "Pawn
+×0   1 M"
+horizontal_alignment = 1

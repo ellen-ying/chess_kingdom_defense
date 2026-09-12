@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://bi6uqni33o15c"]
+
+[ext_resource type="Script" uid="uid://7r787ftrln21" path="res://scripts/floating_reward.gd" id="1"]
+
+[node name="FloatingReward" type="Label" unique_id=79484463]
+theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
+theme_override_font_sizes/font_size = 22
+text = "+1"
+script = ExtResource("1")

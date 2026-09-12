@@ -10,7 +10,8 @@ extends Node2D
 var test_enemy_mode := "Pawn"
 
 @export
-var auto_spawn_enemies := true
+var auto_spawn_enemies = true
+
 
 # ============================================================
 # GAME STATE
@@ -22,14 +23,18 @@ var game_over := false
 @onready var board = $Board
 @onready var king = $King
 
-@onready var pieces = $Pieces
 @onready var enemies = $Enemies
 @onready var projectiles = $Projectiles
 
 @onready var piece_manager = $PieceManager
 @onready var enemy_manager = $EnemyManager
+@onready var piece_parent = $Pieces
+@onready var placement_controller = $PlacementController
+
+@onready var shop_ui = $UILayer/ShopUI
 
 @onready var status_label: Label = $UILayer/StatusLabel
+@onready var currency_label: Label = $UILayer/CurrencyLabel
 @onready var game_over_label: Label = $UILayer/GameOverLabel
 
 
@@ -37,19 +42,15 @@ func _ready() -> void:
 	# Position the king.
 	king.setup(board.get_center_cell(), board)
 
-	# Initialize the piece manager.
-	piece_manager.setup(
-		self,
-		board,
-		pieces
-	)
+	# Initialize all nodes
+	piece_manager.setup(self, board, piece_parent)
+	enemy_manager.setup(self, enemies, board)
+	placement_controller.setup(self, board, piece_parent)
+	shop_ui.setup(placement_controller)
 
-	# Initialize enemy spawning.
-	enemy_manager.setup(
-		self,
-		enemies,
-		board
-	)
+	CurrencyManager.currency_changed.connect(_on_currency_changed)
+
+	_on_currency_changed(CurrencyManager.current_amount)
 
 	game_over_label.visible = false
 
@@ -58,8 +59,8 @@ func _ready() -> void:
 
 func update_hud() -> void:
 	status_label.text = (
-        "KING  %d / 3     WAVE  %d     PLACE: %s"
-		% [lives, enemy_manager.wave, piece_manager.selected_piece_type]
+        "KING  %d / 3     WAVE  %d"
+		% [lives, enemy_manager.wave]
 	)
 
 
@@ -130,3 +131,9 @@ func end_game() -> void:
 	enemy_manager.spawn_timer.stop()
 
 	update_hud()
+	
+func _on_currency_changed(new_amount: int) -> void:
+	currency_label.text = (
+		"MATERIALS: %d"
+		% new_amount
+	)

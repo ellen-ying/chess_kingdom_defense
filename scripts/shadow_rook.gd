@@ -41,6 +41,10 @@ func take_damage(amount: int) -> void:
 	hp -= amount
 
 	if hp <= 0:
+		var reward := CurrencyManager.get_piece_value("Rook")
+		CurrencyManager.add_currency(reward)
+		game.shop_ui.show_currency_reward(global_position, reward)
+		
 		game.enemy_destroyed(self)
 		queue_free()
 
