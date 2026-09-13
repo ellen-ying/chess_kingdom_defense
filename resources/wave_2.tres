@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="WaveConfig" format=3 uid="uid://b3de2bxq4uoid"]
+
+[ext_resource type="Script" uid="uid://djrrmuvj6ifoi" path="res://scripts/wave_config.gd" id="1_d2gni"]
+
+[resource]
+script = ExtResource("1_d2gni")
+spawn_interval = 3.0
+shadow_knight = true
+metadata/_custom_type_script = "uid://djrrmuvj6ifoi"

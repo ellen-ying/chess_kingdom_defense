@@ -1,11 +1,13 @@
 extends Node2D
 
-const SHADOW_PAWN_SCENE := preload("res://scenes/shadow_pawn.tscn")
-const SHADOW_KNIGHT_SCENE := preload("res://scenes/shadow_knight.tscn")
-const SHADOW_BISHOP_SCENE := preload("res://scenes/shadow_bishop.tscn")
-const SHADOW_ROOK_SCENE := preload("res://scenes/shadow_rook.tscn")
-const SHADOW_QUEEN_SCENE := preload("res://scenes/shadow_queen.tscn")
-const SHADOW_KING_SCENE := preload("res://scenes/shadow_king.tscn")
+const ENEMY_SCENES: Dictionary = {
+	"Pawn": preload("res://scenes/shadow_pawn.tscn"),
+	"Knight": preload("res://scenes/shadow_knight.tscn"),
+	"Bishop": preload("res://scenes/shadow_bishop.tscn"),
+	"Rook": preload("res://scenes/shadow_rook.tscn"),
+	"Queen": preload("res://scenes/shadow_queen.tscn"),
+	"King": preload("res://scenes/shadow_king.tscn")
+}
 
 @onready var spawn_timer: Timer = $SpawnTimer
 
@@ -37,72 +39,24 @@ func setup(
 		spawn_timer.start()
 
 
-func _on_spawn_timer_timeout() -> void:
-	if game == null or game.game_over:
-		return
+func spawn_enemy(type: String, game: Node) -> BaseEnemy:
+	if not ENEMY_SCENES.has(type):
+		return null
 
-	spawn_enemy()
+	var enemy: BaseEnemy = ENEMY_SCENES[type].instantiate()
 
+	game.enemies.add_child(enemy)
 
-func spawn_enemy() -> void:
-	var enemy_type = choose_enemy_type()
-	
-	if enemy_type == "None":
-		return
-		
-	var spawn_cell : Vector2i
-	spawn_cell = board.get_random_edge_cell()
-	
-	var enemy: BaseEnemy
-	
-	match enemy_type:
-		"Pawn":
-			enemy = SHADOW_PAWN_SCENE.instantiate()
-			pawn_spawn_count += 1
-		"Knight":
-			enemy = SHADOW_KNIGHT_SCENE.instantiate()
-			knight_spawn_count += 1
-		"Bishop":
-			enemy = SHADOW_BISHOP_SCENE.instantiate()
-			bishop_spawn_count += 1
-			spawn_cell = board.get_random_edge_cell_same_color(game.king.current_cell)
-		"Rook":
-			enemy = SHADOW_ROOK_SCENE.instantiate()
-			rook_spawn_count += 1
-		"Queen":
-			enemy = SHADOW_QUEEN_SCENE.instantiate()
-			queen_spawn_count += 1
-		"King":
-			enemy = SHADOW_KING_SCENE.instantiate()
-			king_spawn_count += 1
-		_:
-			return
+	var spawn_cell = game.board.get_random_edge_cell()
 
-	enemies_parent.add_child(enemy)
+	if type == "Bishop":
+		spawn_cell = (
+			game.board
+			.get_random_edge_cell_same_color(
+				game.king.current_cell
+			)
+		)
+
 	enemy.setup(game, spawn_cell)
 
-	spawned_count += 1
-
-	# Ten enemies per wave.
-	wave = int((spawned_count - 1) / 10) + 1
-
-	game.update_hud()
-	
-func choose_enemy_type() -> String:
-	match game.test_enemy_mode:
-		"Pawn":
-			return "Pawn"
-		"Knight":
-			return "Knight"
-		"Bishop":
-			return "Bishop"
-		"Rook":
-			return "Rook"
-		"Queen":
-			return "Queen"
-		"King":
-			return "King"
-		"None":
-			return "None"
-
-	return "None"
+	return enemy

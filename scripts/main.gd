@@ -20,6 +20,8 @@ var auto_spawn_enemies = true
 var lives := 3
 var game_over := false
 
+signal enemy_changed
+
 @onready var board = $Board
 @onready var king = $King
 
@@ -28,6 +30,7 @@ var game_over := false
 
 @onready var piece_manager = $PieceManager
 @onready var enemy_manager = $EnemyManager
+@onready var wave_manager = $WaveManager
 @onready var piece_parent = $Pieces
 @onready var placement_controller = $PlacementController
 
@@ -36,6 +39,7 @@ var game_over := false
 @onready var status_label: Label = $UILayer/StatusLabel
 @onready var currency_label: Label = $UILayer/CurrencyLabel
 @onready var game_over_label: Label = $UILayer/GameOverLabel
+@onready var wave_banner: Label = $UILayer/WaveBanner
 
 
 func _ready() -> void:
@@ -47,6 +51,7 @@ func _ready() -> void:
 	enemy_manager.setup(self, enemies, board)
 	placement_controller.setup(self, board, piece_parent)
 	shop_ui.setup(placement_controller)
+	wave_manager.setup(self, board, wave_banner)
 
 	CurrencyManager.currency_changed.connect(_on_currency_changed)
 
@@ -60,7 +65,7 @@ func _ready() -> void:
 func update_hud() -> void:
 	status_label.text = (
         "KING  %d / 3     WAVE  %d"
-		% [lives, enemy_manager.wave]
+		% [lives, wave_manager.current_wave_index + 1]
 	)
 
 
@@ -104,7 +109,11 @@ func spawn_projectile(piece: Node2D, target: Node) -> void:
 
 func enemy_destroyed(enemy: Node) -> void:
 	if is_instance_valid(enemy):
+		if enemy.get_parent():
+			enemy.get_parent().remove_child(enemy)
 		enemy.queue_free()
+		
+	enemy_changed.emit()
 
 
 func enemy_reached_king(enemy: Node) -> void:
@@ -114,8 +123,11 @@ func enemy_reached_king(enemy: Node) -> void:
 	lives -= 1
 
 	if is_instance_valid(enemy):
+		if enemy.get_parent():
+			enemy.get_parent().remove_child(enemy)
 		enemy.queue_free()
-
+		
+	enemy_changed.emit()
 	update_hud()
 
 	if lives <= 0:
@@ -127,9 +139,6 @@ func end_game() -> void:
 
 	game_over_label.visible = true
 
-	# Stop spawning new enemies.
-	enemy_manager.spawn_timer.stop()
-
 	update_hud()
 	
 func _on_currency_changed(new_amount: int) -> void:
@@ -137,3 +146,6 @@ func _on_currency_changed(new_amount: int) -> void:
 		"MATERIALS: %d"
 		% new_amount
 	)
+
+#func _notify_wave_enemy_change() -> void:
+	#wave_manager.notify_enemy_count_changed()
