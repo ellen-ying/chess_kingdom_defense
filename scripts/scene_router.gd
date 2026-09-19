@@ -7,6 +7,7 @@ const HOME_OFFICE_SCENE := "res://scenes/home_office.tscn"
 const LEVEL_SELECT_SCENE := "res://scenes/level_select.tscn"
 const BESTIARY_SCENE := "res://scenes/bestiary.tscn"
 const SKILL_SHOP_SCENE := "res://scenes/skill_shop.tscn"
+const LEARNING_OPENINGS_SCENE := "res://scenes/learning_openings.tscn"
 const GAMEPLAY_SCENE := "res://scenes/main.tscn"
 const PLACEHOLDER_SCENE := "res://scenes/placeholder_screen.tscn"
 
@@ -28,6 +29,10 @@ func go_bestiary() -> void:
 
 func go_skill_shop() -> void:
 	get_tree().change_scene_to_file(SKILL_SHOP_SCENE)
+
+
+func go_learning_openings() -> void:
+	get_tree().change_scene_to_file(LEARNING_OPENINGS_SCENE)
 
 
 func start_level(level_id: String) -> void:

@@ -36,4 +36,4 @@ func _on_bestiary_pressed() -> void:
 
 
 func _on_earn_material_pressed() -> void:
-	SceneRouter.show_placeholder("Learning Openings")
+	SceneRouter.go_learning_openings()
