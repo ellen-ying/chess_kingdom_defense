@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="LevelConfig" format=3 uid="uid://r1enwsvq6sqx"]
+
+[ext_resource type="Script" uid="uid://bd66ifnisddte" path="res://scripts/level_config.gd" id="1"]
+[ext_resource type="Script" uid="uid://djrrmuvj6ifoi" path="res://scripts/wave_config.gd" id="2_bl7rf"]
+[ext_resource type="Resource" uid="uid://dmleyt60c60mm" path="res://resources/wave_1.tres" id="3_dbnjb"]
+[ext_resource type="Resource" uid="uid://b3de2bxq4uoid" path="res://resources/wave_2.tres" id="4_vh5kk"]
+[ext_resource type="Resource" uid="uid://duu16xkk3llb4" path="res://resources/wave_3.tres" id="5_sdtqw"]
+
+[resource]
+script = ExtResource("1")
+level_id = "level_3"
+display_name = "Level 3: Knight's Fork"
+allowed_enemy_pieces = Array[String](["Pawn", "Bishop", "Knight"])
+wave_count = 7
+wave_resources = Array[ExtResource("2_bl7rf")]([ExtResource("3_dbnjb"), ExtResource("3_dbnjb"), ExtResource("4_vh5kk"), ExtResource("4_vh5kk"), ExtResource("5_sdtqw"), ExtResource("5_sdtqw"), ExtResource("5_sdtqw")])
+wave_duration = 34.0
+base_spawn_interval = 3.4
+spawn_interval_reduction_per_wave = 0.2
+minimum_spawn_interval = 2.0

@@ -1,9 +1,8 @@
 class_name WaveManager
 extends Node
 
-signal wave_started(wave_number: int)
-signal wave_spawning_finished(wave_number: int)
-signal all_enemies_cleared(wave_number: int)
+signal level_completed
+signal wave_started
 
 @export_category("Wave Configuration")
 
@@ -20,12 +19,14 @@ var debug_start_wave: int = 1
 var current_wave_index := -1
 var spawning := false
 var waiting_for_clear := false
+var level_complete := false
 var game: Node
 var board: Node
 var wave_banner: Node
 
 var spawn_timer := 0.0
 var wave_timer := 0.0
+var level_config: LevelConfig
 
 const ENEMY_SCENES: Dictionary = {
 	"Pawn": preload("res://scenes/shadow_pawn.tscn"),
@@ -37,12 +38,22 @@ const ENEMY_SCENES: Dictionary = {
 }
 
 
+func configure_level(config: LevelConfig) -> void:
+	level_config = config
+	level_complete = false
+	current_wave_index = -1
+	waves = config.wave_resources.duplicate()
+	if waves.is_empty() and not config.is_infinite():
+		for wave_number in range(1, config.wave_count + 1):
+			waves.append(_create_generated_wave(wave_number))
+
+
 func setup(
 	game_reference: Node,
 	board_reference: Node,
 	wave_benner_reference: Node
 	) -> void:
-	if waves.is_empty():
+	if waves.is_empty() and (level_config == null or not level_config.is_infinite()):
 		push_error("WaveManager has no waves configured.")
 		return
 
@@ -63,10 +74,19 @@ func setup(
 		start_new_wave()
 		
 func start_new_wave() -> void:
+	if level_complete:
+		return
+
 	current_wave_index += 1
+	if level_config != null and level_config.is_infinite() and current_wave_index >= waves.size():
+		waves.append(_create_generated_wave(current_wave_index + 1))
 	
 	if (current_wave_index < 0
 		or current_wave_index >= waves.size()):
+		spawning = false
+		waiting_for_clear = false
+		level_complete = true
+		level_completed.emit()
 		return
 	
 	spawning = true
@@ -75,8 +95,29 @@ func start_new_wave() -> void:
 	spawn_timer = 0.0
 	wave_timer = 0.0
 	
-	#wave_started.emit(current_wave_index + 1)
+	wave_started.emit()
 	show_wave_banner(current_wave_index + 1)
+
+
+func get_waves_survived() -> int:
+	if level_config == null or not level_config.is_infinite():
+		return 0
+	return max(0, current_wave_index)
+
+
+func _create_generated_wave(wave_number: int) -> WaveConfig:
+	var wave := WaveConfig.new()
+	var spawn_interval = max(
+		level_config.minimum_spawn_interval,
+		level_config.base_spawn_interval
+		- level_config.spawn_interval_reduction_per_wave * (wave_number - 1)
+	)
+	wave.configure_wave(
+		level_config.allowed_enemy_pieces,
+		level_config.wave_duration,
+		spawn_interval
+	)
+	return wave
 	
 func _process(delta: float) -> void:
 	if game.game_over:

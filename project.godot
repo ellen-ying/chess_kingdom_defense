@@ -11,14 +11,19 @@ config_version=5
 [application]
 
 config/name="ChessDefense"
-run/main_scene="uid://cnopnvfnpxpw0"
+run/main_scene="res://scenes/title_screen.tscn"
 config/features=PackedStringArray("4.7", "Mobile")
 config/icon="res://icon.svg"
 
 [autoload]
 
+SaveData="*res://scripts/save_data.gd"
 CurrencyManager="*uid://bm74jtfouxk0t"
 InventoryManager="*uid://btvd0n76x8oh0"
+OfficeMaterialManager="*res://scripts/office_material_manager.gd"
+RunRewardManager="*res://scripts/run_reward_manager.gd"
+SceneRouter="*res://scripts/scene_router.gd"
+LevelProgressManager="*res://scripts/level_progress_manager.gd"
 
 [display]
 

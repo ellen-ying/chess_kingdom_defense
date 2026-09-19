@@ -162,7 +162,7 @@ func place_piece(cell: Vector2i) -> void:
 	if piece == null:
 		# This should not normally happen, but don't allow
 		# a failed instantiation to consume currency.
-		CurrencyManager.add_currency(definition_cost)
+		CurrencyManager.add_currency(definition_cost, false)
 
 		clear_placement()
 		return

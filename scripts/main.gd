@@ -10,7 +10,7 @@ extends Node2D
 var test_enemy_mode := "Pawn"
 
 @export
-var auto_spawn_enemies = true
+var auto_spawn_enemies = false
 
 
 # ============================================================
@@ -19,6 +19,7 @@ var auto_spawn_enemies = true
 
 var lives := 3
 var game_over := false
+var level_config: LevelConfig
 
 signal enemy_changed
 
@@ -43,6 +44,16 @@ signal enemy_changed
 
 
 func _ready() -> void:
+	level_config = LevelProgressManager.get_level_config(SceneRouter.selected_level_id)
+	if level_config == null:
+		push_error("No level configuration selected: %s" % SceneRouter.selected_level_id)
+		SceneRouter.go_home_office()
+		return
+
+	CurrencyManager.reset_for_new_run()
+	InventoryManager.reset_for_new_run()
+	RunRewardManager.begin_run()
+
 	# Position the king.
 	king.setup(board.get_center_cell(), board)
 
@@ -51,7 +62,10 @@ func _ready() -> void:
 	enemy_manager.setup(self, enemies, board)
 	placement_controller.setup(self, board, piece_parent)
 	shop_ui.setup(placement_controller)
+	wave_manager.configure_level(level_config)
 	wave_manager.setup(self, board, wave_banner)
+	wave_manager.level_completed.connect(_on_level_completed)
+	wave_manager.wave_started.connect(update_hud)
 
 	CurrencyManager.currency_changed.connect(_on_currency_changed)
 
@@ -140,6 +154,25 @@ func end_game() -> void:
 	game_over_label.visible = true
 
 	update_hud()
+	_finish_run()
+
+
+func _on_level_completed() -> void:
+	if game_over:
+		return
+
+	game_over = true
+	LevelProgressManager.complete_level(level_config.level_id)
+	_finish_run()
+
+
+func _finish_run() -> void:
+	if level_config != null and level_config.is_infinite():
+		LevelProgressManager.record_final_stand_score(
+			wave_manager.get_waves_survived()
+		)
+	RunRewardManager.finish_run()
+	SceneRouter.go_home_office()
 	
 func _on_currency_changed(new_amount: int) -> void:
 	currency_label.text = (

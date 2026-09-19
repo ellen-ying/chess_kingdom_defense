@@ -1,6 +1,7 @@
 extends Node
 
 signal currency_changed(new_amount: int)
+signal currency_earned(amount: int)
 
 const PIECE_VALUES: Dictionary = {
 	"Pawn": 1,
@@ -13,12 +14,14 @@ const PIECE_VALUES: Dictionary = {
 var current_amount: int = 5
 
 
-func add_currency(amount: int) -> void:
+func add_currency(amount: int, track_as_earned: bool = true) -> void:
 	if amount <= 0:
 		return
 
 	current_amount += amount
 	currency_changed.emit(current_amount)
+	if track_as_earned:
+		currency_earned.emit(amount)
 
 
 func spend_currency(amount: int) -> bool:

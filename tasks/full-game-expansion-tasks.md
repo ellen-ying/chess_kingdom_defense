@@ -412,8 +412,8 @@ The intended progression is:
 | Level | Introduced enemy |
 |---|---|
 | 1 | Pawn |
-| 2 | Knight |
-| 3 | Bishop |
+| 2 | Bishop |
+| 3 | Knight |
 | 4 | Rook |
 | 5 | Queen |
 | Final Stand | All |

@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_d4apa")
-duration = 60.0
+duration = 5.0
 spawn_interval = 1.0
 shadow_knight = true
 shadow_bishop = true
