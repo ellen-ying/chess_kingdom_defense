@@ -25,6 +25,7 @@ RunRewardManager="*res://scripts/run_reward_manager.gd"
 SceneRouter="*res://scripts/scene_router.gd"
 LevelProgressManager="*res://scripts/level_progress_manager.gd"
 BestiaryManager="*res://scripts/bestiary_manager.gd"
+SkillManager="*res://scripts/skill_manager.gd"
 
 [display]
 

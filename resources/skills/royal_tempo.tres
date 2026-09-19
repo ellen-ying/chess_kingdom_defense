@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="SkillDefinition" format=3]
+[ext_resource type="Script" path="res://scripts/skill_definition.gd" id="1"]
+[resource]
+script = ExtResource("1")
+skill_id = "royal_tempo"
+display_name = "Royal Tempo"
+description = "All defenders attack 8% faster."
+cost = 12
+effect_type = 7
+effect_value = 0.92

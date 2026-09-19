@@ -17,7 +17,10 @@ var auto_spawn_enemies = false
 # GAME STATE
 # ============================================================
 
-var lives := 3
+const BASE_LIVES := 3
+
+var lives := BASE_LIVES
+var max_lives := BASE_LIVES
 var game_over := false
 var level_config: LevelConfig
 
@@ -52,6 +55,8 @@ func _ready() -> void:
 
 	CurrencyManager.reset_for_new_run()
 	InventoryManager.reset_for_new_run()
+	max_lives = BASE_LIVES + int(SkillManager.get_effect_value(SkillDefinition.EffectType.KING_LIVES))
+	lives = max_lives
 	RunRewardManager.begin_run()
 
 	# Position the king.
@@ -78,8 +83,8 @@ func _ready() -> void:
 
 func update_hud() -> void:
 	status_label.text = (
-        "KING  %d / 3     WAVE  %d"
-		% [lives, wave_manager.current_wave_index + 1]
+		"KING  %d / %d     WAVE  %d"
+		% [lives, max_lives, wave_manager.current_wave_index + 1]
 	)
 
 
@@ -117,7 +122,8 @@ func spawn_projectile(piece: Node2D, target: Node) -> void:
 
 	projectile.setup(
 		piece.global_position,
-		target
+		target,
+		piece
 	)
 
 

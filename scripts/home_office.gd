@@ -28,7 +28,7 @@ func _on_play_pressed() -> void:
 
 
 func _on_skills_pressed() -> void:
-	SceneRouter.show_placeholder("Skills")
+	SceneRouter.go_skill_shop()
 
 
 func _on_bestiary_pressed() -> void:

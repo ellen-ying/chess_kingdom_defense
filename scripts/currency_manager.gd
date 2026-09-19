@@ -12,16 +12,28 @@ const PIECE_VALUES: Dictionary = {
 }
 
 var current_amount: int = 5
+var _earned_material_remainder := 0.0
 
 
 func add_currency(amount: int, track_as_earned: bool = true) -> void:
 	if amount <= 0:
 		return
 
-	current_amount += amount
+	var awarded_amount := amount
+	if track_as_earned:
+		var multiplier := SkillManager.get_effect_value(
+			SkillDefinition.EffectType.RUN_MATERIAL_MULTIPLIER
+		)
+		if multiplier <= 0.0:
+			multiplier = 1.0
+		var reward_with_remainder := amount * multiplier + _earned_material_remainder
+		awarded_amount = floori(reward_with_remainder)
+		_earned_material_remainder = reward_with_remainder - awarded_amount
+
+	current_amount += awarded_amount
 	currency_changed.emit(current_amount)
 	if track_as_earned:
-		currency_earned.emit(amount)
+		currency_earned.emit(awarded_amount)
 
 
 func spend_currency(amount: int) -> bool:
@@ -43,4 +55,5 @@ func get_piece_value(piece_type: String) -> int:
 
 func reset_for_new_run() -> void:
 	current_amount = 5
+	_earned_material_remainder = 0.0
 	currency_changed.emit(current_amount)

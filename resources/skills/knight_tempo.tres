@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="SkillDefinition" format=3]
+[ext_resource type="Script" path="res://scripts/skill_definition.gd" id="1"]
+[resource]
+script = ExtResource("1")
+skill_id = "knight_tempo"
+display_name = "Knight Tempo"
+description = "Knights attack 20% faster."
+cost = 6
+effect_type = 3
+effect_value = 0.8

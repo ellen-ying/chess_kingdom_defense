@@ -25,6 +25,7 @@ func setup(game_reference: Node, cell: Vector2i) -> void:
 func _process(delta: float) -> void:
 	if game == null or game.game_over:
 		return
+	update_status_effects(delta)
 
 	lifetime_timer += delta
 
@@ -34,7 +35,7 @@ func _process(delta: float) -> void:
 
 	move_timer += delta
 
-	if move_timer >= MOVE_INTERVAL:
+	if move_timer >= get_move_interval(MOVE_INTERVAL):
 		move_timer = 0.0
 		move_randomly()
 	

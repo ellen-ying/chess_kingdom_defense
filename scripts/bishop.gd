@@ -43,7 +43,7 @@ func _process(delta: float) -> void:
 
 	fire_timer += delta
 
-	if fire_timer >= FIRE_INTERVAL:
+	if fire_timer >= SkillManager.get_attack_interval(FIRE_INTERVAL, self, game):
 		fire_timer = 0.0
 		attempt_attack()
 
