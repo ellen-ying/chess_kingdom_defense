@@ -171,6 +171,7 @@ func spawn_random_enemy() -> void:
 	var spawn_cell := get_spawn_cell(type)
 
 	enemy.setup(game, spawn_cell)
+	BestiaryManager.mark_encountered(type)
 	
 func get_spawn_cell(enemy_type: String) -> Vector2i:
 

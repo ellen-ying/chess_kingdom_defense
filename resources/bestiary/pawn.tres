@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EnemyBestiaryEntry" format=3]
+
+[ext_resource type="Script" path="res://scripts/enemy_bestiary_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+enemy_type = "Pawn"
+display_name = "Shadow Pawn"
+movement_description = "Takes one orthogonal step toward the King each move. When both axes are open, it chooses one at random."
+flavor_text = ""

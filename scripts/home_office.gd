@@ -32,7 +32,7 @@ func _on_skills_pressed() -> void:
 
 
 func _on_bestiary_pressed() -> void:
-	SceneRouter.show_placeholder("Bestiary")
+	SceneRouter.go_bestiary()
 
 
 func _on_earn_material_pressed() -> void:

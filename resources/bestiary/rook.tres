@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EnemyBestiaryEntry" format=3]
+
+[ext_resource type="Script" path="res://scripts/enemy_bestiary_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+enemy_type = "Rook"
+display_name = "Shadow Rook"
+movement_description = "Marches toward the King one square at a time along either its rank or file, choosing an initial axis at random."
+flavor_text = ""

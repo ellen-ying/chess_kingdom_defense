@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EnemyBestiaryEntry" format=3]
+
+[ext_resource type="Script" path="res://scripts/enemy_bestiary_entry.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+enemy_type = "Queen"
+display_name = "Shadow Queen"
+movement_description = "Advances toward the King along ranks, files, or diagonals. It usually continues in its current direction, but can change course."
+flavor_text = ""

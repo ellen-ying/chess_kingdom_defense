@@ -5,6 +5,7 @@ extends Node
 
 const HOME_OFFICE_SCENE := "res://scenes/home_office.tscn"
 const LEVEL_SELECT_SCENE := "res://scenes/level_select.tscn"
+const BESTIARY_SCENE := "res://scenes/bestiary.tscn"
 const GAMEPLAY_SCENE := "res://scenes/main.tscn"
 const PLACEHOLDER_SCENE := "res://scenes/placeholder_screen.tscn"
 
@@ -18,6 +19,10 @@ func go_home_office() -> void:
 
 func go_level_select() -> void:
 	get_tree().change_scene_to_file(LEVEL_SELECT_SCENE)
+
+
+func go_bestiary() -> void:
+	get_tree().change_scene_to_file(BESTIARY_SCENE)
 
 
 func start_level(level_id: String) -> void:
