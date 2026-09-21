@@ -126,6 +126,12 @@ func spawn_projectile(piece: Node2D, target: Node) -> void:
 		piece
 	)
 
+func piece_destroyed(piece: Node) -> void:
+	if is_instance_valid(piece):
+		if piece.get_parent():
+			piece.get_parent().remove_child(piece)
+		piece.queue_free()
+		
 
 func enemy_destroyed(enemy: Node) -> void:
 	if is_instance_valid(enemy):

@@ -9,6 +9,8 @@ const PAWN_ATTACK_OFFSET: Array[Vector2i] = [
 	Vector2i(1, 1)
 ]
 
+const QUEEN_SCENE := preload("res://scenes/queen.tscn")
+
 var game: Node
 var current_cell: Vector2i
 
@@ -39,6 +41,14 @@ func set_dragging(value: bool) -> void:
 func _process(delta: float) -> void:
 	if game == null or game.game_over:
 		return
+		
+	if game.wave_manager.current_wave_index >= 4:
+		var new_queen_cell = current_cell
+		game.piece_destroyed(self)
+		var new_queen = QUEEN_SCENE.instantiate()
+		game.piece_parent.add_child(new_queen)
+		new_queen.setup(game, current_cell)
+		
 
 	fire_timer += delta
 
