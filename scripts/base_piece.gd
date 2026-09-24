@@ -1,6 +1,7 @@
 class_name BasePiece
 extends Node2D
 
+var type = null
 
 # Returns every theoretical attack tile from origin_cell.
 # Occupancy/blocking is intentionally ignored.

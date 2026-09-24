@@ -7,8 +7,11 @@ const MAX_HP := 3
 var game: Node
 var current_cell: Vector2i
 var hp := MAX_HP
+var killed_by = null
+var type = null
 
 var move_timer := 0.0
+var live_timer := 0.0
 var _slow_timer := 0.0
 var _slow_multiplier := 1.0
 
@@ -16,7 +19,7 @@ func setup(game_reference: Node, cell: Vector2i) -> void:
 	push_error("BaseEnemy.setup() was not overridden.")
 
 
-func take_damage(amount: int) -> void:
+func take_damage(amount: int, source_piece: String) -> void:
 	push_error("BaseEnemy.take_damage() was not overridden.")
 
 

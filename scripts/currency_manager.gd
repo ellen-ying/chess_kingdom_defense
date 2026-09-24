@@ -12,6 +12,7 @@ const PIECE_VALUES: Dictionary = {
 }
 
 var current_amount: int = 5
+var currency_spent: int = 0
 var _earned_material_remainder := 0.0
 
 
@@ -44,6 +45,7 @@ func spend_currency(amount: int) -> bool:
 		return false
 
 	current_amount -= amount
+	currency_spent += amount
 	currency_changed.emit(current_amount)
 
 	return true
@@ -52,6 +54,8 @@ func spend_currency(amount: int) -> bool:
 func get_piece_value(piece_type: String) -> int:
 	return PIECE_VALUES.get(piece_type, 0)
 
+func get_current_amount() -> int:
+	return current_amount
 
 func reset_for_new_run() -> void:
 	current_amount = 5

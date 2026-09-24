@@ -26,6 +26,7 @@ var wave_banner: Node
 
 var spawn_timer := 0.0
 var wave_timer := 0.0
+var total_timer := 0.0
 var level_config: LevelConfig
 
 const ENEMY_SCENES: Dictionary = {
@@ -94,9 +95,11 @@ func start_new_wave() -> void:
 
 	spawn_timer = 0.0
 	wave_timer = 0.0
+	total_timer = 0.0
 	
 	wave_started.emit()
-	show_wave_banner(current_wave_index + 1)
+	show_wave_banner(get_wave_number())
+	GameLogger.log_wave_start(get_wave_number())
 
 
 func get_waves_survived() -> int:
@@ -104,6 +107,11 @@ func get_waves_survived() -> int:
 		return 0
 	return max(0, current_wave_index)
 
+func get_wave_number() -> int:
+	if current_wave_index < 0:
+		return 0
+		
+	return current_wave_index + 1
 
 func _create_generated_wave(wave_number: int) -> WaveConfig:
 	var wave := WaveConfig.new()
@@ -122,6 +130,8 @@ func _create_generated_wave(wave_number: int) -> WaveConfig:
 func _process(delta: float) -> void:
 	if game.game_over:
 		return 
+		
+	total_timer += delta
 		
 	if not spawning:
 		return
@@ -171,6 +181,7 @@ func spawn_random_enemy() -> void:
 	var spawn_cell := get_spawn_cell(type)
 
 	enemy.setup(game, spawn_cell)
+	GameLogger.log_enemy_spawned("Shadow"+type, get_wave_number())
 	BestiaryManager.mark_encountered(type)
 	
 func get_spawn_cell(enemy_type: String) -> Vector2i:
@@ -190,7 +201,7 @@ func notify_enemy_count_changed() -> void:
 		return
 
 	waiting_for_clear = false
-	#all_enemies_cleared.emit(current_wave_index + 1)
+	GameLogger.log_wave_end(get_wave_number(), total_timer)
 	start_new_wave()
 	
 

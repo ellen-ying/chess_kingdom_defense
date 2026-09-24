@@ -15,6 +15,7 @@ const LIFETIME := 3.0
 var lifetime_timer := 0.0
 
 func setup(game_reference: Node, cell: Vector2i) -> void:
+	type = "ShadowKing"
 	game = game_reference
 	current_cell = cell
 
@@ -62,7 +63,7 @@ func move_randomly() -> void:
 
 	queue_redraw()
 	
-func take_damage(amount: int) -> void:
+func take_damage(amount: int, source_piece: String) -> void:
 	if hp <= 0:
 		return
 
@@ -70,7 +71,7 @@ func take_damage(amount: int) -> void:
 
 	if hp <= 0:
 		hp = 0
-		game.enemy_destroyed(self)
+		game.enemy_destroyed(self, source_piece)
 		queue_free()
 
 	queue_redraw()

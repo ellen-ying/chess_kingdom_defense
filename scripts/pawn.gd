@@ -19,6 +19,7 @@ var fire_timer := 0.0
 
 
 func setup(game_reference: Node, cell: Vector2i) -> void:
+	type = "Pawn"
 	game = game_reference
 	current_cell = cell
 

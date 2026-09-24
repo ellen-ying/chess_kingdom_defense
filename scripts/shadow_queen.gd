@@ -15,6 +15,7 @@ const QUEEN_DIRECTIONS := [
 var current_direction: Vector2i
 
 func setup(game_reference: Node, cell: Vector2i) -> void:
+	type = "ShadowQueen"
 	game = game_reference
 	current_cell = cell
 	global_position = game.board.cell_to_world(cell)
@@ -28,6 +29,7 @@ func _process(delta: float) -> void:
 	update_status_effects(delta)
 
 	move_timer += delta
+	live_timer += delta
 
 	if move_timer >= get_move_interval(MOVE_INTERVAL):
 		move_timer = 0.0
@@ -126,7 +128,7 @@ func get_toward_king_directions() -> Array[Vector2i]:
 
 	return directions
 
-func take_damage(amount: int) -> void:
+func take_damage(amount: int, source_piece: String) -> void:
 	hp -= amount
 
 	if hp <= 0:
@@ -134,7 +136,7 @@ func take_damage(amount: int) -> void:
 		CurrencyManager.add_currency(reward)
 		game.shop_ui.show_currency_reward(global_position, reward)
 		
-		game.enemy_destroyed(self) 
+		game.enemy_destroyed(self, source_piece) 
 		queue_free()
 
 	queue_redraw()

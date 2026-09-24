@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_vt6cp")
-duration = 5.0
+duration = 50.0
 shadow_knight = true
 shadow_bishop = true
 shadow_rook = true

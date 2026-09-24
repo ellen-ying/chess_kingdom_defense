@@ -27,6 +27,7 @@ LevelProgressManager="*res://scripts/level_progress_manager.gd"
 BestiaryManager="*res://scripts/bestiary_manager.gd"
 SkillManager="*res://scripts/skill_manager.gd"
 DailyRewardManager="*res://scripts/daily_reward_manager.gd"
+GameLogger="*uid://bhci11jnjo6mb"
 
 [display]
 

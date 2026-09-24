@@ -22,6 +22,8 @@ const BASE_LIVES := 3
 var lives := BASE_LIVES
 var max_lives := BASE_LIVES
 var game_over := false
+var outcome = null
+var waves_survived = -1
 var level_config: LevelConfig
 
 signal enemy_changed
@@ -47,6 +49,7 @@ signal enemy_changed
 
 
 func _ready() -> void:
+	GameLogger.start_run(SceneRouter.selected_level_id)
 	level_config = LevelProgressManager.get_level_config(SceneRouter.selected_level_id)
 	if level_config == null:
 		push_error("No level configuration selected: %s" % SceneRouter.selected_level_id)
@@ -133,12 +136,20 @@ func piece_destroyed(piece: Node) -> void:
 		piece.queue_free()
 		
 
-func enemy_destroyed(enemy: Node) -> void:
+func enemy_destroyed(enemy: Node, source_piece: String) -> void:
 	if is_instance_valid(enemy):
+		var type = enemy.type
+		GameLogger.log_enemy_killed(
+			type, source_piece,
+			wave_manager.get_wave_number(), enemy.live_timer
+		)
+		GameLogger.log_material_earned(
+			CurrencyManager.get_piece_value(type.replace("Shadow","")), type
+		)
 		if enemy.get_parent():
 			enemy.get_parent().remove_child(enemy)
 		enemy.queue_free()
-		
+	
 	enemy_changed.emit()
 
 
@@ -147,8 +158,12 @@ func enemy_reached_king(enemy: Node) -> void:
 		return
 
 	lives -= 1
+	GameLogger.log_king_life_lost(lives, wave_manager.get_wave_number())
 
 	if is_instance_valid(enemy):
+		GameLogger.log_enemy_reached_king(
+			enemy.type,	wave_manager.get_wave_number()
+		)
 		if enemy.get_parent():
 			enemy.get_parent().remove_child(enemy)
 		enemy.queue_free()
@@ -157,6 +172,8 @@ func enemy_reached_king(enemy: Node) -> void:
 	update_hud()
 
 	if lives <= 0:
+		outcome = "LOSE"
+		waves_survived = wave_manager.current_wave_index
 		end_game()
 
 
@@ -174,6 +191,8 @@ func _on_level_completed() -> void:
 		return
 
 	game_over = true
+	outcome = "WIN"
+	waves_survived = wave_manager.current_wave_index 
 	LevelProgressManager.complete_level(level_config.level_id)
 	_finish_run()
 
@@ -185,12 +204,15 @@ func _finish_run() -> void:
 		)
 	RunRewardManager.finish_run()
 	SceneRouter.go_home_office()
+	if ((not outcome) or waves_survived < 0):
+		push_error("Invalid end of run satistics.")
+	GameLogger.end_run(
+		outcome, waves_survived, 
+		RunRewardManager.run_material_earned, CurrencyManager.currency_spent
+	)
 	
 func _on_currency_changed(new_amount: int) -> void:
 	currency_label.text = (
 		"MATERIALS: %d"
 		% new_amount
 	)
-
-#func _notify_wave_enemy_change() -> void:
-	#wave_manager.notify_enemy_count_changed()

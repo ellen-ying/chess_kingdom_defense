@@ -156,7 +156,7 @@ func place_piece(cell: Vector2i) -> void:
 	):
 		clear_placement()
 		return
-
+	
 	var piece := active_piece_scene.instantiate() as BasePiece
 
 	if piece == null:
@@ -167,6 +167,13 @@ func place_piece(cell: Vector2i) -> void:
 		clear_placement()
 		return
 
+	GameLogger.log_piece_purchased(
+		active_piece_type, definition_cost, CurrencyManager.get_current_amount()
+	)
+	GameLogger.log_piece_placed(
+		active_piece_type, cell.x, cell.y,
+		game.wave_manager.get_wave_number()
+	)
 	pieces_parent.add_child(piece)
 	piece.setup(game, cell)
 
