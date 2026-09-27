@@ -186,7 +186,7 @@ func _draw() -> void:
 	)
 	
 	# HP indicator.
-	for i in range(MAX_HP):
+	for i in range(max_hp):
 		var hp_color := Color("#C62828") if i < hp else Color("#444444")
 
 		draw_rect(

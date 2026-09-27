@@ -40,13 +40,23 @@ const ENEMY_SCENES: Dictionary = {
 
 
 func configure_level(config: LevelConfig) -> void:
-	level_config = config
+	level_config = config.duplicate_with_waves()
+	level_config.setup()
 	level_complete = false
 	current_wave_index = -1
-	waves = config.wave_resources.duplicate()
-	if waves.is_empty() and not config.is_infinite():
-		for wave_number in range(1, config.wave_count + 1):
+	waves = level_config.wave_resources
+	
+	# Automatic populate if no wave list is available
+	if waves.is_empty() and not level_config.is_infinite():
+		for wave_number in range(1, level_config.wave_count + 1):
 			waves.append(_create_generated_wave(wave_number))
+			
+	for wave in waves:
+		wave.configure_wave(
+			level_config.get_wave_duration(), 
+			level_config.get_spawn_interval())
+		level_config.increase_wave_duration()
+		level_config.decrease_spawn_interval()
 
 
 func setup(
@@ -126,9 +136,9 @@ func _create_generated_wave(wave_number: int) -> WaveConfig:
 		- level_config.spawn_interval_reduction_per_wave * (wave_number - 1)
 	)
 	wave.configure_wave(
-		level_config.allowed_enemy_pieces,
 		level_config.wave_duration,
-		spawn_interval
+		spawn_interval,
+		level_config.allowed_enemy_pieces
 	)
 	return wave
 	

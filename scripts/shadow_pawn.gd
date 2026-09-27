@@ -2,6 +2,8 @@ extends BaseEnemy
 
 func setup(game_reference: Node, cell: Vector2i) -> void:
 	type = "ShadowPawn"
+	max_hp = 2
+	hp = max_hp
 	game = game_reference
 	current_cell = cell
 	global_position = game.board.cell_to_world(cell)
@@ -113,7 +115,7 @@ func _draw() -> void:
 	)
 
 	# HP indicator.
-	for i in range(MAX_HP):
+	for i in range(max_hp):
 		var hp_color := Color("#C62828") if i < hp else Color("#444444")
 
 		draw_rect(

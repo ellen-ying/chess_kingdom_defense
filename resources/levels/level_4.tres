@@ -2,10 +2,8 @@
 
 [ext_resource type="Script" uid="uid://bd66ifnisddte" path="res://scripts/level_config.gd" id="1"]
 [ext_resource type="Script" uid="uid://djrrmuvj6ifoi" path="res://scripts/wave_config.gd" id="2_kbucj"]
-[ext_resource type="Resource" uid="uid://dmleyt60c60mm" path="res://resources/wave_1.tres" id="3_od1oh"]
-[ext_resource type="Resource" uid="uid://b3de2bxq4uoid" path="res://resources/wave_2.tres" id="4_ahug5"]
-[ext_resource type="Resource" uid="uid://duu16xkk3llb4" path="res://resources/wave_3.tres" id="5_rkf6i"]
-[ext_resource type="Resource" uid="uid://66u1b2tpl3c7" path="res://resources/wave_4.tres" id="6_si2pv"]
+[ext_resource type="Resource" uid="uid://dmleyt60c60mm" path="res://resources/waves/wave_1.tres" id="3_dobqq"]
+[ext_resource type="Resource" uid="uid://b3de2bxq4uoid" path="res://resources/waves/wave_2.tres" id="4_575p4"]
 
 [resource]
 script = ExtResource("1")
@@ -13,8 +11,5 @@ level_id = "level_4"
 display_name = "Level 4: Open Files"
 allowed_enemy_pieces = Array[String](["Pawn", "Bishop", "Knight", "Rook"])
 wave_count = 9
-wave_resources = Array[ExtResource("2_kbucj")]([ExtResource("3_od1oh"), ExtResource("3_od1oh"), ExtResource("4_ahug5"), ExtResource("4_ahug5"), ExtResource("5_rkf6i"), ExtResource("5_rkf6i"), ExtResource("6_si2pv"), ExtResource("6_si2pv"), ExtResource("6_si2pv")])
-wave_duration = 38.0
+wave_resources = Array[ExtResource("2_kbucj")]([ExtResource("3_dobqq"), ExtResource("3_dobqq"), ExtResource("4_575p4"), ExtResource("4_575p4")])
 base_spawn_interval = 3.0
-spawn_interval_reduction_per_wave = 0.2
-minimum_spawn_interval = 1.6

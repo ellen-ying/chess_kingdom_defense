@@ -2,11 +2,11 @@ class_name BaseEnemy
 extends Node2D
 
 const MOVE_INTERVAL := 1.0
-const MAX_HP := 3
+var max_hp := 3
 
 var game: Node
 var current_cell: Vector2i
-var hp := MAX_HP
+var hp : int
 var killed_by = null
 var type = null
 
@@ -21,7 +21,7 @@ func setup(game_reference: Node, cell: Vector2i) -> void:
 
 func take_damage(amount: int, source_piece: String) -> void:
 	push_error("BaseEnemy.take_damage() was not overridden.")
-
+	
 
 func update_status_effects(delta: float) -> void:
 	if _slow_timer <= 0.0:

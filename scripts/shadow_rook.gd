@@ -130,7 +130,7 @@ func _draw() -> void:
 		2.0
 	)
 
-	for i in range(MAX_HP):
+	for i in range(max_hp):
 		draw_rect(
 			Rect2(-15 + i * 10, 26, 7, 4),
 			Color("#C62828") if i < hp else Color("#444444")

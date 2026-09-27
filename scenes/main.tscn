@@ -10,11 +10,11 @@
 [ext_resource type="Script" uid="uid://bkg874dujg7s1" path="res://scripts/placement_controller.gd" id="7_o6xl0"]
 [ext_resource type="Script" uid="uid://djrrmuvj6ifoi" path="res://scripts/wave_config.gd" id="8_jkv2x"]
 [ext_resource type="PackedScene" uid="uid://c122gebecncm8" path="res://scenes/shop_ui.tscn" id="8_tipki"]
-[ext_resource type="Resource" uid="uid://dmleyt60c60mm" path="res://resources/wave_1.tres" id="9_jbj1t"]
-[ext_resource type="Resource" uid="uid://b3de2bxq4uoid" path="res://resources/wave_2.tres" id="10_muem4"]
-[ext_resource type="Resource" uid="uid://duu16xkk3llb4" path="res://resources/wave_3.tres" id="11_dp3eg"]
-[ext_resource type="Resource" uid="uid://66u1b2tpl3c7" path="res://resources/wave_4.tres" id="12_0ld40"]
-[ext_resource type="Resource" uid="uid://d0ey0vwpkfdd6" path="res://resources/wave_5.tres" id="13_gqmmt"]
+[ext_resource type="Resource" uid="uid://dmleyt60c60mm" path="res://resources/waves/wave_1.tres" id="9_jbj1t"]
+[ext_resource type="Resource" uid="uid://b3de2bxq4uoid" path="res://resources/waves/wave_2.tres" id="10_muem4"]
+[ext_resource type="Resource" uid="uid://duu16xkk3llb4" path="res://resources/waves/wave_3.tres" id="11_dp3eg"]
+[ext_resource type="Resource" uid="uid://66u1b2tpl3c7" path="res://resources/waves/wave_4.tres" id="12_0ld40"]
+[ext_resource type="Resource" uid="uid://d0ey0vwpkfdd6" path="res://resources/waves/wave_5.tres" id="13_gqmmt"]
 
 [node name="Main" type="Node2D" unique_id=1813833294]
 script = ExtResource("1_jyhfs")

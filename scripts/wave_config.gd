@@ -18,19 +18,20 @@ extends Resource
 
 
 func configure_wave(
-	enabled_enemy_types: Array[String],
 	wave_duration: float,
-	universal_spawn_interval: float
+	universal_spawn_interval: float,
+	enabled_enemy_types = null
 ) -> void:
 	duration = wave_duration
 	spawn_interval = universal_spawn_interval
-
-	shadow_pawn = "Pawn" in enabled_enemy_types
-	shadow_knight = "Knight" in enabled_enemy_types
-	shadow_bishop = "Bishop" in enabled_enemy_types
-	shadow_rook = "Rook" in enabled_enemy_types
-	shadow_queen = "Queen" in enabled_enemy_types
-	shadow_king = "King" in enabled_enemy_types
+	
+	if enabled_enemy_types != null:
+		shadow_pawn = "Pawn" in enabled_enemy_types
+		shadow_knight = "Knight" in enabled_enemy_types
+		shadow_bishop = "Bishop" in enabled_enemy_types
+		shadow_rook = "Rook" in enabled_enemy_types
+		shadow_queen = "Queen" in enabled_enemy_types
+		shadow_king = "King" in enabled_enemy_types
 
 
 func get_available_enemy_types() -> Array[String]:

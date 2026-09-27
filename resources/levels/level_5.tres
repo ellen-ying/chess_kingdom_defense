@@ -2,19 +2,13 @@
 
 [ext_resource type="Script" uid="uid://bd66ifnisddte" path="res://scripts/level_config.gd" id="1"]
 [ext_resource type="Script" uid="uid://djrrmuvj6ifoi" path="res://scripts/wave_config.gd" id="2_ecry0"]
-[ext_resource type="Resource" uid="uid://dmleyt60c60mm" path="res://resources/wave_1.tres" id="3_qu7t1"]
-[ext_resource type="Resource" uid="uid://b3de2bxq4uoid" path="res://resources/wave_2.tres" id="4_f65rh"]
-[ext_resource type="Resource" uid="uid://duu16xkk3llb4" path="res://resources/wave_3.tres" id="5_kg0lv"]
-[ext_resource type="Resource" uid="uid://66u1b2tpl3c7" path="res://resources/wave_4.tres" id="6_2jqfw"]
-[ext_resource type="Resource" uid="uid://d0ey0vwpkfdd6" path="res://resources/wave_5.tres" id="7_xo7e7"]
+[ext_resource type="Resource" uid="uid://dmleyt60c60mm" path="res://resources/waves/wave_1.tres" id="3_r3v0c"]
+[ext_resource type="Resource" uid="uid://b3de2bxq4uoid" path="res://resources/waves/wave_2.tres" id="4_ykmg3"]
 
 [resource]
 script = ExtResource("1")
 level_id = "level_5"
 display_name = "Level 5: Queen's Gambit"
 allowed_enemy_pieces = Array[String](["Pawn", "Bishop", "Knight", "Rook", "Queen"])
-wave_resources = Array[ExtResource("2_ecry0")]([ExtResource("3_qu7t1"), ExtResource("3_qu7t1"), ExtResource("4_f65rh"), ExtResource("4_f65rh"), ExtResource("5_kg0lv"), ExtResource("5_kg0lv"), ExtResource("6_2jqfw"), ExtResource("6_2jqfw"), ExtResource("7_xo7e7"), ExtResource("7_xo7e7")])
-wave_duration = 42.0
+wave_resources = Array[ExtResource("2_ecry0")]([ExtResource("3_r3v0c"), ExtResource("3_r3v0c"), ExtResource("4_ykmg3"), ExtResource("4_ykmg3")])
 base_spawn_interval = 2.6
-spawn_interval_reduction_per_wave = 0.18
-minimum_spawn_interval = 1.3

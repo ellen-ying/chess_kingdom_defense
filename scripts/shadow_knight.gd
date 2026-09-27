@@ -177,7 +177,7 @@ func _draw() -> void:
 	)
 
 	# HP bar
-	for i in range(MAX_HP):
+	for i in range(max_hp):
 		var hp_color := (
 			Color("#C62828")
 			if i < hp

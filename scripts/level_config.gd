@@ -16,11 +16,44 @@ extends Resource
 @export var wave_resources: Array[WaveConfig] = []
 
 @export_category("Difficulty Curve")
-@export var wave_duration := 30.0
-@export var base_spawn_interval := 4.0
-@export var spawn_interval_reduction_per_wave := 0.25
-@export var minimum_spawn_interval := 0.8
+@export var base_wave_duration := 15.0
+@export var wave_duration_increment := 10.0
+@export var maximum_wave_duration := 100.0
+@export var base_spawn_interval := 5.0
+@export var spawn_interval_reduction := 0.5
+@export var minimum_spawn_interval := 1.0
+
+var wave_duration
+var spawn_interval
 
 
 func is_infinite() -> bool:
 	return wave_count == -1
+	
+func setup():
+	wave_duration = base_wave_duration
+	spawn_interval = base_spawn_interval
+
+func get_wave_duration() -> float:
+	return wave_duration
+
+func increase_wave_duration() -> void:
+	wave_duration += wave_duration_increment
+	wave_duration = min(wave_duration, maximum_wave_duration)
+
+func get_spawn_interval() -> float:
+	return spawn_interval
+	
+func decrease_spawn_interval() -> void:
+	spawn_interval -= spawn_interval_reduction
+	spawn_interval = max(spawn_interval, minimum_spawn_interval)
+
+func duplicate_with_waves() -> LevelConfig:
+	var copy: LevelConfig = self.duplicate(true) as LevelConfig
+	copy.wave_resources = []
+
+	for wave in wave_resources:
+		if wave != null:
+			copy.wave_resources.append(wave.duplicate(true) as WaveConfig)
+
+	return copy 
