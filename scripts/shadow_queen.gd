@@ -16,6 +16,8 @@ var current_direction: Vector2i
 
 func setup(game_reference: Node, cell: Vector2i) -> void:
 	type = "ShadowQueen"
+	max_hp = 9
+	hp = max_hp
 	game = game_reference
 	current_cell = cell
 	global_position = game.board.cell_to_world(cell)

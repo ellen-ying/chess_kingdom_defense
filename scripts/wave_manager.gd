@@ -10,7 +10,7 @@ signal wave_started
 
 @export_category("Debug")
 
-@export var debug_mode: bool = true
+@export var debug_mode: bool = false
 @export_range(1, 100, 1)
 var debug_start_wave: int = 1
 
@@ -128,18 +128,17 @@ func get_wave_number() -> int:
 		
 	return current_wave_index + 1
 
-func _create_generated_wave(wave_number: int) -> WaveConfig:
+func _create_generated_wave(_wave_number: int) -> WaveConfig:
 	var wave := WaveConfig.new()
-	var spawn_interval = max(
-		level_config.minimum_spawn_interval,
-		level_config.base_spawn_interval
-		- level_config.spawn_interval_reduction_per_wave * (wave_number - 1)
-	)
 	wave.configure_wave(
-		level_config.wave_duration,
-		spawn_interval,
+		level_config.get_wave_duration(),
+		level_config.get_spawn_interval(),
 		level_config.allowed_enemy_pieces
 	)
+	# Advance the difficulty curve so the next generated wave is
+	# harder, mirroring how configure_level steps pre-built waves.
+	level_config.increase_wave_duration()
+	level_config.decrease_spawn_interval()
 	return wave
 	
 func _process(delta: float) -> void:
@@ -149,6 +148,11 @@ func _process(delta: float) -> void:
 	total_timer += delta
 		
 	if not spawning:
+		# Safety poll: wave completion must not depend solely on the
+		# enemy_changed signal. If the last enemy died before the wave
+		# duration expired, no signal would ever fire again and the
+		# wave (and the whole level) would stall forever.
+		_try_end_cleared_wave()
 		return
 
 	var wave := get_current_wave()
@@ -209,6 +213,10 @@ func get_spawn_cell(enemy_type: String) -> Vector2i:
 	return board.get_random_edge_cell()
 
 func notify_enemy_count_changed() -> void:
+	_try_end_cleared_wave()
+
+
+func _try_end_cleared_wave() -> void:
 	if not waiting_for_clear:
 		return
 

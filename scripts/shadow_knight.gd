@@ -18,6 +18,8 @@ const SPECIAL_DISTANCE_SQUARED := 5
 
 func setup(game_reference: Node, cell: Vector2i) -> void:
 	type = "ShadowKnight"
+	max_hp = 3
+	hp = max_hp
 	game = game_reference
 	current_cell = cell
 

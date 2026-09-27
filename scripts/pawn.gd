@@ -4,9 +4,13 @@ const FIRE_INTERVAL := 0.5
 
 const PAWN_ATTACK_OFFSET: Array[Vector2i] = [
 	Vector2i(-1, -1),
-	Vector2i(1, -1),
+	Vector2i(-1, 0),
 	Vector2i(-1, 1),
-	Vector2i(1, 1)
+	Vector2i(0, 1),
+	Vector2i(1, 1),
+	Vector2i(1, 0),
+	Vector2i(1, -1),
+	Vector2i(0, -1)
 ]
 
 const QUEEN_SCENE := preload("res://scenes/queen.tscn")
@@ -71,7 +75,7 @@ func find_closest_enemy():
 	var target_cell: Vector2i
 
 	# We check one square before two squares.
-	for distance in [1, 2]:
+	for distance in [1]:
 		for direction in PAWN_ATTACK_OFFSET:
 			target_cell = current_cell + direction * distance
 			

@@ -13,6 +13,8 @@ var king_cell: Vector2i
 
 func setup(game_reference: Node, cell: Vector2i) -> void:
 	type = "ShadowRook"
+	max_hp = 5
+	hp = max_hp
 	game = game_reference
 	current_cell = cell
 	global_position = game.board.cell_to_world(current_cell)

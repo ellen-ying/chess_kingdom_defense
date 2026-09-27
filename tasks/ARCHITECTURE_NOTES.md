@@ -105,7 +105,7 @@ Hub screens are separate `Control` scenes (`title_screen`, `home_office`, `level
 ## Known gaps and risks
 
 - **README is stale**: it still describes the Rook-only sandbox with no shop/currency/waves and P/N/B/R/Q piece-switching; the game now has levels, a hub, meta progression, and telemetry.
-- **Debug defaults ship on**: `WaveManager.debug_mode` is exported as `true`, so Z/X/C wave jumps are live in normal builds; `debug_start_wave` is also honored in `setup`.
+- **Debug keys off by default**: `WaveManager.debug_mode` now defaults to `false`, so Z/X/C wave jumps only work when enabled in the editor; `debug_start_wave` is still honored in `setup`. (The Z/X/C paths set `spawning`/`waiting_for_clear` to false and can leave a wave in limbo — re-enable only for debugging.)
 - **Legacy `EnemyManager` auto-spawn path still exists** but is dormant: `auto_spawn_enemies` defaults to `false`, `main.tscn` no longer overrides it or connects `SpawnTimer.timeout`, and `spawn_enemy()` there does not log to GameLogger or mark bestiary encounters. Levels rely exclusively on `WaveManager`; the legacy node could be deleted after confirmation.
 - `take_damage` now requires a `source_piece: String` argument on every enemy; any future enemy script must implement the new signature (status-effect tick too).
 - `RunRewardManager` conversion is unconditionally 20% (`RUN_TO_OFFICE_RATE`); no upgrade path modifies it yet.

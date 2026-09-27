@@ -16,11 +16,11 @@ extends Resource
 @export var wave_resources: Array[WaveConfig] = []
 
 @export_category("Difficulty Curve")
-@export var base_wave_duration := 15.0
+@export var base_wave_duration := 20.0
 @export var wave_duration_increment := 10.0
 @export var maximum_wave_duration := 100.0
-@export var base_spawn_interval := 5.0
-@export var spawn_interval_reduction := 0.5
+@export var base_spawn_interval := 8.0
+@export var spawn_interval_reduction := 1.0
 @export var minimum_spawn_interval := 1.0
 
 var wave_duration
