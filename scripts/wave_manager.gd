@@ -67,7 +67,12 @@ func setup(
 	if starting_wave < 1:
 		starting_wave = 1
 
-	starting_wave = min(starting_wave, waves.size())
+	# Only clamp against the wave list when one exists: infinite
+	# levels (Final Stand) begin with no pre-built waves and grow
+	# on demand, so clamping to waves.size() here would zero the
+	# start wave and no wave would ever begin.
+	if waves.size() > 0:
+		starting_wave = min(starting_wave, waves.size())
 
 	current_wave_index = starting_wave - 2
 

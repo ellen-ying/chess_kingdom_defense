@@ -71,9 +71,13 @@ func _ready() -> void:
 	placement_controller.setup(self, board, piece_parent)
 	shop_ui.setup(placement_controller)
 	wave_manager.configure_level(level_config)
-	wave_manager.setup(self, board, wave_banner)
+	# Connect the wave signals BEFORE setup(): setup() starts the
+	# first wave immediately, so signals emitted during setup (the
+	# first wave_started, or a premature level_completed) must
+	# already have listeners.
 	wave_manager.level_completed.connect(_on_level_completed)
 	wave_manager.wave_started.connect(update_hud)
+	wave_manager.setup(self, board, wave_banner)
 
 	CurrencyManager.currency_changed.connect(_on_currency_changed)
 
@@ -167,14 +171,20 @@ func enemy_reached_king(enemy: Node) -> void:
 		if enemy.get_parent():
 			enemy.get_parent().remove_child(enemy)
 		enemy.queue_free()
-		
-	enemy_changed.emit()
-	update_hud()
 
+	# The loss must be decided BEFORE enemy_changed is emitted:
+	# that signal lets the WaveManager end the final wave and
+	# complete the level synchronously, which previously won the
+	# race against the lives check and logged an all-lives-lost
+	# run as WIN (running _finish_run twice).
 	if lives <= 0:
 		outcome = "LOSE"
 		waves_survived = wave_manager.current_wave_index
 		end_game()
+		return
+
+	enemy_changed.emit()
+	update_hud()
 
 
 func end_game() -> void:
@@ -184,6 +194,18 @@ func end_game() -> void:
 
 	update_hud()
 	_finish_run()
+
+
+## Ends the run early with an explicit result label. Used ONLY by the
+## AutoplayBot autoload for headless auto-play (wave cap / hard timeout);
+## it must NEVER be called from normal gameplay logic.
+func end_run_with_result(result: String) -> void:
+	if game_over:
+		return
+
+	outcome = result
+	waves_survived = wave_manager.current_wave_index
+	end_game()
 
 
 func _on_level_completed() -> void:

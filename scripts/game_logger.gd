@@ -362,6 +362,13 @@ func log_material_earned(
 	)
 
 
+## Generic event hook for auxiliary systems (e.g. AutoplayBot). Fields
+## appear fully in JSONL; only fields matching known CSV columns are
+## also written to CSV.
+func log_bot_event(event_type: String, fields: Dictionary = {}) -> void:
+	_log_event(event_type, fields)
+
+
 # ============================================================
 # GENERIC EVENT LOGGER
 # ============================================================

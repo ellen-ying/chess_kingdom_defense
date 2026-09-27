@@ -105,10 +105,20 @@ Hub screens are separate `Control` scenes (`title_screen`, `home_office`, `level
 ## Known gaps and risks
 
 - **README is stale**: it still describes the Rook-only sandbox with no shop/currency/waves and P/N/B/R/Q piece-switching; the game now has levels, a hub, meta progression, and telemetry.
-- **Pawn promotion test hook**: `pawn.gd::_process` promotes itself into a Queen whenever `wave_manager.current_wave_index >= 4`. This runs for every Pawn every frame and looks like leftover testing scaffolding, not a designed promotion feature.
 - **Debug defaults ship on**: `WaveManager.debug_mode` is exported as `true`, so Z/X/C wave jumps are live in normal builds; `debug_start_wave` is also honored in `setup`.
 - **Legacy `EnemyManager` auto-spawn path still exists** but is dormant: `auto_spawn_enemies` defaults to `false`, `main.tscn` no longer overrides it or connects `SpawnTimer.timeout`, and `spawn_enemy()` there does not log to GameLogger or mark bestiary encounters. Levels rely exclusively on `WaveManager`; the legacy node could be deleted after confirmation.
 - `take_damage` now requires a `source_piece: String` argument on every enemy; any future enemy script must implement the new signature (status-effect tick too).
 - `RunRewardManager` conversion is unconditionally 20% (`RUN_TO_OFFICE_RATE`); no upgrade path modifies it yet.
 - Kill rewards are still hard-coded per enemy script (`CurrencyManager.get_piece_value(...)`), so reward balance changes touch five enemy files rather than one table.
+
+## AutoplayBot (headless auto-play, additive)
+
+- `AutoplayBot` (`scripts/autoplay_bot.gd`) is a **dormant autoload** for automated headless data generation. It activates only when (a) recognized auto-play arguments appear after `--` on the command line AND (b) the display server is headless. In normal play it does nothing (it disables its own `_process` at startup).
+- It drives the game exclusively through the human input paths' underlying functions: `ShopUI.begin_tray_pointer()` → `PlacementController.place_piece()` (literal mouse-event replay is impossible in `--headless`). It never mutates gameplay state directly.
+- CLI contract (all optional, `--key=value`): `--strategy` (`cheapest_first` | `balanced` | `rush_strongest` | `random`, default `balanced`), `--level` (any id in `LevelProgressManager.LEVEL_CONFIGS`, default `level_1`), `--runs` (default 1), `--decision-interval` (game seconds, default 0.5), `--timeout-seconds` (real seconds, default 600), `--final-stand-cap` (default 30), `--rush-gap` (default 3), `--seed` (default -1 = unseeded), `--time-scale` (default 16.0, runtime-only speed-up). After the final run the process calls `get_tree().quit()`.
+- Placement uses a line-aware threat heuristic: a threat map (enemy cells weight 3, sign-step corridors toward the King weight 1) scored per candidate cell via the defender's own pure `get_attack_tiles_for_cell()` geometry (so Bishop diagonals / Rook rays / Queen lines differ per cell), with a `coverage_fallback` (King's Chebyshev 1–2 ring) between waves. The heuristic used is logged per placement.
+- Bot events go through the additive `GameLogger.log_bot_event()` helper: `bot_run_config` (run start: strategy/level/seed/time-scale/...), `bot_placed`, `bot_idle`, `run_timeout`, `bot_run_capped`. **JSONL is authoritative for bot events** (CSV only fills matching columns).
+- `Main.end_run_with_result(result)` (`main.gd`) is the **only** gameplay-file hook: it force-ends a run with an explicit outcome label (`"TIMEOUT"`, or `"WIN"` for wave-capped Final Stand runs, distinguished by `bot_run_capped`). It is for the bot only and must never be called from normal gameplay logic.
+- `tools/run_autoplay_batch.sh` runs all 4 strategies × 6 levels sequentially (env-configurable: `GODOT_BIN`, `RUNS`, `TIME_SCALE`, `TIMEOUT_SECONDS`, `FINAL_STAND_CAP`, `DECISION_INTERVAL`, `SEED`, `CAPTURE_DIR`), backs up/restores `user://save.cfg` around the batch (the game creates a fresh `save.cfg` if none exists), and archives only each combination's new logs into `data-captures/` with `strategy_level_` prefixed filenames (`data-captures/` is gitignored).
+
 

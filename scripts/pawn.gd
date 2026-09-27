@@ -43,12 +43,12 @@ func _process(delta: float) -> void:
 	if game == null or game.game_over:
 		return
 		
-	if game.wave_manager.current_wave_index >= 4:
-		var new_queen_cell = current_cell
-		game.piece_destroyed(self)
-		var new_queen = QUEEN_SCENE.instantiate()
-		game.piece_parent.add_child(new_queen)
-		new_queen.setup(game, current_cell)
+	#if game.wave_manager.current_wave_index >= 4:
+		#var new_queen_cell = current_cell
+		#game.piece_destroyed(self)
+		#var new_queen = QUEEN_SCENE.instantiate()
+		#game.piece_parent.add_child(new_queen)
+		#new_queen.setup(game, current_cell)
 		
 
 	fire_timer += delta
