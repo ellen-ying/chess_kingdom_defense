@@ -49,6 +49,12 @@ func _process(_delta: float) -> void:
 	if cell == game.king.current_cell:
 		return
 
+	# Player pieces must stay within the central placement zone —
+	# the same zone new placements are restricted to (full-bleed
+	# layout brief).
+	if not board.is_placeable_cell(cell):
+		return
+
 	dragging_piece.set_cell(cell)
 	last_drag_cell = cell
 

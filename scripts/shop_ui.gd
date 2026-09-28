@@ -41,7 +41,7 @@ const CATALOG: Dictionary[String, Dictionary] = {
 	}
 }
 
-@onready var slots_container: HBoxContainer = $Slots
+@onready var slots_container: VBoxContainer = $Slots
 
 var placement_controller: Node
 var slots: Dictionary = {}
@@ -123,7 +123,7 @@ func show_currency_reward(
 
 	var target_position = (
 		get_parent()
-		.get_node("CurrencyLabel")
+		.get_node("HUDBar/HBox/CurrencyLabel")
 		.get_global_rect()
 		.get_center()
 	)

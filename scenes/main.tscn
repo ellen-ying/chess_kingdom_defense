@@ -15,10 +15,21 @@
 [ext_resource type="Resource" uid="uid://duu16xkk3llb4" path="res://resources/waves/wave_3.tres" id="11_dp3eg"]
 [ext_resource type="Resource" uid="uid://66u1b2tpl3c7" path="res://resources/waves/wave_4.tres" id="12_0ld40"]
 [ext_resource type="Resource" uid="uid://d0ey0vwpkfdd6" path="res://resources/waves/wave_5.tres" id="13_gqmmt"]
+[ext_resource type="Script" uid="uid://mjwnnsoy30oy" path="res://scripts/screen_layout.gd" id="14_layout"]
+[ext_resource type="PackedScene" path="res://scenes/pause_overlay.tscn" id="15_pause"]
 
 [node name="Main" type="Node2D" unique_id=1813833294]
 script = ExtResource("1_jyhfs")
 test_enemy_mode = "Rook"
+
+[node name="Background" type="ColorRect" parent="." unique_id=1401302073]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.2, 0.145, 0.102, 1)
 
 [node name="Board" type="Node2D" parent="." unique_id=1994042262]
 script = ExtResource("1_o5qli")
@@ -49,51 +60,52 @@ waves = Array[ExtResource("8_jkv2x")]([ExtResource("9_jbj1t"), ExtResource("10_m
 [node name="PlacementController" type="Node2D" parent="." unique_id=1792770738]
 script = ExtResource("7_o6xl0")
 
-[node name="UILayer" type="Control" parent="." unique_id=26452059]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="ScreenLayout" type="Node" parent="." unique_id=1960001843]
+script = ExtResource("14_layout")
 
-[node name="StatusLabel" type="Label" parent="UILayer" unique_id=110542390]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="UILayer" type="CanvasLayer" parent="." unique_id=635875709]
 
-[node name="GameOverLabel" type="Label" parent="UILayer" unique_id=173903754]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="HUDBar" type="PanelContainer" parent="UILayer" unique_id=1442463801]
+offset_right = 1152.0
+offset_bottom = 54.0
 
-[node name="CurrencyLabel" type="Label" parent="UILayer" unique_id=1105622849]
-layout_mode = 1
-anchors_preset = 13
-anchor_left = 0.5
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = 930.0
-offset_right = 1086.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="HBox" type="HBoxContainer" parent="UILayer/HUDBar" unique_id=235340779]
+layout_mode = 2
+theme_override_constants/separation = 32
+
+[node name="MenuButton" type="Button" parent="UILayer/HUDBar/HBox" unique_id=1703655346]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 24
+text = "☰"
+
+[node name="LivesLabel" type="Label" parent="UILayer/HUDBar/HBox" unique_id=257544581]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "KING  3 / 3"
+
+[node name="WaveLabel" type="Label" parent="UILayer/HUDBar/HBox" unique_id=294583024]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "WAVE  1"
+
+[node name="Spacer" type="Control" parent="UILayer/HUDBar/HBox" unique_id=1637082961]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CurrencyLabel" type="Label" parent="UILayer/HUDBar/HBox" unique_id=1469399552]
+layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "MATERIALS: 5"
-horizontal_alignment = 2
 
 [node name="ShopUI" parent="UILayer" unique_id=1807039670 instance=ExtResource("8_tipki")]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 556.0
-offset_top = 570.0
-offset_right = 556.0
-offset_bottom = 570.0
-grow_vertical = 2
+offset_left = 952.0
+offset_top = 54.0
+offset_right = 1152.0
+offset_bottom = 648.0
 
 [node name="FloatingRewards" type="Control" parent="UILayer" unique_id=1374242408]
-layout_mode = 1
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -103,20 +115,21 @@ mouse_filter = 2
 
 [node name="WaveBanner" type="Label" parent="UILayer" unique_id=117336829]
 visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 476.0
-offset_top = 274.0
-offset_right = 636.0
-offset_bottom = 335.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_right = 160.0
+offset_bottom = 61.0
 pivot_offset = Vector2(80, 30)
 theme_override_font_sizes/font_size = 44
 text = "WAVE 1"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="GameOverLabel" type="Label" parent="UILayer" unique_id=173903754]
+visible = false
+offset_right = 300.0
+offset_bottom = 80.0
+theme_override_font_sizes/font_size = 44
+text = "GAME OVER"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PauseOverlay" parent="UILayer" unique_id=186884295 instance=ExtResource("15_pause")]

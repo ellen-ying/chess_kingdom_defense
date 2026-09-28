@@ -40,12 +40,19 @@ signal enemy_changed
 @onready var piece_parent = $Pieces
 @onready var placement_controller = $PlacementController
 
+@onready var background: ColorRect = $Background
+@onready var ui_layer: CanvasLayer = $UILayer
 @onready var shop_ui = $UILayer/ShopUI
 
-@onready var status_label: Label = $UILayer/StatusLabel
-@onready var currency_label: Label = $UILayer/CurrencyLabel
+@onready var screen_layout: Node = $ScreenLayout
+@onready var hud_bar: PanelContainer = $UILayer/HUDBar
+@onready var menu_button: Button = $UILayer/HUDBar/HBox/MenuButton
+@onready var lives_label: Label = $UILayer/HUDBar/HBox/LivesLabel
+@onready var wave_label: Label = $UILayer/HUDBar/HBox/WaveLabel
+@onready var currency_label: Label = $UILayer/HUDBar/HBox/CurrencyLabel
 @onready var game_over_label: Label = $UILayer/GameOverLabel
 @onready var wave_banner: Label = $UILayer/WaveBanner
+@onready var pause_overlay: Control = $UILayer/PauseOverlay
 
 
 func _ready() -> void:
@@ -85,14 +92,39 @@ func _ready() -> void:
 
 	game_over_label.visible = false
 
+	menu_button.pressed.connect(_on_menu_button_pressed)
+	pause_overlay.setup(self)
+
 	update_hud()
+
+	# First real layout pass. Must run after the King and all
+	# @onready references exist; ScreenLayout re-applies this on
+	# every viewport resize (window size / aspect / orientation).
+	screen_layout.apply_layout()
 
 
 func update_hud() -> void:
-	status_label.text = (
-		"KING  %d / %d     WAVE  %d"
-		% [lives, max_lives, wave_manager.current_wave_index + 1]
+	# Same display formats as the old combined StatusLabel (task Q6).
+	lives_label.text = (
+		"KING  %d / %d"
+		% [lives, max_lives]
 	)
+
+	wave_label.text = (
+		"WAVE  %d"
+		% [wave_manager.current_wave_index + 1]
+	)
+
+
+func _on_menu_button_pressed() -> void:
+	pause_overlay.open()
+
+
+func _exit_tree() -> void:
+	# Defensive: if the scene changes while the player-initiated
+	# pause overlay is open, the next scene must not inherit a
+	# paused tree.
+	get_tree().paused = false
 
 
 func find_enemy_at_cell(cell: Vector2i):
@@ -196,9 +228,10 @@ func end_game() -> void:
 	_finish_run()
 
 
-## Ends the run early with an explicit result label. Used ONLY by the
-## AutoplayBot autoload for headless auto-play (wave cap / hard timeout);
-## it must NEVER be called from normal gameplay logic.
+## Ends the run early with an explicit result label. Used by the
+## AutoplayBot autoload (wave cap / hard timeout) and by the pause
+## menu's "Return to Home Office" (outcome "ABANDONED"); it must
+## NEVER be called from normal win/lose gameplay logic.
 func end_run_with_result(result: String) -> void:
 	if game_over:
 		return

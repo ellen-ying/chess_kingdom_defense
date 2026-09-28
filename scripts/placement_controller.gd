@@ -121,6 +121,12 @@ func is_valid_placement_cell(cell: Vector2i) -> bool:
 	if cell == game.king.current_cell:
 		return false
 
+	# Player pieces may only be placed in the central 9-column zone;
+	# the outer columns are enemy-traversal-only territory (full-bleed
+	# layout brief).
+	if not board.is_placeable_cell(cell):
+		return false
+
 	# Only player pieces block placement.
 	for child in pieces_parent.get_children():
 		if not child is BasePiece:
@@ -255,12 +261,12 @@ func _draw() -> void:
 	var tile_rect := Rect2(
 		board.cell_to_world(hovered_cell)
 		- Vector2(
-			board.TILE_SIZE / 2.0,
-			board.TILE_SIZE / 2.0
+			board.tile_size / 2.0,
+			board.tile_size / 2.0
 		),
 		Vector2(
-			board.TILE_SIZE,
-			board.TILE_SIZE
+			board.tile_size,
+			board.tile_size
 		)
 	)
 
@@ -293,12 +299,12 @@ func _draw() -> void:
 		var attack_rect := Rect2(
 			board.cell_to_world(attack_cell)
 			- Vector2(
-				board.TILE_SIZE / 2.0,
-				board.TILE_SIZE / 2.0
+				board.tile_size / 2.0,
+				board.tile_size / 2.0
 			),
 			Vector2(
-				board.TILE_SIZE,
-				board.TILE_SIZE
+				board.tile_size,
+				board.tile_size
 			)
 		)
 
