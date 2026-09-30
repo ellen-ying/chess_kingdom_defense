@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="SkillDefinition" format=3 uid="uid://cbfye8mvr4e41"]
+
+[ext_resource type="Script" uid="uid://eql1dg6i6hhr" path="res://scripts/skill_definition.gd" id="1_hc823"]
+
+[resource]
+script = ExtResource("1_hc823")
+skill_id = "pawn_push"
+display_name = "Pawn Push"
+description = "Every extends its attacking range from one to two."
+cost = 200
+effect_value = 1.0
+metadata/_custom_type_script = "uid://eql1dg6i6hhr"

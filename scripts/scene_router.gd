@@ -36,7 +36,8 @@ func go_learning_openings() -> void:
 
 
 func start_level(level_id: String) -> void:
-	selected_level_id = level_id
+	if level_id != "_current":
+		selected_level_id = level_id
 	get_tree().change_scene_to_file(GAMEPLAY_SCENE)
 
 

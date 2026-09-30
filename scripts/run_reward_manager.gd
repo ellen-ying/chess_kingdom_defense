@@ -4,7 +4,7 @@ extends Node
 ## Material. It observes earned currency rather than the current balance, so
 ## spending during a run cannot reduce the conversion reward.
 
-const RUN_TO_OFFICE_RATE := 0.20
+const RUN_TO_OFFICE_RATE := 1.0
 
 var run_material_earned := 0
 var _run_active := false
@@ -27,7 +27,7 @@ func finish_run() -> int:
 
 	_run_finished = true
 	_run_active = false
-	var office_material_gained := floori(run_material_earned * RUN_TO_OFFICE_RATE)
+	var office_material_gained = calculate_office_material_gained()
 	OfficeMaterialManager.add_office_material(office_material_gained)
 	return office_material_gained
 
@@ -35,3 +35,9 @@ func finish_run() -> int:
 func _on_currency_earned(amount: int) -> void:
 	if _run_active and amount > 0:
 		run_material_earned += amount
+		
+func calculate_office_material_gained() -> int:
+	var office_material_gained = max(
+		floori((run_material_earned - CurrencyManager.currency_spent)), 0
+	)  * RUN_TO_OFFICE_RATE
+	return office_material_gained

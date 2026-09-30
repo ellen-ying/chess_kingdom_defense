@@ -302,7 +302,7 @@ func _check_final_stand_cap() -> void:
 	if config["level"] != "final_stand":
 		return
 
-	if game.wave_manager.get_wave_number() < int(config["final-stand-cap"]):
+	if game.wave_manager.get_current_wave_number() < int(config["final-stand-cap"]):
 		return
 
 	_run_forced_end_done = true
@@ -310,7 +310,7 @@ func _check_final_stand_cap() -> void:
 	GameLogger.log_bot_event(
 		"bot_run_capped",
 		{
-			"wave_number": game.wave_manager.get_wave_number()
+			"wave_number": game.wave_manager.get_current_wave_number()
 		}
 	)
 
@@ -336,7 +336,7 @@ func _check_run_timeout() -> void:
 		"run_timeout",
 		{
 			"seconds": float(config["timeout-seconds"]),
-			"wave_number": game.wave_manager.get_wave_number(),
+			"wave_number": game.wave_manager.get_current_wave_number(),
 			"material_remaining": CurrencyManager.current_amount
 		}
 	)
@@ -393,7 +393,7 @@ func _act() -> void:
 			"piece_type": piece_type,
 			"tile_col": cell.x,
 			"tile_row": cell.y,
-			"wave_number": game.wave_manager.get_wave_number(),
+			"wave_number": game.wave_manager.get_current_wave_number(),
 			"heuristic": _last_heuristic
 		}
 	)

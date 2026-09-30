@@ -10,8 +10,9 @@ const PIECE_VALUES: Dictionary = {
 	"Rook": 5,
 	"Queen": 9
 }
+const INITIAL_AMOUNT = 3
 
-var current_amount: int = 5
+var current_amount: int = 3
 var currency_spent: int = 0
 var _earned_material_remainder := 0.0
 
@@ -58,6 +59,6 @@ func get_current_amount() -> int:
 	return current_amount
 
 func reset_for_new_run() -> void:
-	current_amount = 5
+	current_amount = INITIAL_AMOUNT
 	_earned_material_remainder = 0.0
 	currency_changed.emit(current_amount)

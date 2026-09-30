@@ -107,7 +107,6 @@ func apply_layout() -> void:
 	)
 
 	_recenter_over_play_area(game.wave_banner, play_area_origin, play_area_size)
-	_recenter_over_play_area(game.game_over_label, play_area_origin, play_area_size)
 
 	_reposition_board_entities(game, board)
 

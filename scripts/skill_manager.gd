@@ -9,10 +9,11 @@ const QUEEN_AURA_INTERVAL_MULTIPLIER := 0.85
 
 const DEFINITIONS: Array[SkillDefinition] = [
 	preload("res://resources/skills/royal_reserve.tres"),
+	preload("res://resources/skills/pawn_push.tres"),
 	preload("res://resources/skills/material_ledger.tres"),
 	preload("res://resources/skills/pawn_phalanx.tres"),
-	preload("res://resources/skills/knight_tempo.tres"),
 	preload("res://resources/skills/bishops_bind.tres"),
+	preload("res://resources/skills/knight_tempo.tres"),
 	preload("res://resources/skills/rook_rebuff.tres"),
 	preload("res://resources/skills/queens_command.tres"),
 	preload("res://resources/skills/royal_tempo.tres")
@@ -86,16 +87,15 @@ func get_attack_interval(base_interval: float, piece: BasePiece, game: Node) -> 
 	return base_interval * multiplier
 
 
-func apply_projectile_effects(source_piece: BasePiece, target: BaseEnemy) -> void:
-	if source_piece == null or target == null:
+func apply_projectile_effects(source_piece_type: String, target: BaseEnemy) -> void:
+	if source_piece_type == null or target == null:
 		return
 
-	var script_path = source_piece.get_script().resource_path
-	if script_path.ends_with("bishop.gd"):
+	if source_piece_type == "Bishop":
 		var slow_percent := get_effect_value(SkillDefinition.EffectType.BISHOP_SLOW_PERCENT)
 		if slow_percent > 0.0:
 			target.apply_slow(1.0 - slow_percent, 1.5)
-	elif script_path.ends_with("rook.gd"):
+	elif source_piece_type == "Rook":
 		var pushback_distance := int(get_effect_value(SkillDefinition.EffectType.ROOK_PUSHBACK_DISTANCE))
 		if pushback_distance > 0:
 			target.push_away_from_king(pushback_distance)

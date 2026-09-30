@@ -5,7 +5,7 @@ const HIT_DISTANCE := 8.0
 
 var target: Node
 var damage := 1
-var source_piece: BasePiece
+var source_piece_type: String
 
 var shoot_direction : Vector2
 
@@ -17,7 +17,7 @@ func setup(
 ) -> void:
 	global_position = start_position
 	target = target_reference
-	source_piece = source_piece_reference
+	source_piece_type = source_piece_reference.type
 	
 	if target == null or not is_instance_valid(target):
 		queue_free()
@@ -45,9 +45,9 @@ func _process(delta: float) -> void:
 	var distance = current_direction.length()
 
 	if distance <= HIT_DISTANCE:
-		target.take_damage(damage, source_piece.type)
+		target.take_damage(damage, source_piece_type)
 		if target is BaseEnemy:
-			SkillManager.apply_projectile_effects(source_piece, target)
+			SkillManager.apply_projectile_effects(source_piece_type, target)
 		queue_free()
 		return
 

@@ -21,6 +21,13 @@ func add_piece(piece_type: String, amount: int = 1) -> void:
 
 	inventory[piece_type] = get_piece_count(piece_type) + amount
 	inventory_changed.emit(piece_type, inventory[piece_type])
+	
+func remove_piece(piece_type: String, amount: int = -1) -> void:
+	if amount >= 0:
+		return
+
+	inventory[piece_type] = get_piece_count(piece_type) + amount
+	inventory_changed.emit(piece_type, inventory[piece_type])
 
 
 func get_piece_count(piece_type: String) -> int:

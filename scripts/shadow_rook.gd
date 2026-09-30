@@ -42,6 +42,8 @@ func _process(delta: float) -> void:
 		move_timer = 0.0
 		move_toward_king()
 		
+	take_piece_at_cell(game)
+		
 func take_damage(amount: int, source_piece: String) -> void:
 	hp -= amount
 
@@ -132,8 +134,4 @@ func _draw() -> void:
 		2.0
 	)
 
-	for i in range(max_hp):
-		draw_rect(
-			Rect2(-15 + i * 10, 26, 7, 4),
-			Color("#C62828") if i < hp else Color("#444444")
-		)
+	draw_hp()

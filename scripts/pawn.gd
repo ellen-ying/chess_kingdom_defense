@@ -17,17 +17,23 @@ const QUEEN_SCENE := preload("res://scenes/queen.tscn")
 
 var game: Node
 var current_cell: Vector2i
+var attack_range: Array = [1]
 
 var dragging := false
 var fire_timer := 0.0
 
+func _ready() -> void:
+	if SkillManager.has_skill("pawn_push"):
+		attack_range = [1, 2]
+	else:
+		attack_range = [1]
 
 func setup(game_reference: Node, cell: Vector2i) -> void:
 	type = "Pawn"
 	game = game_reference
 	current_cell = cell
-
 	global_position = game.board.cell_to_world(current_cell)
+	
 
 	queue_redraw()
 
@@ -75,7 +81,7 @@ func find_closest_enemy():
 	var target_cell: Vector2i
 
 	# We check one square before two squares.
-	for distance in [1]:
+	for distance in attack_range:
 		for direction in PAWN_ATTACK_OFFSET:
 			target_cell = current_cell + direction * distance
 			
@@ -95,7 +101,7 @@ func get_attack_tiles_for_cell(
 ) -> Array[Vector2i]:
 	var result: Array[Vector2i] = []
 
-	for distance in [1, 2]:
+	for distance in attack_range:
 		for direction in PAWN_ATTACK_OFFSET:
 			var cell = origin_cell + direction * distance
 

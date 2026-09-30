@@ -1,10 +1,12 @@
-[gd_resource type="Resource" script_class="SkillDefinition" format=3]
-[ext_resource type="Script" path="res://scripts/skill_definition.gd" id="1"]
+[gd_resource type="Resource" script_class="SkillDefinition" format=3 uid="uid://ck5w60ktphv2a"]
+
+[ext_resource type="Script" uid="uid://eql1dg6i6hhr" path="res://scripts/skill_definition.gd" id="1"]
+
 [resource]
 script = ExtResource("1")
 skill_id = "bishops_bind"
 display_name = "Bishop's Bind"
 description = "Bishop hits slow an enemy's movement by 40% for 1.5 seconds."
-cost = 7
-effect_type = 4
+cost = 5000
+effect_type = 5
 effect_value = 0.4

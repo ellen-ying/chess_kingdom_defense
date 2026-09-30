@@ -21,6 +21,7 @@ const BASE_LIVES := 3
 
 var lives := BASE_LIVES
 var max_lives := BASE_LIVES
+var max_waves: int
 var game_over := false
 var outcome = null
 var waves_survived = -1
@@ -50,9 +51,9 @@ signal enemy_changed
 @onready var lives_label: Label = $UILayer/HUDBar/HBox/LivesLabel
 @onready var wave_label: Label = $UILayer/HUDBar/HBox/WaveLabel
 @onready var currency_label: Label = $UILayer/HUDBar/HBox/CurrencyLabel
-@onready var game_over_label: Label = $UILayer/GameOverLabel
 @onready var wave_banner: Label = $UILayer/WaveBanner
 @onready var pause_overlay: Control = $UILayer/PauseOverlay
+@onready var result_overlay: Control = $UILayer/ResultOverlay
 
 
 func _ready() -> void:
@@ -85,15 +86,16 @@ func _ready() -> void:
 	wave_manager.level_completed.connect(_on_level_completed)
 	wave_manager.wave_started.connect(update_hud)
 	wave_manager.setup(self, board, wave_banner)
+	max_waves = wave_manager.get_total_wave_number()
 
 	CurrencyManager.currency_changed.connect(_on_currency_changed)
 
 	_on_currency_changed(CurrencyManager.current_amount)
 
-	game_over_label.visible = false
 
 	menu_button.pressed.connect(_on_menu_button_pressed)
 	pause_overlay.setup(self)
+	result_overlay.setup(self)
 
 	update_hud()
 
@@ -111,8 +113,8 @@ func update_hud() -> void:
 	)
 
 	wave_label.text = (
-		"WAVE  %d"
-		% [wave_manager.current_wave_index + 1]
+		"WAVE  %d / %d"
+		% [wave_manager.get_current_wave_number(), max_waves]
 	)
 
 
@@ -126,6 +128,14 @@ func _exit_tree() -> void:
 	# paused tree.
 	get_tree().paused = false
 
+func find_piece_at_cell(cell: Vector2i):
+	var result = null
+	
+	for piece in piece_parent.get_children():
+		if piece.current_cell == cell:
+			result = piece
+
+	return result
 
 func find_enemy_at_cell(cell: Vector2i):
 	var enemies_here := get_enemies_at_cell(cell)
@@ -167,6 +177,7 @@ func spawn_projectile(piece: Node2D, target: Node) -> void:
 
 func piece_destroyed(piece: Node) -> void:
 	if is_instance_valid(piece):
+		InventoryManager.remove_piece(piece.type)
 		if piece.get_parent():
 			piece.get_parent().remove_child(piece)
 		piece.queue_free()
@@ -177,7 +188,7 @@ func enemy_destroyed(enemy: Node, source_piece: String) -> void:
 		var type = enemy.type
 		GameLogger.log_enemy_killed(
 			type, source_piece,
-			wave_manager.get_wave_number(), enemy.live_timer
+			wave_manager.get_current_wave_number(), enemy.live_timer
 		)
 		GameLogger.log_material_earned(
 			CurrencyManager.get_piece_value(type.replace("Shadow","")), type
@@ -194,11 +205,11 @@ func enemy_reached_king(enemy: Node) -> void:
 		return
 
 	lives -= 1
-	GameLogger.log_king_life_lost(lives, wave_manager.get_wave_number())
+	GameLogger.log_king_life_lost(lives, wave_manager.get_current_wave_number())
 
 	if is_instance_valid(enemy):
 		GameLogger.log_enemy_reached_king(
-			enemy.type,	wave_manager.get_wave_number()
+			enemy.type,	wave_manager.get_current_wave_number()
 		)
 		if enemy.get_parent():
 			enemy.get_parent().remove_child(enemy)
@@ -213,6 +224,7 @@ func enemy_reached_king(enemy: Node) -> void:
 		outcome = "LOSE"
 		waves_survived = wave_manager.current_wave_index
 		end_game()
+		result_overlay.open(outcome)
 		return
 
 	enemy_changed.emit()
@@ -221,8 +233,6 @@ func enemy_reached_king(enemy: Node) -> void:
 
 func end_game() -> void:
 	game_over = true
-
-	game_over_label.visible = true
 
 	update_hud()
 	_finish_run()
@@ -239,6 +249,7 @@ func end_run_with_result(result: String) -> void:
 	outcome = result
 	waves_survived = wave_manager.current_wave_index
 	end_game()
+	SceneRouter.go_home_office()
 
 
 func _on_level_completed() -> void:
@@ -249,6 +260,7 @@ func _on_level_completed() -> void:
 	outcome = "WIN"
 	waves_survived = wave_manager.current_wave_index 
 	LevelProgressManager.complete_level(level_config.level_id)
+	result_overlay.open(outcome)
 	_finish_run()
 
 
@@ -258,7 +270,6 @@ func _finish_run() -> void:
 			wave_manager.get_waves_survived()
 		)
 	RunRewardManager.finish_run()
-	SceneRouter.go_home_office()
 	if ((not outcome) or waves_survived < 0):
 		push_error("Invalid end of run satistics.")
 	GameLogger.end_run(

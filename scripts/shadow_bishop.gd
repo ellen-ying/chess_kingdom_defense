@@ -38,6 +38,8 @@ func _process(delta: float) -> void:
 	if move_timer >= get_move_interval(MOVE_INTERVAL):
 		move_timer = 0.0
 		move_toward_king()
+		
+	take_piece_at_cell(game)
 
 func move_toward_king() -> void:
 	if abs(direction_to_king.x) == abs(direction_to_king.y):
@@ -126,9 +128,5 @@ func _draw() -> void:
 		Color("#AA3333"),
 		2.0
 	)
-
-	for i in range(max_hp):
-		draw_rect(
-			Rect2(-15 + i * 10, 26, 7, 4),
-			Color("#C62828") if i < hp else Color("#444444")
-		)
+	
+	draw_hp()

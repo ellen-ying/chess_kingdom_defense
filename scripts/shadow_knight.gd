@@ -39,7 +39,8 @@ func _process(delta: float) -> void:
 	if move_timer >= get_move_interval(MOVE_INTERVAL):
 		move_timer = 0.0
 		move_toward_king()
-
+	
+	take_piece_at_cell(game)
 
 func move_toward_king() -> void:
 	var king_cell: Vector2i = game.king.current_cell
@@ -179,19 +180,4 @@ func _draw() -> void:
 	)
 
 	# HP bar
-	for i in range(max_hp):
-		var hp_color := (
-			Color("#C62828")
-			if i < hp
-			else Color("#444444")
-		)
-
-		draw_rect(
-			Rect2(
-				-15 + i * 10,
-				26,
-				7,
-				4
-			),
-			hp_color
-		)
+	draw_hp()

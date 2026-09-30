@@ -2,6 +2,7 @@ class_name SkillDefinition
 extends Resource
 
 enum EffectType {
+	PAWN_ATTACK_RANGE,
 	KING_LIVES,
 	RUN_MATERIAL_MULTIPLIER,
 	PAWN_PHALANX_INTERVAL_MULTIPLIER,

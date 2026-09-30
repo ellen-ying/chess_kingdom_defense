@@ -4,6 +4,7 @@ func setup(game_reference: Node, cell: Vector2i) -> void:
 	type = "ShadowPawn"
 	max_hp = 2
 	hp = max_hp
+	hp_offset = max_hp * HP_BAR_LENGTH / 2
 	game = game_reference
 	current_cell = cell
 	global_position = game.board.cell_to_world(cell)
@@ -22,7 +23,8 @@ func _process(delta: float) -> void:
 	if move_timer >= get_move_interval(MOVE_INTERVAL):
 		move_timer = 0.0
 		move_toward_king()
-
+	
+	take_piece_at_cell(game)
 
 func move_toward_king() -> void:
 	var king_cell: Vector2i = game.king.current_cell
@@ -115,15 +117,4 @@ func _draw() -> void:
 	)
 
 	# HP indicator.
-	for i in range(max_hp):
-		var hp_color := Color("#C62828") if i < hp else Color("#444444")
-
-		draw_rect(
-			Rect2(
-				-15 + i * 10,
-				-29,
-				7,
-				4
-			),
-			hp_color
-		)
+	draw_hp()

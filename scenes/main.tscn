@@ -17,6 +17,7 @@
 [ext_resource type="Resource" uid="uid://d0ey0vwpkfdd6" path="res://resources/waves/wave_5.tres" id="13_gqmmt"]
 [ext_resource type="Script" uid="uid://mjwnnsoy30oy" path="res://scripts/screen_layout.gd" id="14_layout"]
 [ext_resource type="PackedScene" path="res://scenes/pause_overlay.tscn" id="15_pause"]
+[ext_resource type="PackedScene" uid="uid://b2fqhxk1w85wb" path="res://scenes/result_overlay.tscn" id="18_dp3eg"]
 
 [node name="Main" type="Node2D" unique_id=1813833294]
 script = ExtResource("1_jyhfs")
@@ -123,13 +124,8 @@ text = "WAVE 1"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="GameOverLabel" type="Label" parent="UILayer" unique_id=173903754]
-visible = false
-offset_right = 300.0
-offset_bottom = 80.0
-theme_override_font_sizes/font_size = 44
-text = "GAME OVER"
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="PauseOverlay" parent="UILayer" unique_id=186884295 instance=ExtResource("15_pause")]
+visible = false
+
+[node name="ResultOverlay" parent="UILayer" unique_id=1516154321 instance=ExtResource("18_dp3eg")]
+visible = false

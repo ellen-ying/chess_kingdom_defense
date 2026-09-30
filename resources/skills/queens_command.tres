@@ -1,10 +1,12 @@
-[gd_resource type="Resource" script_class="SkillDefinition" format=3]
-[ext_resource type="Script" path="res://scripts/skill_definition.gd" id="1"]
+[gd_resource type="Resource" script_class="SkillDefinition" format=3 uid="uid://nerr4lxwh28b"]
+
+[ext_resource type="Script" uid="uid://eql1dg6i6hhr" path="res://scripts/skill_definition.gd" id="1"]
+
 [resource]
 script = ExtResource("1")
 skill_id = "queens_command"
 display_name = "Queen's Command"
 description = "Defenders within three squares of a Queen attack 15% faster."
-cost = 10
-effect_type = 6
+cost = 10000
+effect_type = 7
 effect_value = 3.0

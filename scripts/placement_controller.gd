@@ -178,7 +178,7 @@ func place_piece(cell: Vector2i) -> void:
 	)
 	GameLogger.log_piece_placed(
 		active_piece_type, cell.x, cell.y,
-		game.wave_manager.get_wave_number()
+		game.wave_manager.get_current_wave_number()
 	)
 	pieces_parent.add_child(piece)
 	piece.setup(game, cell)

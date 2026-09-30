@@ -11,3 +11,5 @@ level_id = "level_2"
 display_name = "Level 2: Diagonal Pressure"
 allowed_enemy_pieces = Array[String](["Pawn", "Bishop"])
 wave_resources = Array[ExtResource("2_or7n4")]([ExtResource("3_rbwim"), ExtResource("3_rbwim"), ExtResource("4_f38rn"), ExtResource("4_f38rn")])
+base_wave_duration = 60.0
+spawn_interval_reduction = 2.0

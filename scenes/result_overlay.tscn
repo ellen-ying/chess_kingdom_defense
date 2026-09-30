@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://b2fqhxk1w85wb"]
+
+[ext_resource type="Script" uid="uid://c42ps0fxga8y3" path="res://scripts/result_overlay.gd" id="1_34faa"]
+
+[node name="ResultOverlay" type="Control" unique_id=1516154321]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_34faa")
+
+[node name="Dim" type="ColorRect" parent="." unique_id=1940869091]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.6)
+
+[node name="Menu" type="VBoxContainer" parent="." unique_id=90176782]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -134.5
+offset_top = -85.5
+offset_right = 134.5
+offset_bottom = 85.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
+
+[node name="ResultLabel" type="Label" parent="Menu" unique_id=1936930878]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "YOU WIN"
+horizontal_alignment = 1
+
+[node name="MaterialsLabel" type="Label" parent="Menu" unique_id=1496932579]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Materials earned: 5 points"
+horizontal_alignment = 1
+
+[node name="RestartButton" type="Button" parent="Menu" unique_id=889342744]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Restart"
+
+[node name="HomeOfficeButton" type="Button" parent="Menu" unique_id=2073321277]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Return to Home Office"

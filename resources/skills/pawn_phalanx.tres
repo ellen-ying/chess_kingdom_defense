@@ -1,10 +1,12 @@
-[gd_resource type="Resource" script_class="SkillDefinition" format=3]
-[ext_resource type="Script" path="res://scripts/skill_definition.gd" id="1"]
+[gd_resource type="Resource" script_class="SkillDefinition" format=3 uid="uid://b841d2f81tgxa"]
+
+[ext_resource type="Script" uid="uid://eql1dg6i6hhr" path="res://scripts/skill_definition.gd" id="1"]
+
 [resource]
 script = ExtResource("1")
 skill_id = "pawn_phalanx"
 display_name = "Pawn Phalanx"
 description = "A Pawn next to another Pawn attacks 15% faster."
-cost = 5
-effect_type = 2
+cost = 2000
+effect_type = 3
 effect_value = 0.85

@@ -14,3 +14,5 @@ display_name = "Level 4: Open Files"
 allowed_enemy_pieces = Array[String](["Pawn", "Bishop", "Knight", "Rook"])
 wave_count = 9
 wave_resources = Array[ExtResource("2_kbucj")]([ExtResource("3_dobqq"), ExtResource("3_dobqq"), ExtResource("4_575p4"), ExtResource("5_kbucj"), ExtResource("6_od1oh"), ExtResource("6_od1oh"), ExtResource("6_od1oh")])
+base_wave_duration = 60.0
+spawn_interval_reduction = 2.5

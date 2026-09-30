@@ -113,8 +113,8 @@ func start_new_wave() -> void:
 	total_timer = 0.0
 	
 	wave_started.emit()
-	show_wave_banner(get_wave_number())
-	GameLogger.log_wave_start(get_wave_number())
+	show_wave_banner(get_current_wave_number())
+	GameLogger.log_wave_start(get_current_wave_number())
 
 
 func get_waves_survived() -> int:
@@ -122,11 +122,17 @@ func get_waves_survived() -> int:
 		return 0
 	return max(0, current_wave_index)
 
-func get_wave_number() -> int:
+func get_current_wave_number() -> int:
 	if current_wave_index < 0:
 		return 0
 		
 	return current_wave_index + 1
+	
+func get_total_wave_number() -> int:
+	if waves == null:
+		return 0
+		
+	return waves.size()
 
 func _create_generated_wave(_wave_number: int) -> WaveConfig:
 	var wave := WaveConfig.new()
@@ -200,7 +206,7 @@ func spawn_random_enemy() -> void:
 	var spawn_cell := get_spawn_cell(type)
 
 	enemy.setup(game, spawn_cell)
-	GameLogger.log_enemy_spawned("Shadow"+type, get_wave_number())
+	GameLogger.log_enemy_spawned("Shadow"+type, get_current_wave_number())
 	BestiaryManager.mark_encountered(type)
 	
 func get_spawn_cell(enemy_type: String) -> Vector2i:
@@ -224,7 +230,7 @@ func _try_end_cleared_wave() -> void:
 		return
 
 	waiting_for_clear = false
-	GameLogger.log_wave_end(get_wave_number(), total_timer)
+	GameLogger.log_wave_end(get_current_wave_number(), total_timer)
 	start_new_wave()
 	
 
