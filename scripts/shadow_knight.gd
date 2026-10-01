@@ -24,6 +24,10 @@ func setup(game_reference: Node, cell: Vector2i) -> void:
 	current_cell = cell
 
 	global_position = game.board.cell_to_world(current_cell)
+	reposition_offset(
+		ScreenLayout.scale_vec, ScreenLayout.sprite_offset,
+		ScreenLayout.shadow_radius, ScreenLayout.shadow_offset
+	)
 
 	queue_redraw()
 
@@ -126,58 +130,59 @@ func take_damage(amount: int, source_piece: String) -> void:
 
 
 func _draw() -> void:
-	# Shadow
-	draw_circle(
-		Vector2(2, 4),
-		20.0,
-		Color(0, 0, 0, 0.25)
-	)
-
-	# Knight silhouette
-	var knight_shape := PackedVector2Array([
-		Vector2(-14, 17),
-		Vector2(-12, 7),
-		Vector2(-8, 1),
-		Vector2(-12, -7),
-		Vector2(-9, -19),
-		Vector2(-2, -24),
-		Vector2(8, -17),
-		Vector2(12, -8),
-		Vector2(8, -1),
-		Vector2(12, 7),
-		Vector2(15, 17)
-	])
-
-	draw_colored_polygon(
-		knight_shape,
-		Color("#151515")
-	)
-
-	draw_polyline(
-		PackedVector2Array([
-			Vector2(-14, 17),
-			Vector2(-12, 7),
-			Vector2(-8, 1),
-			Vector2(-12, -7),
-			Vector2(-9, -19),
-			Vector2(-2, -24),
-			Vector2(8, -17),
-			Vector2(12, -8),
-			Vector2(8, -1),
-			Vector2(12, 7),
-			Vector2(15, 17),
-			Vector2(-14, 17)
-		]),
-		Color("#666666"),
-		2.0
-	)
-
-	# Eye
-	draw_circle(
-		Vector2(4, -13),
-		2.0,
-		Color("#FF3333")
-	)
+	pass
+	## Shadow
+	#draw_circle(
+		#Vector2(2, 4),
+		#20.0,
+		#Color(0, 0, 0, 0.25)
+	#)
+#
+	## Knight silhouette
+	#var knight_shape := PackedVector2Array([
+		#Vector2(-14, 17),
+		#Vector2(-12, 7),
+		#Vector2(-8, 1),
+		#Vector2(-12, -7),
+		#Vector2(-9, -19),
+		#Vector2(-2, -24),
+		#Vector2(8, -17),
+		#Vector2(12, -8),
+		#Vector2(8, -1),
+		#Vector2(12, 7),
+		#Vector2(15, 17)
+	#])
+#
+	#draw_colored_polygon(
+		#knight_shape,
+		#Color("#151515")
+	#)
+#
+	#draw_polyline(
+		#PackedVector2Array([
+			#Vector2(-14, 17),
+			#Vector2(-12, 7),
+			#Vector2(-8, 1),
+			#Vector2(-12, -7),
+			#Vector2(-9, -19),
+			#Vector2(-2, -24),
+			#Vector2(8, -17),
+			#Vector2(12, -8),
+			#Vector2(8, -1),
+			#Vector2(12, 7),
+			#Vector2(15, 17),
+			#Vector2(-14, 17)
+		#]),
+		#Color("#666666"),
+		#2.0
+	#)
+#
+	## Eye
+	#draw_circle(
+		#Vector2(4, -13),
+		#2.0,
+		#Color("#FF3333")
+	#)
 
 	# HP bar
 	draw_hp()

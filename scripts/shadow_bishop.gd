@@ -19,6 +19,10 @@ func setup(game_reference: Node, cell: Vector2i) -> void:
 	game = game_reference
 	current_cell = cell
 	global_position = game.board.cell_to_world(current_cell)
+	reposition_offset(
+		ScreenLayout.scale_vec, ScreenLayout.sprite_offset,
+		ScreenLayout.shadow_radius, ScreenLayout.shadow_offset
+	)
 	
 	king_cell = game.king.current_cell
 	direction_to_king = king_cell - current_cell
@@ -96,37 +100,38 @@ func take_damage(amount: int, source_piece: String) -> void:
 	queue_redraw()
 	
 func _draw() -> void:
-	draw_circle(
-		Vector2(2, 4),
-		20.0,
-		Color(0, 0, 0, 0.25)
-	)
-
-	var body := PackedVector2Array([
-		Vector2(-12, 16),
-		Vector2(-8, 4),
-		Vector2(-5, -5),
-		Vector2(-10, -15),
-		Vector2(0, -25),
-		Vector2(10, -15),
-		Vector2(5, -5),
-		Vector2(8, 4),
-		Vector2(12, 16)
-	])
-
-	draw_colored_polygon(body, Color("#151515"))
-
-	draw_polyline(
-		body + PackedVector2Array([body[0]]),
-		Color("#666666"),
-		2.0
-	)
-
-	draw_line(
-		Vector2(-3, -15),
-		Vector2(4, -7),
-		Color("#AA3333"),
-		2.0
-	)
+	pass
+	#draw_circle(
+		#Vector2(2, 4),
+		#20.0,
+		#Color(0, 0, 0, 0.25)
+	#)
+#
+	#var body := PackedVector2Array([
+		#Vector2(-12, 16),
+		#Vector2(-8, 4),
+		#Vector2(-5, -5),
+		#Vector2(-10, -15),
+		#Vector2(0, -25),
+		#Vector2(10, -15),
+		#Vector2(5, -5),
+		#Vector2(8, 4),
+		#Vector2(12, 16)
+	#])
+#
+	#draw_colored_polygon(body, Color("#151515"))
+#
+	#draw_polyline(
+		#body + PackedVector2Array([body[0]]),
+		#Color("#666666"),
+		#2.0
+	#)
+#
+	#draw_line(
+		#Vector2(-3, -15),
+		#Vector2(4, -7),
+		#Color("#AA3333"),
+		#2.0
+	#)
 	
 	draw_hp()

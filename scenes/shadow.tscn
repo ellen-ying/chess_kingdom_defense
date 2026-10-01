@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://svs3id6etr6"]
+
+[ext_resource type="Script" uid="uid://cxii5hyv73qoi" path="res://scripts/shadow.gd" id="1_0rvn4"]
+
+[node name="Shadow" type="Node2D" unique_id=812840974]
+scale = Vector2(1.3, 0.8)
+script = ExtResource("1_0rvn4")

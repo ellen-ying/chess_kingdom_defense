@@ -29,6 +29,7 @@ SkillManager="*res://scripts/skill_manager.gd"
 DailyRewardManager="*res://scripts/daily_reward_manager.gd"
 GameLogger="*uid://bhci11jnjo6mb"
 AutoplayBot="*res://scripts/autoplay_bot.gd"
+ScreenLayout="*uid://mjwnnsoy30oy"
 
 [display]
 

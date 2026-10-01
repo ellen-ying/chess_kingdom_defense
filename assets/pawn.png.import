@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c1jw6nu5fuled"
-path="res://.godot/imported/tile_floor.png-cdc62e187b434bea4d943c120f6a15a2.ctex"
+uid="uid://0efgjdeib8er"
+path="res://.godot/imported/pawn.png-badf2a999a3856fc930ae1a0881c04e1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/tile_floor.png"
-dest_files=["res://.godot/imported/tile_floor.png-cdc62e187b434bea4d943c120f6a15a2.ctex"]
+source_file="res://assets/pawn.png"
+dest_files=["res://.godot/imported/pawn.png-badf2a999a3856fc930ae1a0881c04e1.ctex"]
 
 [params]
 

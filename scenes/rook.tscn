@@ -1,6 +1,13 @@
 [gd_scene format=3 uid="uid://dqqjkloh6bj6h"]
 
 [ext_resource type="Script" uid="uid://cmw6u3dnrkpwe" path="res://scripts/rook.gd" id="1_fdtut"]
+[ext_resource type="PackedScene" uid="uid://svs3id6etr6" path="res://scenes/shadow.tscn" id="2_7yy3k"]
+[ext_resource type="Texture2D" uid="uid://e1evxt46f2ik" path="res://assets/rook.png" id="3_pdqtm"]
 
 [node name="Rook" type="Node2D" unique_id=1347690504]
 script = ExtResource("1_fdtut")
+
+[node name="Shadow" parent="." unique_id=812840974 instance=ExtResource("2_7yy3k")]
+
+[node name="PieceSprite" type="Sprite2D" parent="." unique_id=241039824]
+texture = ExtResource("3_pdqtm")

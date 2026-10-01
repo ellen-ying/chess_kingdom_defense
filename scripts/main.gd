@@ -45,7 +45,6 @@ signal enemy_changed
 @onready var ui_layer: CanvasLayer = $UILayer
 @onready var shop_ui = $UILayer/ShopUI
 
-@onready var screen_layout: Node = $ScreenLayout
 @onready var hud_bar: PanelContainer = $UILayer/HUDBar
 @onready var menu_button: Button = $UILayer/HUDBar/HBox/MenuButton
 @onready var lives_label: Label = $UILayer/HUDBar/HBox/LivesLabel
@@ -69,9 +68,6 @@ func _ready() -> void:
 	max_lives = BASE_LIVES + int(SkillManager.get_effect_value(SkillDefinition.EffectType.KING_LIVES))
 	lives = max_lives
 	RunRewardManager.begin_run()
-
-	# Position the king.
-	king.setup(board.get_center_cell(), board)
 
 	# Initialize all nodes
 	piece_manager.setup(self, board, piece_parent)
@@ -102,7 +98,11 @@ func _ready() -> void:
 	# First real layout pass. Must run after the King and all
 	# @onready references exist; ScreenLayout re-applies this on
 	# every viewport resize (window size / aspect / orientation).
-	screen_layout.apply_layout()
+	ScreenLayout.apply_layout(self)
+	
+	# Position the king.
+	king.setup(self, board.get_center_cell(), board)
+	
 
 
 func update_hud() -> void:

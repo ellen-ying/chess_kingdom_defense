@@ -21,6 +21,10 @@ func setup(game_reference: Node, cell: Vector2i) -> void:
 	game = game_reference
 	current_cell = cell
 	global_position = game.board.cell_to_world(cell)
+	reposition_offset(
+		ScreenLayout.scale_vec, ScreenLayout.sprite_offset,
+		ScreenLayout.shadow_radius, ScreenLayout.shadow_offset
+	)
 
 	queue_redraw()
 
@@ -146,47 +150,48 @@ func take_damage(amount: int, source_piece: String) -> void:
 
 
 func _draw() -> void:
-	draw_circle(
-		Vector2(2, 4),
-		22.0,
-		Color(0, 0, 0, 0.25)
-	)
-
-	# Crown
-	var crown := PackedVector2Array([
-		Vector2(-16, -4),
-		Vector2(-13, -20),
-		Vector2(-6, -10),
-		Vector2(0, -24),
-		Vector2(6, -10),
-		Vector2(14, -20),
-		Vector2(16, -4),
-		Vector2(10, 5),
-		Vector2(-10, 5)
-	])
-
-	draw_colored_polygon(
-		crown,
-		Color("#202020")
-	)
-
-	draw_polyline(
-		crown + PackedVector2Array([crown[0]]),
-		Color("#202020"),
-		2.0
-	)
-
-	# Body
-	draw_circle(
-		Vector2(0, 10),
-		8.0,
-		Color("#202020")
-	)
-
-	draw_rect(
-		Rect2(-12, 10, 24, 8),
-		Color("#202020")
-	)
+	pass
+	#draw_circle(
+		#Vector2(2, 4),
+		#22.0,
+		#Color(0, 0, 0, 0.25)
+	#)
+#
+	## Crown
+	#var crown := PackedVector2Array([
+		#Vector2(-16, -4),
+		#Vector2(-13, -20),
+		#Vector2(-6, -10),
+		#Vector2(0, -24),
+		#Vector2(6, -10),
+		#Vector2(14, -20),
+		#Vector2(16, -4),
+		#Vector2(10, 5),
+		#Vector2(-10, 5)
+	#])
+#
+	#draw_colored_polygon(
+		#crown,
+		#Color("#202020")
+	#)
+#
+	#draw_polyline(
+		#crown + PackedVector2Array([crown[0]]),
+		#Color("#202020"),
+		#2.0
+	#)
+#
+	## Body
+	#draw_circle(
+		#Vector2(0, 10),
+		#8.0,
+		#Color("#202020")
+	#)
+#
+	#draw_rect(
+		#Rect2(-12, 10, 24, 8),
+		#Color("#202020")
+	#)
 	
 	# HP indicator.
 	draw_hp()

@@ -18,6 +18,10 @@ func setup(game_reference: Node, cell: Vector2i) -> void:
 	game = game_reference
 	current_cell = cell
 	global_position = game.board.cell_to_world(current_cell)
+	reposition_offset(
+		ScreenLayout.scale_vec, ScreenLayout.sprite_offset,
+		ScreenLayout.shadow_radius, ScreenLayout.shadow_offset
+	)
 	
 	king_cell = game.king.current_cell
 	direction_to_king = king_cell - current_cell
@@ -103,35 +107,36 @@ func move_toward_king() -> void:
 	queue_redraw()
 	
 func _draw() -> void:
-	draw_circle(
-		Vector2(2, 4),
-		20.0,
-		Color(0, 0, 0, 0.25)
-	)
-
-	draw_rect(
-		Rect2(-13, -5, 26, 21),
-		Color("#151515")
-	)
-
-	var roof := PackedVector2Array([
-		Vector2(-15, -5),
-		Vector2(-15, -20),
-		Vector2(-8, -20),
-		Vector2(-6, -26),
-		Vector2(0, -20),
-		Vector2(6, -26),
-		Vector2(8, -20),
-		Vector2(15, -20),
-		Vector2(15, -5)
-	])
-
-	draw_colored_polygon(roof, Color("#151515"))
-
-	draw_polyline(
-		roof + PackedVector2Array([roof[0]]),
-		Color("#666666"),
-		2.0
-	)
+	pass
+	#draw_circle(
+		#Vector2(2, 4),
+		#20.0,
+		#Color(0, 0, 0, 0.25)
+	#)
+#
+	#draw_rect(
+		#Rect2(-13, -5, 26, 21),
+		#Color("#151515")
+	#)
+#
+	#var roof := PackedVector2Array([
+		#Vector2(-15, -5),
+		#Vector2(-15, -20),
+		#Vector2(-8, -20),
+		#Vector2(-6, -26),
+		#Vector2(0, -20),
+		#Vector2(6, -26),
+		#Vector2(8, -20),
+		#Vector2(15, -20),
+		#Vector2(15, -5)
+	#])
+#
+	#draw_colored_polygon(roof, Color("#151515"))
+#
+	#draw_polyline(
+		#roof + PackedVector2Array([roof[0]]),
+		#Color("#666666"),
+		#2.0
+	#)
 
 	draw_hp()

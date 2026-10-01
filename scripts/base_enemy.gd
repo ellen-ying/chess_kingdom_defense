@@ -18,12 +18,27 @@ var live_timer := 0.0
 var _slow_timer := 0.0
 var _slow_multiplier := 1.0
 
+var piece_sprite
+var shadow
+
+func _ready() -> void:
+	piece_sprite = $PieceSprite
+	shadow = $Shadow
+
 func setup(game_reference: Node, cell: Vector2i) -> void:
 	push_error("BaseEnemy.setup() was not overridden.")
 
 
 func take_damage(amount: int, source_piece: String) -> void:
 	push_error("BaseEnemy.take_damage() was not overridden.")
+	
+func reposition_offset(sprite_scale: Vector2, sprite_offset: Vector2,
+	shadow_radius: float, shadow_offset: Vector2) -> void:
+	piece_sprite.scale = sprite_scale
+	piece_sprite.offset = sprite_offset
+	shadow.offset = shadow_offset
+	shadow.radius = shadow_radius
+	shadow.queue_redraw()
 	
 func take_piece_at_cell(game_reference: Node) -> void:
 	var piece = game.find_piece_at_cell(current_cell)
@@ -76,7 +91,7 @@ func draw_hp() -> void:
 		draw_rect(
 			Rect2(
 				start_x + i * (HP_BAR_LENGTH + spacing),
-				26,
+				ScreenLayout.tile_size / 2.0,
 				HP_BAR_LENGTH,
 				HP_BAR_HEIGHT
 			),

@@ -22,6 +22,10 @@ func setup(game_reference: Node, cell: Vector2i) -> void:
 	current_cell = cell
 
 	global_position = game.board.cell_to_world(current_cell)
+	reposition_offset(
+		ScreenLayout.scale_vec, ScreenLayout.sprite_offset,
+		ScreenLayout.shadow_radius, ScreenLayout.shadow_offset
+	)
 
 	queue_redraw()
 
@@ -108,43 +112,44 @@ func get_attack_tiles_for_cell(
 
 
 func _draw() -> void:
-	var alpha := 0.65 if dragging else 1.0
-
-	# Shadow
-	draw_circle(
-		Vector2(2, 4),
-		20.0,
-		Color(0, 0, 0, 0.2 * alpha)
-	)
-
-	# Body
-	var body := PackedVector2Array([
-		Vector2(-12, 16),
-		Vector2(-8, 4),
-		Vector2(-5, -5),
-		Vector2(-10, -15),
-		Vector2(0, -25),
-		Vector2(10, -15),
-		Vector2(5, -5),
-		Vector2(8, 4),
-		Vector2(12, 16)
-	])
-
-	draw_colored_polygon(
-		body,
-		Color(0.95, 0.95, 0.95, alpha)
-	)
-
-	draw_polyline(
-		body + PackedVector2Array([body[0]]),
-		Color(0.15, 0.15, 0.15, alpha),
-		2.0
-	)
-
-	# Bishop slit
-	draw_line(
-		Vector2(-3, -15),
-		Vector2(4, -7),
-		Color("#333333", alpha),
-		2.0
-	)
+	pass
+	#var alpha := 0.65 if dragging else 1.0
+#
+	## Shadow
+	#draw_circle(
+		#Vector2(2, 4),
+		#20.0,
+		#Color(0, 0, 0, 0.2 * alpha)
+	#)
+#
+	## Body
+	#var body := PackedVector2Array([
+		#Vector2(-12, 16),
+		#Vector2(-8, 4),
+		#Vector2(-5, -5),
+		#Vector2(-10, -15),
+		#Vector2(0, -25),
+		#Vector2(10, -15),
+		#Vector2(5, -5),
+		#Vector2(8, 4),
+		#Vector2(12, 16)
+	#])
+#
+	#draw_colored_polygon(
+		#body,
+		#Color(0.95, 0.95, 0.95, alpha)
+	#)
+#
+	#draw_polyline(
+		#body + PackedVector2Array([body[0]]),
+		#Color(0.15, 0.15, 0.15, alpha),
+		#2.0
+	#)
+#
+	## Bishop slit
+	#draw_line(
+		#Vector2(-3, -15),
+		#Vector2(4, -7),
+		#Color("#333333", alpha),
+		#2.0
+	#)

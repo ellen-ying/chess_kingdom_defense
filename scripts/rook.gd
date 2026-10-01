@@ -22,6 +22,10 @@ func setup(game_reference: Node, cell: Vector2i) -> void:
 	current_cell = cell
 
 	global_position = game.board.cell_to_world(current_cell)
+	reposition_offset(
+		ScreenLayout.scale_vec, ScreenLayout.sprite_offset,
+		ScreenLayout.shadow_radius, ScreenLayout.shadow_offset
+	)
 
 	queue_redraw()
 
@@ -104,40 +108,41 @@ func get_attack_tiles_for_cell(
 
 
 func _draw() -> void:
-	var alpha := 0.65 if dragging else 1.0
-
-	draw_circle(
-		Vector2(2, 4),
-		20.0,
-		Color(0, 0, 0, 0.2 * alpha)
-	)
-
-	# Main tower
-	draw_rect(
-		Rect2(-13, -5, 26, 21),
-		Color(0.95, 0.95, 0.95, alpha)
-	)
-
-	# Roof
-	var roof := PackedVector2Array([
-		Vector2(-15, -5),
-		Vector2(-15, -20),
-		Vector2(-8, -20),
-		Vector2(-6, -26),
-		Vector2(0, -20),
-		Vector2(6, -26),
-		Vector2(8, -20),
-		Vector2(15, -20),
-		Vector2(15, -5)
-	])
-
-	draw_colored_polygon(
-		roof,
-		Color(0.95, 0.95, 0.95, alpha)
-	)
-
-	draw_polyline(
-		roof + PackedVector2Array([roof[0]]),
-		Color(0.15, 0.15, 0.15, alpha),
-		2.0
-	)
+	pass
+	#var alpha := 0.65 if dragging else 1.0
+#
+	#draw_circle(
+		#Vector2(2, 4),
+		#20.0,
+		#Color(0, 0, 0, 0.2 * alpha)
+	#)
+#
+	## Main tower
+	#draw_rect(
+		#Rect2(-13, -5, 26, 21),
+		#Color(0.95, 0.95, 0.95, alpha)
+	#)
+#
+	## Roof
+	#var roof := PackedVector2Array([
+		#Vector2(-15, -5),
+		#Vector2(-15, -20),
+		#Vector2(-8, -20),
+		#Vector2(-6, -26),
+		#Vector2(0, -20),
+		#Vector2(6, -26),
+		#Vector2(8, -20),
+		#Vector2(15, -20),
+		#Vector2(15, -5)
+	#])
+#
+	#draw_colored_polygon(
+		#roof,
+		#Color(0.95, 0.95, 0.95, alpha)
+	#)
+#
+	#draw_polyline(
+		#roof + PackedVector2Array([roof[0]]),
+		#Color(0.15, 0.15, 0.15, alpha),
+		#2.0
+	#)

@@ -1,8 +1,9 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene format=3 uid="uid://bh1odh5jcft2f"]
 
-[ext_resource type="Script" path="res://scripts/home_office.gd" id="1"]
+[ext_resource type="Script" uid="uid://b0wa43l78jqqd" path="res://scripts/home_office.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://bh4hhkiim2am5" path="res://assets/home_office.jpg" id="2_53mdv"]
 
-[node name="HomeOffice" type="Control"]
+[node name="HomeOffice" type="Control" unique_id=1991577141]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,28 +12,29 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1")
 
-[node name="FallbackBackground" type="ColorRect" parent="."]
+[node name="FallbackBackground" type="ColorRect" parent="." unique_id=1984111975]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.11, 0.13, 0.18, 1)
 mouse_filter = 2
+color = Color(0.11, 0.13, 0.18, 1)
 
-[node name="Background" type="TextureRect" parent="."]
+[node name="Background" type="TextureRect" parent="." unique_id=167574167]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_53mdv")
 expand_mode = 1
 stretch_mode = 6
-mouse_filter = 2
 
-[node name="Margin" type="MarginContainer" parent="."]
+[node name="Margin" type="MarginContainer" parent="." unique_id=1107801971]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -45,21 +47,21 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Layout" type="VBoxContainer" parent="Margin"]
+[node name="Layout" type="VBoxContainer" parent="Margin" unique_id=19119411]
 layout_mode = 2
 theme_override_constants/separation = 24
 
-[node name="TopBar" type="HBoxContainer" parent="Margin/Layout"]
+[node name="TopBar" type="HBoxContainer" parent="Margin/Layout" unique_id=1349338965]
 layout_mode = 2
 
-[node name="Title" type="Label" parent="Margin/Layout/TopBar"]
+[node name="Title" type="Label" parent="Margin/Layout/TopBar" unique_id=1231745733]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.95, 0.79, 0.35, 1)
 theme_override_font_sizes/font_size = 32
 text = "THE HOME OFFICE"
 
-[node name="OfficeMaterialLabel" type="Label" parent="Margin/Layout/TopBar"]
+[node name="OfficeMaterialLabel" type="Label" parent="Margin/Layout/TopBar" unique_id=1455105090]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.85, 0.9, 0.96, 1)
@@ -67,59 +69,59 @@ theme_override_font_sizes/font_size = 20
 text = "OFFICE MATERIAL  0"
 horizontal_alignment = 2
 
-[node name="Spacer" type="Control" parent="Margin/Layout"]
+[node name="Spacer" type="Control" parent="Margin/Layout" unique_id=192393606]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
 
-[node name="OfficeCard" type="PanelContainer" parent="Margin/Layout"]
-layout_mode = 2
+[node name="OfficeCard" type="PanelContainer" parent="Margin/Layout" unique_id=1648013170]
 custom_minimum_size = Vector2(380, 0)
+layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="Content" type="VBoxContainer" parent="Margin/Layout/OfficeCard"]
+[node name="Content" type="VBoxContainer" parent="Margin/Layout/OfficeCard" unique_id=2042773137]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="King" type="Label" parent="Margin/Layout/OfficeCard/Content"]
+[node name="King" type="Label" parent="Margin/Layout/OfficeCard/Content" unique_id=925620264]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 1)
 theme_override_font_sizes/font_size = 42
 text = "♔"
 horizontal_alignment = 1
 
-[node name="Welcome" type="Label" parent="Margin/Layout/OfficeCard/Content"]
+[node name="Welcome" type="Label" parent="Margin/Layout/OfficeCard/Content" unique_id=1670356341]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Your defenses await, Your Majesty."
 horizontal_alignment = 1
 
-[node name="PlayButton" type="Button" parent="Margin/Layout/OfficeCard/Content"]
+[node name="PlayButton" type="Button" parent="Margin/Layout/OfficeCard/Content" unique_id=630018383]
 unique_name_in_owner = true
-layout_mode = 2
 custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
 theme_override_font_sizes/font_size = 22
 text = "Play"
 
-[node name="SkillsButton" type="Button" parent="Margin/Layout/OfficeCard/Content"]
-layout_mode = 2
+[node name="SkillsButton" type="Button" parent="Margin/Layout/OfficeCard/Content" unique_id=108373371]
 custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Skills"
 
-[node name="BestiaryButton" type="Button" parent="Margin/Layout/OfficeCard/Content"]
-layout_mode = 2
+[node name="BestiaryButton" type="Button" parent="Margin/Layout/OfficeCard/Content" unique_id=1625841857]
 custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Bestiary"
 
-[node name="EarnMaterialButton" type="Button" parent="Margin/Layout/OfficeCard/Content"]
-layout_mode = 2
+[node name="EarnMaterialButton" type="Button" parent="Margin/Layout/OfficeCard/Content" unique_id=594666826]
 custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Earn Material"
 
-[node name="BottomSpacer" type="Control" parent="Margin/Layout"]
+[node name="BottomSpacer" type="Control" parent="Margin/Layout" unique_id=1804345474]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2

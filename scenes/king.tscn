@@ -1,6 +1,13 @@
 [gd_scene format=3 uid="uid://dg5axfkcycn7h"]
 
 [ext_resource type="Script" uid="uid://p2oukxb0bno5" path="res://scripts/king.gd" id="1_div27"]
+[ext_resource type="Texture2D" uid="uid://dx0qvu12cd36v" path="res://assets/king.png" id="1_fn2xo"]
+[ext_resource type="PackedScene" uid="uid://svs3id6etr6" path="res://scenes/shadow.tscn" id="3_gmgs4"]
 
-[node name="King" type="Node2D" unique_id=1733295763]
+[node name="King" type="Node2D" unique_id=1617469542]
 script = ExtResource("1_div27")
+
+[node name="Shadow" parent="." unique_id=812840974 instance=ExtResource("3_gmgs4")]
+
+[node name="KingSprite" type="Sprite2D" parent="." unique_id=39464494]
+texture = ExtResource("1_fn2xo")

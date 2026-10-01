@@ -1,6 +1,13 @@
 [gd_scene format=3 uid="uid://bxajglvhw5srs"]
 
 [ext_resource type="Script" uid="uid://dtqrliegjgehh" path="res://scripts/knight.gd" id="1_dp28g"]
+[ext_resource type="PackedScene" uid="uid://svs3id6etr6" path="res://scenes/shadow.tscn" id="2_qxgmm"]
+[ext_resource type="Texture2D" uid="uid://cph0mlhm3f1qq" path="res://assets/knight.png" id="3_0dyjn"]
 
 [node name="Knight" type="Node2D" unique_id=1233838640]
 script = ExtResource("1_dp28g")
+
+[node name="Shadow" parent="." unique_id=812840974 instance=ExtResource("2_qxgmm")]
+
+[node name="PieceSprite" type="Sprite2D" parent="." unique_id=188657644]
+texture = ExtResource("3_0dyjn")

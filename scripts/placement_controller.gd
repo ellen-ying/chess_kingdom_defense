@@ -214,6 +214,10 @@ func _create_ghost() -> void:
 	)
 
 	ghost_piece.visible = true
+	ghost_piece.reposition_offset(
+		ScreenLayout.scale_vec, ScreenLayout.sprite_offset,
+		ScreenLayout.shadow_radius, ScreenLayout.shadow_offset
+	)
 
 
 func _update_ghost() -> void:
