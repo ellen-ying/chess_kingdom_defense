@@ -224,7 +224,6 @@ func enemy_reached_king(enemy: Node) -> void:
 		outcome = "LOSE"
 		waves_survived = wave_manager.current_wave_index
 		end_game()
-		result_overlay.open(outcome)
 		return
 
 	enemy_changed.emit()
@@ -260,7 +259,6 @@ func _on_level_completed() -> void:
 	outcome = "WIN"
 	waves_survived = wave_manager.current_wave_index 
 	LevelProgressManager.complete_level(level_config.level_id)
-	result_overlay.open(outcome)
 	_finish_run()
 
 
@@ -273,10 +271,17 @@ func _finish_run() -> void:
 	if ((not outcome) or waves_survived < 0):
 		push_error("Invalid end of run satistics.")
 	GameLogger.end_run(
-		outcome, waves_survived, 
+		outcome, waves_survived,
 		RunRewardManager.run_material_earned, CurrencyManager.currency_spent
 	)
-	
+
+	# Single consistent presentation point: every run end (natural
+	# win, natural loss, bot wave-cap/timeout, pause-menu abandon)
+	# opens the result overlay exactly once, after logging and the
+	# material conversion are complete.
+	result_overlay.open(outcome)
+
+
 func _on_currency_changed(new_amount: int) -> void:
 	currency_label.text = (
 		"MATERIALS: %d"

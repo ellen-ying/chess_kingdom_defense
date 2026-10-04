@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://xgc4uvxp8y0n" path="res://scripts/shadow_rook.gd" id="1_0xpsf"]
 [ext_resource type="PackedScene" uid="uid://svs3id6etr6" path="res://scenes/shadow.tscn" id="2_johha"]
-[ext_resource type="Texture2D" uid="uid://xli73va3c0wj" path="res://assets/shadow_rook.png" id="3_johha"]
+[ext_resource type="Texture2D" uid="uid://cod8uofawnlhp" path="res://assets/shadow_rook.png" id="3_johha"]
 
 [node name="ShadowRook" type="Node2D" unique_id=1191498084]
 script = ExtResource("1_0xpsf")

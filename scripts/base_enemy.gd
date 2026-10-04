@@ -40,9 +40,10 @@ func reposition_offset(sprite_scale: Vector2, sprite_offset: Vector2,
 	shadow.radius = shadow_radius
 	shadow.queue_redraw()
 	
-func take_piece_at_cell(game_reference: Node) -> void:
+func take_piece_at_cell() -> void:
 	var piece = game.find_piece_at_cell(current_cell)
 	if piece != null:
+		game.get_node("PiecePlaceSound").play()
 		game.piece_destroyed(piece)
 	
 func update_status_effects(delta: float) -> void:

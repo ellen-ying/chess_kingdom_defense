@@ -2,7 +2,9 @@
 
 [ext_resource type="Script" uid="uid://cg4411x2innau" path="res://scripts/main.gd" id="1_jyhfs"]
 [ext_resource type="Script" uid="uid://eflb2k1r3d63" path="res://scripts/board.gd" id="1_o5qli"]
+[ext_resource type="AudioStream" uid="uid://de4o0wb3hiem4" path="res://sounds/defense.wav" id="2_0ld40"]
 [ext_resource type="Script" uid="uid://6ap5ikwf4xbk" path="res://scripts/enemy_manager.gd" id="2_0wfyh"]
+[ext_resource type="AudioStream" uid="uid://0yqnblp4jd8b" path="res://sounds/piece_place.wav" id="3_gqmmt"]
 [ext_resource type="Script" uid="uid://dwe255c2k4w0s" path="res://scripts/piece_manager.gd" id="3_sugp2"]
 [ext_resource type="PackedScene" uid="uid://dg5axfkcycn7h" path="res://scenes/king.tscn" id="3_tipki"]
 [ext_resource type="PackedScene" uid="uid://dq3poopyh4me1" path="res://scenes/projectile.tscn" id="6_ya4ey"]
@@ -22,6 +24,14 @@
 [node name="Main" type="Node2D" unique_id=1813833294]
 script = ExtResource("1_jyhfs")
 test_enemy_mode = "Rook"
+
+[node name="DefenseMusic" type="AudioStreamPlayer" parent="." unique_id=668406462]
+stream = ExtResource("2_0ld40")
+autoplay = true
+playback_type = 1
+
+[node name="PiecePlaceSound" type="AudioStreamPlayer" parent="." unique_id=531725703]
+stream = ExtResource("3_gqmmt")
 
 [node name="Background" type="ColorRect" parent="." unique_id=1401302073]
 anchors_preset = 15

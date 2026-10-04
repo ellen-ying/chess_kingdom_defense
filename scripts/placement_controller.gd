@@ -180,6 +180,7 @@ func place_piece(cell: Vector2i) -> void:
 		active_piece_type, cell.x, cell.y,
 		game.wave_manager.get_current_wave_number()
 	)
+	game.get_node("PiecePlaceSound").play()
 	pieces_parent.add_child(piece)
 	piece.setup(game, cell)
 

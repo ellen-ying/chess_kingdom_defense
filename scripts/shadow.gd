@@ -7,5 +7,5 @@ func _draw() -> void:
 	draw_circle(
 		Vector2(0, 4) + offset,
 		radius,
-		Color(0, 0, 0, 0.25)
+		Color(0, 0, 0, 0.15)
 	)

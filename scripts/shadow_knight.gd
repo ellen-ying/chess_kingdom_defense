@@ -44,7 +44,7 @@ func _process(delta: float) -> void:
 		move_timer = 0.0
 		move_toward_king()
 	
-	take_piece_at_cell(game)
+	take_piece_at_cell()
 
 func move_toward_king() -> void:
 	var king_cell: Vector2i = game.king.current_cell

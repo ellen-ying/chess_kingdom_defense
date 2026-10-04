@@ -43,7 +43,7 @@ func _process(delta: float) -> void:
 		move_timer = 0.0
 		move_toward_king()
 		
-	take_piece_at_cell(game)
+	take_piece_at_cell()
 
 func move_toward_king() -> void:
 	if abs(direction_to_king.x) == abs(direction_to_king.y):

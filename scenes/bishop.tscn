@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dh6yrjaa3csip" path="res://scripts/bishop.gd" id="1_fqlt4"]
 [ext_resource type="PackedScene" uid="uid://svs3id6etr6" path="res://scenes/shadow.tscn" id="2_x4yfa"]
-[ext_resource type="Texture2D" uid="uid://wtak8ordate3" path="res://assets/bishop.png" id="3_ev788"]
+[ext_resource type="Texture2D" uid="uid://cccdyss70uo6m" path="res://assets/bishop.png" id="3_ev788"]
 
 [node name="Bishop" type="Node2D" unique_id=61476739]
 script = ExtResource("1_fqlt4")

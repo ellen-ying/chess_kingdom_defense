@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dhwxb57ath584" path="res://scripts/shadow_bishop.gd" id="1_ggu08"]
 [ext_resource type="PackedScene" uid="uid://svs3id6etr6" path="res://scenes/shadow.tscn" id="2_epdqt"]
-[ext_resource type="Texture2D" uid="uid://fe16xtped0rh" path="res://assets/shadow_bishop.png" id="3_pid4h"]
+[ext_resource type="Texture2D" uid="uid://d0w60jwikxw2g" path="res://assets/shadow_bishop.png" id="3_pid4h"]
 
 [node name="ShadowBishop" type="Node2D" unique_id=498854822]
 script = ExtResource("1_ggu08")

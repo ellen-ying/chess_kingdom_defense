@@ -46,7 +46,7 @@ func _process(delta: float) -> void:
 		move_timer = 0.0
 		move_toward_king()
 		
-	take_piece_at_cell(game)
+	take_piece_at_cell()
 		
 func take_damage(amount: int, source_piece: String) -> void:
 	hp -= amount
