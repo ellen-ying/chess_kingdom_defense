@@ -9,9 +9,9 @@
 [resource]
 script = ExtResource("1")
 level_id = "level_3"
-display_name = "Level 3: Knight's Fork"
+display_name = "Level 3  ·  Knight's Fork"
 allowed_enemy_pieces = Array[String](["Pawn", "Bishop", "Knight"])
-wave_count = 7
+wave_count = 6
 wave_resources = Array[ExtResource("2_bl7rf")]([ExtResource("3_sygx3"), ExtResource("3_sygx3"), ExtResource("4_bl7rf"), ExtResource("4_bl7rf"), ExtResource("5_bl7rf"), ExtResource("5_bl7rf")])
 base_wave_duration = 60.0
 spawn_interval_reduction = 2.5

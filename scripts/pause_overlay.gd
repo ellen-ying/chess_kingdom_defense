@@ -15,7 +15,7 @@ extends Control
 ## autoload and keeps flushing; nothing is lost.
 
 var game: Node
-
+@onready var button_sound = $ButtonSound
 
 func setup(game_reference: Node) -> void:
 	game = game_reference
@@ -30,6 +30,7 @@ func _ready() -> void:
 
 
 func open() -> void:
+	button_sound.play()
 	visible = true
 	get_tree().paused = true
 
@@ -40,14 +41,14 @@ func close() -> void:
 
 
 func _on_resume_button_pressed() -> void:
+	button_sound.play()
 	close()
 
 
 func _on_settings_button_pressed() -> void:
-	# Placeholder (task Q2): no settings subsystem exists yet, so the
-	# button ships silent/disabled. When settings arrive, this is the
-	# single hookup point.
-	pass
+	button_sound.play()
+	close()
+	game.setting_overlay.open()
 
 
 func _on_home_office_button_pressed() -> void:
@@ -55,6 +56,7 @@ func _on_home_office_button_pressed() -> void:
 	# end_run_with_result path: outcome + waves are recorded, material
 	# converts, the Final Stand score is stored, GameLogger.end_run
 	# closes the log, and the scene routes home (outcome "ABANDONED").
+	button_sound.play()
 	close()
 
 	if game != null and is_instance_valid(game):

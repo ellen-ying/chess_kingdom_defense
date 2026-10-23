@@ -1,10 +1,11 @@
-[gd_resource type="Resource" script_class="EnemyBestiaryEntry" format=3]
+[gd_resource type="Resource" script_class="EnemyBestiaryEntry" format=3 uid="uid://dfatpemotphs8"]
 
-[ext_resource type="Script" path="res://scripts/enemy_bestiary_entry.gd" id="1"]
+[ext_resource type="Script" uid="uid://6l2kxin3qlbt" path="res://scripts/enemy_bestiary_entry.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://dcoapfe73feey" path="res://archives/simple_version/shadow_pawn.png" id="1_5kut0"]
 
 [resource]
 script = ExtResource("1")
 enemy_type = "Pawn"
 display_name = "Shadow Pawn"
 movement_description = "Takes one orthogonal step toward the King each move. When both axes are open, it chooses one at random."
-flavor_text = ""
+illustration = ExtResource("1_5kut0")

@@ -28,8 +28,9 @@ const TRAY_MAX := 200.0
 
 # For resclaing the sprite
 const SPRITE_SIZE = 128.0
-const SCALE_CONST = 1.5
-const MOVE_OFFSET_SCALE = 6.0
+const SCALE_CONST = 1.2
+const SPRITE_MOVE_OFFSET_SCALE = 10.0
+const SHADOW_MOVE_OFFSET_SCALE = 1.7
 var tile_size: int
 var scale: float
 var scale_vec
@@ -120,9 +121,10 @@ func apply_layout(game: Node) -> void:
 			push_error("Tile size is zero.")
 	scale = tile_size / SPRITE_SIZE * SCALE_CONST
 	scale_vec = Vector2(scale, scale)
-	sprite_offset = Vector2(0, -tile_size / MOVE_OFFSET_SCALE)
+	#sprite_offset = Vector2.ZERO
+	sprite_offset = Vector2(0, -tile_size / SPRITE_MOVE_OFFSET_SCALE)
 	shadow_radius = tile_size / 4.0
-	shadow_offset = Vector2(0, tile_size / (MOVE_OFFSET_SCALE - 1.0))
+	shadow_offset = Vector2(0, tile_size / (SHADOW_MOVE_OFFSET_SCALE))
 
 	_recenter_over_play_area(game.wave_banner, play_area_origin, play_area_size)
 

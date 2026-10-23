@@ -1,10 +1,11 @@
-[gd_resource type="Resource" script_class="EnemyBestiaryEntry" format=3]
+[gd_resource type="Resource" script_class="EnemyBestiaryEntry" format=3 uid="uid://2owj2lv8sojk"]
 
-[ext_resource type="Script" path="res://scripts/enemy_bestiary_entry.gd" id="1"]
+[ext_resource type="Script" uid="uid://6l2kxin3qlbt" path="res://scripts/enemy_bestiary_entry.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://oeclsleolby6" path="res://archives/simple_version/shadow_rook.png" id="1_3mnbi"]
 
 [resource]
 script = ExtResource("1")
 enemy_type = "Rook"
 display_name = "Shadow Rook"
 movement_description = "Marches toward the King one square at a time along either its rank or file, choosing an initial axis at random."
-flavor_text = ""
+illustration = ExtResource("1_3mnbi")

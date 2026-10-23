@@ -46,13 +46,15 @@ signal enemy_changed
 @onready var shop_ui = $UILayer/ShopUI
 
 @onready var hud_bar: PanelContainer = $UILayer/HUDBar
-@onready var menu_button: Button = $UILayer/HUDBar/HBox/MenuButton
-@onready var lives_label: Label = $UILayer/HUDBar/HBox/LivesLabel
-@onready var wave_label: Label = $UILayer/HUDBar/HBox/WaveLabel
-@onready var currency_label: Label = $UILayer/HUDBar/HBox/CurrencyLabel
+@onready var menu_button: TextureButton = %MenuButton
+@onready var lives_label: Label = %LivesLabel
+@onready var wave_label: Label = %WaveLabel
+@onready var currency_label: Label = %CurrencyLabel
 @onready var wave_banner: Label = $UILayer/WaveBanner
 @onready var pause_overlay: Control = $UILayer/PauseOverlay
 @onready var result_overlay: Control = $UILayer/ResultOverlay
+@onready var setting_overlay: Control = $UILayer/SettingOverlay
+@onready var button_sound = $ButtonSound
 
 
 func _ready() -> void:
@@ -92,6 +94,7 @@ func _ready() -> void:
 	menu_button.pressed.connect(_on_menu_button_pressed)
 	pause_overlay.setup(self)
 	result_overlay.setup(self)
+	setting_overlay.setup(self)
 
 	update_hud()
 
@@ -108,12 +111,12 @@ func _ready() -> void:
 func update_hud() -> void:
 	# Same display formats as the old combined StatusLabel (task Q6).
 	lives_label.text = (
-		"KING  %d / %d"
+		"King  %d / %d"
 		% [lives, max_lives]
 	)
 
 	wave_label.text = (
-		"WAVE  %d / %d"
+		"Wave  %d / %d"
 		% [wave_manager.get_current_wave_number(), max_waves]
 	)
 
@@ -284,6 +287,6 @@ func _finish_run() -> void:
 
 func _on_currency_changed(new_amount: int) -> void:
 	currency_label.text = (
-		"MATERIALS: %d"
+		"Materials · %d"
 		% new_amount
 	)

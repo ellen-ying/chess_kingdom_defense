@@ -11,8 +11,9 @@
 [resource]
 script = ExtResource("1")
 level_id = "level_5"
-display_name = "Level 5: Queen's Gambit"
+display_name = "Level 5  ·  Queen's Gambit"
 allowed_enemy_pieces = Array[String](["Pawn", "Bishop", "Knight", "Rook", "Queen"])
+wave_count = 8
 wave_resources = Array[ExtResource("2_ecry0")]([ExtResource("3_r3v0c"), ExtResource("3_r3v0c"), ExtResource("4_ykmg3"), ExtResource("5_ecry0"), ExtResource("6_qu7t1"), ExtResource("6_qu7t1"), ExtResource("7_f65rh"), ExtResource("7_f65rh")])
 base_wave_duration = 60.0
 spawn_interval_reduction = 3.0

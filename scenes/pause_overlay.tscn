@@ -1,8 +1,12 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://b10a8rfcmbcy"]
 
-[ext_resource type="Script" path="res://scripts/pause_overlay.gd" id="1_pause"]
+[ext_resource type="Script" uid="uid://dn3j26m113gkj" path="res://scripts/pause_overlay.gd" id="1_pause"]
+[ext_resource type="FontFile" uid="uid://cs5wxott28qej" path="res://assets/Cinzel-SemiBold.ttf" id="2_3fhia"]
+[ext_resource type="AudioStream" uid="uid://cnc8yyu46qqa1" path="res://sounds/button.wav" id="2_dx577"]
+[ext_resource type="Theme" uid="uid://bj5e21td8bmic" path="res://resources/button_theme.tres" id="3_fggc0"]
+[ext_resource type="Script" uid="uid://dtuok8ulu60yy" path="res://scripts/button_border.gd" id="4_hsvgc"]
 
-[node name="PauseOverlay" type="Control"]
+[node name="PauseOverlay" type="Control" unique_id=901632412]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 15
@@ -12,16 +16,21 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_pause")
 
-[node name="Dim" type="ColorRect" parent="."]
+[node name="ButtonSound" type="AudioStreamPlayer" parent="." unique_id=550322193]
+stream = ExtResource("2_dx577")
+bus = &"SFX"
+
+[node name="Dim" type="ColorRect" parent="." unique_id=323981191]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 0.6)
+color = Color(0.12156863, 0.1764706, 0.3019608, 0.60784316)
 
-[node name="Menu" type="VBoxContainer" parent="."]
+[node name="Menu" type="VBoxContainer" parent="." unique_id=1708137122]
+custom_minimum_size = Vector2(350, 0)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -32,27 +41,63 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 16
 
-[node name="Title" type="Label" parent="Menu"]
+[node name="Title" type="Label" parent="Menu" unique_id=2011195649]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.96862745, 0.93333334, 0.84705883, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.7058824)
+theme_override_constants/shadow_offset_x = 2
+theme_override_fonts/font = ExtResource("2_3fhia")
 theme_override_font_sizes/font_size = 40
-text = "PAUSED"
+text = "Paused"
 horizontal_alignment = 1
 
-[node name="ResumeButton" type="Button" parent="Menu"]
+[node name="ResumeButton" type="Button" parent="Menu" unique_id=2132067537]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme = ExtResource("3_fggc0")
 theme_override_font_sizes/font_size = 24
 text = "Resume"
 
-[node name="SettingsButton" type="Button" parent="Menu"]
+[node name="Control" type="Control" parent="Menu/ResumeButton" unique_id=180695087]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_hsvgc")
+
+[node name="SettingsButton" type="Button" parent="Menu" unique_id=426715017]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme = ExtResource("3_fggc0")
 theme_override_font_sizes/font_size = 24
-disabled = true
 text = "Settings"
 
-[node name="HomeOfficeButton" type="Button" parent="Menu"]
+[node name="Control" type="Control" parent="Menu/SettingsButton" unique_id=505964885]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_hsvgc")
+
+[node name="HomeOfficeButton" type="Button" parent="Menu" unique_id=1864296768]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme = ExtResource("3_fggc0")
 theme_override_font_sizes/font_size = 24
 text = "Return to Home Office"
+
+[node name="Control" type="Control" parent="Menu/HomeOfficeButton" unique_id=1669016365]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_hsvgc")

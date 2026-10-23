@@ -1,10 +1,11 @@
-[gd_resource type="Resource" script_class="EnemyBestiaryEntry" format=3]
+[gd_resource type="Resource" script_class="EnemyBestiaryEntry" format=3 uid="uid://dt8cod18hpmvu"]
 
-[ext_resource type="Script" path="res://scripts/enemy_bestiary_entry.gd" id="1"]
+[ext_resource type="Script" uid="uid://6l2kxin3qlbt" path="res://scripts/enemy_bestiary_entry.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://ds8uukvqslv5o" path="res://archives/simple_version/shadow_bishop.png" id="1_u1rmk"]
 
 [resource]
 script = ExtResource("1")
 enemy_type = "Bishop"
 display_name = "Shadow Bishop"
 movement_description = "Travels diagonally toward the King and enters on an edge square matching the King's board color."
-flavor_text = ""
+illustration = ExtResource("1_u1rmk")

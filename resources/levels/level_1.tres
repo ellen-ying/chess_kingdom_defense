@@ -7,7 +7,7 @@
 [resource]
 script = ExtResource("1_level")
 level_id = "level_1"
-display_name = "Level 1: Pawn Patrol"
+display_name = "Level 1  ·  Pawn Patrol"
 allowed_enemy_pieces = Array[String](["Pawn"])
 wave_count = 3
 wave_resources = Array[ExtResource("2_sfdh2")]([ExtResource("3_yc005"), ExtResource("3_yc005"), ExtResource("3_yc005")])

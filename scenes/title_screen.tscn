@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://byfw1t8yt20ke"]
 
 [ext_resource type="Script" uid="uid://brs8y8l6bs27r" path="res://scripts/title_screen.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://b10f7p6hhxx4x" path="res://assets/title.jpg" id="2_sa3yf"]
 
 [node name="TitleScreen" type="Control" unique_id=700722998]
 layout_mode = 3
@@ -11,7 +12,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1")
 
-[node name="Background" type="TextureRect" parent="." unique_id=426638594]
+[node name="Background" type="TextureRect" parent="." unique_id=699154365]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -19,48 +20,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+texture = ExtResource("2_sa3yf")
 expand_mode = 1
 stretch_mode = 6
-
-[node name="FallbackBackground" type="ColorRect" parent="." unique_id=310940210]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-color = Color(0.07, 0.09, 0.14, 1)
-
-[node name="Center" type="CenterContainer" parent="." unique_id=44310505]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="Content" type="VBoxContainer" parent="Center" unique_id=1478942279]
-layout_mode = 2
-theme_override_constants/separation = 16
-
-[node name="Title" type="Label" parent="Center/Content" unique_id=203230845]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.95, 0.79, 0.35, 1)
-theme_override_colors/font_outline_color = Color(0.02, 0.02, 0.03, 1)
-theme_override_constants/outline_size = 8
-theme_override_font_sizes/font_size = 56
-text = "CHESS KINGDOM
-DEFENSE"
-horizontal_alignment = 1
-
-[node name="Prompt" type="Label" parent="Center/Content" unique_id=1433512189]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.82, 0.84, 0.9, 1)
-theme_override_font_sizes/font_size = 18
-text = "Preparing the office…"
-horizontal_alignment = 1
 
 [node name="AdvanceTimer" type="Timer" parent="." unique_id=1225559301]
 wait_time = 2.0

@@ -14,6 +14,12 @@ const PLACEHOLDER_SCENE := "res://scenes/placeholder_screen.tscn"
 var selected_level_id := "level_1"
 var placeholder_title := ""
 
+## Set by title_screen.advance() right before go_home_office(), and
+## consumed (cleared) by the Home Office on entry — drives the
+## one-per-session title→office crossfade + window flare. Repeat
+## hub visits (popups, returning from gameplay) never set it.
+var arriving_from_title := false
+
 
 func go_home_office() -> void:
 	get_tree().change_scene_to_file(HOME_OFFICE_SCENE)
