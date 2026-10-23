@@ -2,7 +2,9 @@
 
 [ext_resource type="Script" uid="uid://cg4411x2innau" path="res://scripts/main.gd" id="1_jyhfs"]
 [ext_resource type="Script" uid="uid://eflb2k1r3d63" path="res://scripts/board.gd" id="1_o5qli"]
+[ext_resource type="AudioStream" uid="uid://de4o0wb3hiem4" path="res://sounds/defense.wav" id="2_0ld40"]
 [ext_resource type="Script" uid="uid://6ap5ikwf4xbk" path="res://scripts/enemy_manager.gd" id="2_0wfyh"]
+[ext_resource type="AudioStream" uid="uid://0yqnblp4jd8b" path="res://sounds/piece_place.wav" id="3_gqmmt"]
 [ext_resource type="Script" uid="uid://dwe255c2k4w0s" path="res://scripts/piece_manager.gd" id="3_sugp2"]
 [ext_resource type="PackedScene" uid="uid://dg5axfkcycn7h" path="res://scenes/king.tscn" id="3_tipki"]
 [ext_resource type="PackedScene" uid="uid://dq3poopyh4me1" path="res://scenes/projectile.tscn" id="6_ya4ey"]
@@ -16,12 +18,51 @@
 [ext_resource type="Resource" uid="uid://66u1b2tpl3c7" path="res://resources/waves/wave_4.tres" id="12_0ld40"]
 [ext_resource type="Resource" uid="uid://d0ey0vwpkfdd6" path="res://resources/waves/wave_5.tres" id="13_gqmmt"]
 [ext_resource type="Script" uid="uid://mjwnnsoy30oy" path="res://scripts/screen_layout.gd" id="14_layout"]
-[ext_resource type="PackedScene" path="res://scenes/pause_overlay.tscn" id="15_pause"]
+[ext_resource type="PackedScene" uid="uid://b10a8rfcmbcy" path="res://scenes/pause_overlay.tscn" id="15_pause"]
 [ext_resource type="PackedScene" uid="uid://b2fqhxk1w85wb" path="res://scenes/result_overlay.tscn" id="18_dp3eg"]
+[ext_resource type="FontFile" uid="uid://dtp71uphrbgg0" path="res://assets/Cinzel-Medium.ttf" id="18_jscy8"]
+[ext_resource type="Texture2D" uid="uid://8ti0m7h1tyuo" path="res://assets/menu_button_normal.png" id="18_y6deb"]
+[ext_resource type="Texture2D" uid="uid://brj7t5lxdv071" path="res://assets/menu_button_hover.png" id="19_og1vs"]
+[ext_resource type="FontFile" uid="uid://cs5wxott28qej" path="res://assets/Cinzel-SemiBold.ttf" id="19_yc10j"]
+[ext_resource type="PackedScene" uid="uid://cjicn16a5u5qg" path="res://scenes/setting_overlay.tscn" id="25_og1vs"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jscy8"]
+bg_color = Color(0.9411765, 0.8862745, 0.7607843, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.7647059, 0.65882355, 0.45882353, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pm3ni"]
+bg_color = Color(0.12156863, 0.1764706, 0.3019608, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.7647059, 0.65882355, 0.45882353, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
 
 [node name="Main" type="Node2D" unique_id=1813833294]
 script = ExtResource("1_jyhfs")
 test_enemy_mode = "Rook"
+
+[node name="DefenseMusic" type="AudioStreamPlayer" parent="." unique_id=668406462]
+stream = ExtResource("2_0ld40")
+autoplay = true
+bus = &"Music"
+playback_type = 1
+
+[node name="PiecePlaceSound" type="AudioStreamPlayer" parent="." unique_id=531725703]
+stream = ExtResource("3_gqmmt")
+bus = &"Music"
 
 [node name="Background" type="ColorRect" parent="." unique_id=1401302073]
 anchors_preset = 15
@@ -69,35 +110,72 @@ script = ExtResource("14_layout")
 [node name="HUDBar" type="PanelContainer" parent="UILayer" unique_id=1442463801]
 offset_right = 1152.0
 offset_bottom = 54.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_jscy8")
 
-[node name="HBox" type="HBoxContainer" parent="UILayer/HUDBar" unique_id=235340779]
+[node name="HBoxMargin" type="MarginContainer" parent="UILayer/HUDBar" unique_id=1109417526]
+layout_mode = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 19
+theme_override_constants/margin_bottom = 3
+
+[node name="HBox" type="HBoxContainer" parent="UILayer/HUDBar/HBoxMargin" unique_id=235340779]
 layout_mode = 2
 theme_override_constants/separation = 32
 
-[node name="MenuButton" type="Button" parent="UILayer/HUDBar/HBox" unique_id=1703655346]
+[node name="MenuButton" type="TextureButton" parent="UILayer/HUDBar/HBoxMargin/HBox" unique_id=1829171414]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
+size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_font_sizes/font_size = 24
-text = "☰"
+texture_normal = ExtResource("18_y6deb")
+texture_hover = ExtResource("19_og1vs")
+ignore_texture_size = true
+stretch_mode = 5
 
-[node name="LivesLabel" type="Label" parent="UILayer/HUDBar/HBox" unique_id=257544581]
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "KING  3 / 3"
-
-[node name="WaveLabel" type="Label" parent="UILayer/HUDBar/HBox" unique_id=294583024]
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "WAVE  1"
-
-[node name="Spacer" type="Control" parent="UILayer/HUDBar/HBox" unique_id=1637082961]
+[node name="LivesLabel" type="Label" parent="UILayer/HUDBar/HBoxMargin/HBox" unique_id=257544581]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+custom_maximum_size = Vector2(300, -1)
 layout_mode = 2
 size_flags_horizontal = 3
-
-[node name="CurrencyLabel" type="Label" parent="UILayer/HUDBar/HBox" unique_id=1469399552]
-layout_mode = 2
+theme_override_colors/font_color = Color(0.23137255, 0.16470589, 0.11764706, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.39215687)
+theme_override_constants/shadow_offset_x = 1
+theme_override_fonts/font = ExtResource("18_jscy8")
 theme_override_font_sizes/font_size = 24
-text = "MATERIALS: 5"
+text = "King  3 / 3"
+
+[node name="WaveLabel" type="Label" parent="UILayer/HUDBar/HBoxMargin/HBox" unique_id=294583024]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+size_flags_stretch_ratio = 0.8
+theme_override_colors/font_color = Color(0.96862745, 0.93333334, 0.84705883, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.39215687)
+theme_override_constants/shadow_offset_x = 1
+theme_override_fonts/font = ExtResource("18_jscy8")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_pm3ni")
+text = "Wave  1/3"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CurrencyLabel" type="Label" parent="UILayer/HUDBar/HBoxMargin/HBox" unique_id=1469399552]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.23137255, 0.16470589, 0.11764706, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.39215687)
+theme_override_constants/shadow_offset_x = 1
+theme_override_fonts/font = ExtResource("18_jscy8")
+theme_override_font_sizes/font_size = 24
+text = "Materials · 5"
+horizontal_alignment = 2
 
 [node name="ShopUI" parent="UILayer" unique_id=1807039670 instance=ExtResource("8_tipki")]
 offset_left = 952.0
@@ -119,8 +197,12 @@ visible = false
 offset_right = 160.0
 offset_bottom = 61.0
 pivot_offset = Vector2(80, 30)
+theme_override_colors/font_color = Color(0.83137256, 0.6509804, 0.2901961, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.7058824)
+theme_override_constants/shadow_offset_x = 2
+theme_override_fonts/font = ExtResource("19_yc10j")
 theme_override_font_sizes/font_size = 44
-text = "WAVE 1"
+text = "Wave 1"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -128,4 +210,7 @@ vertical_alignment = 1
 visible = false
 
 [node name="ResultOverlay" parent="UILayer" unique_id=1516154321 instance=ExtResource("18_dp3eg")]
+visible = false
+
+[node name="SettingOverlay" parent="UILayer" unique_id=503317906 instance=ExtResource("25_og1vs")]
 visible = false

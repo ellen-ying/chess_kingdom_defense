@@ -1,23 +1,61 @@
 [gd_scene format=3 uid="uid://bvk4cge6glmco"]
 
 [ext_resource type="Script" uid="uid://chy3nyq7ajvmj" path="res://scripts/shop_slot.gd" id="1"]
+[ext_resource type="FontFile" uid="uid://b84nrgcgmfad0" path="res://assets/Lora-Medium.ttf" id="2_sl5e3"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i3ubo"]
+bg_color = Color(0.9411765, 0.8862745, 0.7607843, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.7647059, 0.65882355, 0.45882353, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
 
 [node name="ShopSlot" type="PanelContainer" unique_id=1435734684]
-custom_minimum_size = Vector2(120, 82)
+custom_minimum_size = Vector2(120, 100)
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_i3ubo")
 script = ExtResource("1")
 
-[node name="VBox" type="VBoxContainer" parent="." unique_id=606456782]
+[node name="ShopSlotMargin" type="MarginContainer" parent="." unique_id=1618871172]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 2
+
+[node name="VBox" type="VBoxContainer" parent="ShopSlotMargin" unique_id=606456782]
 layout_mode = 2
 
-[node name="IconLabel" type="Label" parent="VBox" unique_id=338386567]
-custom_minimum_size = Vector2(0, 38)
+[node name="NumLabel" type="Label" parent="ShopSlotMargin/VBox" unique_id=771764501]
+unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 30
-text = "P"
-horizontal_alignment = 1
+theme_override_colors/font_color = Color(0.23137255, 0.16470589, 0.11764706, 1)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 0
+theme_override_fonts/font = ExtResource("2_sl5e3")
+theme_override_font_sizes/font_size = 14
+text = "x0"
+horizontal_alignment = 2
 
-[node name="InfoLabel" type="Label" parent="VBox" unique_id=1121766319]
+[node name="IconTexture" type="TextureRect" parent="ShopSlotMargin/VBox" unique_id=464810227]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 38)
 layout_mode = 2
-text = "Pawn
-×0   1 M"
+expand_mode = 1
+stretch_mode = 5
+
+[node name="InfoLabel" type="Label" parent="ShopSlotMargin/VBox" unique_id=1121766319]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.23137255, 0.16470589, 0.11764706, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.39215687)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 0
+theme_override_fonts/font = ExtResource("2_sl5e3")
+text = "Pawn · 1 M"
 horizontal_alignment = 1

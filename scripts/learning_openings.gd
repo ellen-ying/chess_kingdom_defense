@@ -1,10 +1,18 @@
 extends Control
 
+## Embedded-in-popup convention (task Stage 6): when this scene is
+## instanced inside the Home Office popup container, `embedded` is
+## true and the back button asks the popup to close instead of
+## routing scenes. Standalone behavior (embedded=false) is unchanged.
+
+signal close_requested
+
+var embedded := false
+
 @onready var office_material_label: Label = %OfficeMaterialLabel
 @onready var remaining_uses_label: Label = %RemainingUsesLabel
 @onready var claim_button: Button = %ClaimButton
 @onready var status_label: Label = %StatusLabel
-@onready var back_button: Button = %BackButton
 
 
 func _ready() -> void:
@@ -15,7 +23,7 @@ func _ready() -> void:
 func _refresh() -> void:
 	office_material_label.text = "OFFICE MATERIAL  %d" % OfficeMaterialManager.current_amount
 	var remaining_uses := DailyRewardManager.get_remaining_uses()
-	remaining_uses_label.text = "Openings studied today: %d / %d" % [
+	remaining_uses_label.text = "Openings studied today: %d of %d" % [
 		DailyRewardManager.DAILY_USE_LIMIT - remaining_uses,
 		DailyRewardManager.DAILY_USE_LIMIT
 	]
@@ -31,7 +39,3 @@ func _refresh() -> void:
 func _on_claim_pressed() -> void:
 	if DailyRewardManager.claim_reward():
 		_refresh()
-
-
-func _on_back_pressed() -> void:
-	SceneRouter.go_home_office()

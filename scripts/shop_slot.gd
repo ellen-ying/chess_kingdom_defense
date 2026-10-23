@@ -9,8 +9,9 @@ var cost: int = 0
 var pointer_down := false
 var pointer_position := Vector2.ZERO
 
-@onready var icon_label: Label = $VBox/IconLabel
-@onready var info_label: Label = $VBox/InfoLabel
+@onready var icon_label: TextureRect = %IconTexture
+@onready var num_label: Label = %NumLabel
+@onready var info_label: Label = %InfoLabel
 
 
 func configure(
@@ -21,8 +22,9 @@ func configure(
 	piece_type = type
 	display_name = display_name_value
 	cost = cost_value
-
-	icon_label.text = get_icon_text(piece_type)
+	
+	var texture_file = "res://assets/" + piece_type.to_lower() + ".png"
+	icon_label.texture = load(texture_file)
 
 	_update_display(InventoryManager.get_piece_count(piece_type))
 
@@ -35,14 +37,8 @@ func _ready() -> void:
 func _update_display(inventory_count: int) -> void:
 	var enough_materials := (CurrencyManager.current_amount >= cost)
 
-	info_label.text = (
-		"%s\n×%d   %d M"
-		% [
-			display_name,
-			inventory_count,
-			cost
-		]
-	)
+	info_label.text = ("%s · %d M" % [display_name, cost])
+	num_label.text = "x%d" % [inventory_count]
 
 	if enough_materials:
 		modulate = Color.WHITE
@@ -81,7 +77,7 @@ func _gui_input(event: InputEvent) -> void:
 		pointer_down = true
 		pointer_position = event.position
 
-		get_parent().get_parent().begin_tray_pointer(piece_type)
+		get_parent().get_parent().get_parent().get_parent().begin_tray_pointer(piece_type)
 
 		accept_event()
 		return
@@ -94,17 +90,17 @@ func _gui_input(event: InputEvent) -> void:
 	accept_event()
 
 
-func get_icon_text(type: String) -> String:
-	match type:
-		"Pawn":
-			return "♙"
-		"Knight":
-			return "♘"
-		"Bishop":
-			return "♗"
-		"Rook":
-			return "♖"
-		"Queen":
-			return "♕"
-
-	return "?"
+#func get_icon_text(type: String) -> String:
+	#match type:
+		#"Pawn":
+			#return "♙"
+		#"Knight":
+			#return "♘"
+		#"Bishop":
+			#return "♗"
+		#"Rook":
+			#return "♖"
+		#"Queen":
+			#return "♕"
+#
+	#return "?"

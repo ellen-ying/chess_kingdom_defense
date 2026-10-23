@@ -45,15 +45,16 @@ signal enemy_changed
 @onready var ui_layer: CanvasLayer = $UILayer
 @onready var shop_ui = $UILayer/ShopUI
 
-@onready var screen_layout: Node = $ScreenLayout
 @onready var hud_bar: PanelContainer = $UILayer/HUDBar
-@onready var menu_button: Button = $UILayer/HUDBar/HBox/MenuButton
-@onready var lives_label: Label = $UILayer/HUDBar/HBox/LivesLabel
-@onready var wave_label: Label = $UILayer/HUDBar/HBox/WaveLabel
-@onready var currency_label: Label = $UILayer/HUDBar/HBox/CurrencyLabel
+@onready var menu_button: TextureButton = %MenuButton
+@onready var lives_label: Label = %LivesLabel
+@onready var wave_label: Label = %WaveLabel
+@onready var currency_label: Label = %CurrencyLabel
 @onready var wave_banner: Label = $UILayer/WaveBanner
 @onready var pause_overlay: Control = $UILayer/PauseOverlay
 @onready var result_overlay: Control = $UILayer/ResultOverlay
+@onready var setting_overlay: Control = $UILayer/SettingOverlay
+@onready var button_sound = $ButtonSound
 
 
 func _ready() -> void:
@@ -69,9 +70,6 @@ func _ready() -> void:
 	max_lives = BASE_LIVES + int(SkillManager.get_effect_value(SkillDefinition.EffectType.KING_LIVES))
 	lives = max_lives
 	RunRewardManager.begin_run()
-
-	# Position the king.
-	king.setup(board.get_center_cell(), board)
 
 	# Initialize all nodes
 	piece_manager.setup(self, board, piece_parent)
@@ -96,24 +94,29 @@ func _ready() -> void:
 	menu_button.pressed.connect(_on_menu_button_pressed)
 	pause_overlay.setup(self)
 	result_overlay.setup(self)
+	setting_overlay.setup(self)
 
 	update_hud()
 
 	# First real layout pass. Must run after the King and all
 	# @onready references exist; ScreenLayout re-applies this on
 	# every viewport resize (window size / aspect / orientation).
-	screen_layout.apply_layout()
+	ScreenLayout.apply_layout(self)
+	
+	# Position the king.
+	king.setup(self, board.get_center_cell(), board)
+	
 
 
 func update_hud() -> void:
 	# Same display formats as the old combined StatusLabel (task Q6).
 	lives_label.text = (
-		"KING  %d / %d"
+		"King  %d / %d"
 		% [lives, max_lives]
 	)
 
 	wave_label.text = (
-		"WAVE  %d / %d"
+		"Wave  %d / %d"
 		% [wave_manager.get_current_wave_number(), max_waves]
 	)
 
@@ -224,7 +227,6 @@ func enemy_reached_king(enemy: Node) -> void:
 		outcome = "LOSE"
 		waves_survived = wave_manager.current_wave_index
 		end_game()
-		result_overlay.open(outcome)
 		return
 
 	enemy_changed.emit()
@@ -260,7 +262,6 @@ func _on_level_completed() -> void:
 	outcome = "WIN"
 	waves_survived = wave_manager.current_wave_index 
 	LevelProgressManager.complete_level(level_config.level_id)
-	result_overlay.open(outcome)
 	_finish_run()
 
 
@@ -273,12 +274,19 @@ func _finish_run() -> void:
 	if ((not outcome) or waves_survived < 0):
 		push_error("Invalid end of run satistics.")
 	GameLogger.end_run(
-		outcome, waves_survived, 
+		outcome, waves_survived,
 		RunRewardManager.run_material_earned, CurrencyManager.currency_spent
 	)
-	
+
+	# Single consistent presentation point: every run end (natural
+	# win, natural loss, bot wave-cap/timeout, pause-menu abandon)
+	# opens the result overlay exactly once, after logging and the
+	# material conversion are complete.
+	result_overlay.open(outcome)
+
+
 func _on_currency_changed(new_amount: int) -> void:
 	currency_label.text = (
-		"MATERIALS: %d"
+		"Materials · %d"
 		% new_amount
 	)

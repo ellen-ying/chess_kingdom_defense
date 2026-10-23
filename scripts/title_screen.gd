@@ -1,17 +1,8 @@
 extends Control
 
-@export var background_texture: Texture2D
-
 @onready var background: TextureRect = $Background
-@onready var fallback_background: ColorRect = $FallbackBackground
 
 var _advanced := false
-
-
-func _ready() -> void:
-	move_child(fallback_background, 0)
-	background.texture = background_texture
-
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_pressed():
@@ -26,4 +17,8 @@ func advance() -> void:
 	if _advanced:
 		return
 	_advanced = true
+	# The Home Office consumes this flag to run the title→office
+	# crossfade + window flare (Stage 3); the crossfade itself is
+	# executed by the office, not here.
+	SceneRouter.arriving_from_title = true
 	SceneRouter.go_home_office()

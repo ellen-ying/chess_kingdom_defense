@@ -1,6 +1,10 @@
 [gd_scene format=3 uid="uid://b2fqhxk1w85wb"]
 
 [ext_resource type="Script" uid="uid://c42ps0fxga8y3" path="res://scripts/result_overlay.gd" id="1_34faa"]
+[ext_resource type="FontFile" uid="uid://cs5wxott28qej" path="res://assets/Cinzel-SemiBold.ttf" id="2_ckcxy"]
+[ext_resource type="FontFile" uid="uid://dnajiu5j3ocvp" path="res://assets/Lora-Regular.ttf" id="3_3y548"]
+[ext_resource type="Theme" uid="uid://bj5e21td8bmic" path="res://resources/button_theme.tres" id="4_v8t34"]
+[ext_resource type="Script" uid="uid://dtuok8ulu60yy" path="res://scripts/button_border.gd" id="5_qipum"]
 
 [node name="ResultOverlay" type="Control" unique_id=1516154321]
 layout_mode = 3
@@ -18,9 +22,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 0.6)
+color = Color(0.12156863, 0.1764706, 0.3019608, 0.60784316)
 
 [node name="Menu" type="VBoxContainer" parent="." unique_id=90176782]
+custom_minimum_size = Vector2(350, 0)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -38,25 +43,53 @@ theme_override_constants/separation = 16
 [node name="ResultLabel" type="Label" parent="Menu" unique_id=1936930878]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_colors/font_color = Color(0.96862745, 0.93333334, 0.84705883, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.7058824)
+theme_override_constants/shadow_offset_x = 2
+theme_override_fonts/font = ExtResource("2_ckcxy")
 theme_override_font_sizes/font_size = 40
-text = "YOU WIN"
+text = "You Win"
 horizontal_alignment = 1
 
 [node name="MaterialsLabel" type="Label" parent="Menu" unique_id=1496932579]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
+theme_override_colors/font_color = Color(0.96862745, 0.93333334, 0.84705883, 1)
+theme_override_fonts/font = ExtResource("3_3y548")
+theme_override_font_sizes/font_size = 20
 text = "Materials earned: 5 points"
 horizontal_alignment = 1
 
 [node name="RestartButton" type="Button" parent="Menu" unique_id=889342744]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme = ExtResource("4_v8t34")
 theme_override_font_sizes/font_size = 24
 text = "Restart"
 
+[node name="Control" type="Control" parent="Menu/RestartButton" unique_id=1017032432]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_qipum")
+
 [node name="HomeOfficeButton" type="Button" parent="Menu" unique_id=2073321277]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme = ExtResource("4_v8t34")
 theme_override_font_sizes/font_size = 24
 text = "Return to Home Office"
+
+[node name="Control" type="Control" parent="Menu/HomeOfficeButton" unique_id=1484912227]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_qipum")

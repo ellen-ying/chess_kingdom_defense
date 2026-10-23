@@ -23,6 +23,9 @@ var dragging := false
 var fire_timer := 0.0
 
 func _ready() -> void:
+	piece_sprite = $PieceSprite
+	shadow = $Shadow
+	
 	if SkillManager.has_skill("pawn_push"):
 		attack_range = [1, 2]
 	else:
@@ -33,7 +36,10 @@ func setup(game_reference: Node, cell: Vector2i) -> void:
 	game = game_reference
 	current_cell = cell
 	global_position = game.board.cell_to_world(current_cell)
-	
+	reposition_offset(
+		ScreenLayout.scale_vec, ScreenLayout.sprite_offset,
+		ScreenLayout.shadow_radius, ScreenLayout.shadow_offset
+	)
 
 	queue_redraw()
 
@@ -112,47 +118,48 @@ func get_attack_tiles_for_cell(
 
 
 func _draw() -> void:
-	var alpha := 0.65 if dragging else 1.0
-
-	# Shadow.
-	draw_circle(
-		Vector2(2, 4),
-		18.0,
-		Color(0, 0, 0, 0.2 * alpha)
-	)
-
-	# Pawn head.
-	draw_circle(
-		Vector2(0, -9),
-		8.0,
-		Color(0.95, 0.95, 0.95, alpha)
-	)
-
-	# Pawn body.
-	var body := PackedVector2Array([
-		Vector2(-12, -2),
-		Vector2(12, -2),
-		Vector2(8, 10),
-		Vector2(14, 16),
-		Vector2(-14, 16),
-		Vector2(-8, 10)
-	])
-
-	draw_colored_polygon(
-		body,
-		Color(0.95, 0.95, 0.95, alpha)
-	)
-
-	draw_polyline(
-		PackedVector2Array([
-			Vector2(-12, -2),
-			Vector2(12, -2),
-			Vector2(8, 10),
-			Vector2(14, 16),
-			Vector2(-14, 16),
-			Vector2(-8, 10),
-			Vector2(-12, -2)
-		]),
-		Color(0.15, 0.15, 0.15, alpha),
-		2.0
-	)
+	pass
+	#var alpha := 0.65 if dragging else 1.0
+#
+	## Shadow.
+	#draw_circle(
+		#Vector2(2, 4),
+		#18.0,
+		#Color(0, 0, 0, 0.2 * alpha)
+	#)
+#
+	## Pawn head.
+	#draw_circle(
+		#Vector2(0, -9),
+		#8.0,
+		#Color(0.95, 0.95, 0.95, alpha)
+	#)
+#
+	## Pawn body.
+	#var body := PackedVector2Array([
+		#Vector2(-12, -2),
+		#Vector2(12, -2),
+		#Vector2(8, 10),
+		#Vector2(14, 16),
+		#Vector2(-14, 16),
+		#Vector2(-8, 10)
+	#])
+#
+	#draw_colored_polygon(
+		#body,
+		#Color(0.95, 0.95, 0.95, alpha)
+	#)
+#
+	#draw_polyline(
+		#PackedVector2Array([
+			#Vector2(-12, -2),
+			#Vector2(12, -2),
+			#Vector2(8, 10),
+			#Vector2(14, 16),
+			#Vector2(-14, 16),
+			#Vector2(-8, 10),
+			#Vector2(-12, -2)
+		#]),
+		#Color(0.15, 0.15, 0.15, alpha),
+		#2.0
+	#)

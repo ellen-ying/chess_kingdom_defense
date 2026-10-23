@@ -1,7 +1,14 @@
 [gd_scene format=3 uid="uid://d12whhrwphxuj"]
 
 [ext_resource type="Script" uid="uid://cbkhykywa1vsd" path="res://scripts/shadow_knight.gd" id="1_gbeer"]
+[ext_resource type="PackedScene" uid="uid://svs3id6etr6" path="res://scenes/shadow.tscn" id="2_x4nfm"]
+[ext_resource type="Texture2D" uid="uid://0snw6jxxul5i" path="res://assets/shadow_knight.png" id="3_x4nfm"]
 
 [node name="ShadowKnight" type="Node2D" unique_id=1323960820]
 script = ExtResource("1_gbeer")
 metadata/_custom_type_script = "uid://beeljddqrtw35"
+
+[node name="Shadow" parent="." unique_id=812840974 instance=ExtResource("2_x4nfm")]
+
+[node name="PieceSprite" type="Sprite2D" parent="." unique_id=2050024019]
+texture = ExtResource("3_x4nfm")

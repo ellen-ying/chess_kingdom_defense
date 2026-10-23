@@ -1,8 +1,40 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene format=3 uid="uid://c6xd8kp8klenf"]
 
-[ext_resource type="Script" path="res://scripts/learning_openings.gd" id="1"]
+[ext_resource type="Script" uid="uid://cfxfamgsxvacx" path="res://scripts/learning_openings.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://hnm4ut53q2ye" path="res://assets/paper_texture.png" id="2_ingmx"]
+[ext_resource type="FontFile" uid="uid://cs5wxott28qej" path="res://assets/Cinzel-SemiBold.ttf" id="4_0rqpv"]
+[ext_resource type="Script" uid="uid://dtuok8ulu60yy" path="res://scripts/button_border.gd" id="5_7ctuc"]
+[ext_resource type="FontFile" uid="uid://b84nrgcgmfad0" path="res://assets/Lora-Medium.ttf" id="5_pbyw4"]
+[ext_resource type="FontFile" uid="uid://dnajiu5j3ocvp" path="res://assets/Lora-Regular.ttf" id="7_pbyw4"]
 
-[node name="LearningOpenings" type="Control"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0rqpv"]
+bg_color = Color(0.12156863, 0.1764706, 0.3019608, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w4v4b"]
+bg_color = Color(0.12156863, 0.1764706, 0.3019608, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pbyw4"]
+bg_color = Color(0.16470589, 0.23137255, 0.38039216, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cpeew"]
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="LearningOpenings" type="Control" unique_id=906924039]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,17 +43,18 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1")
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="Background" type="TextureRect" parent="." unique_id=373631536]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.08, 0.1, 0.15, 1)
 mouse_filter = 2
+texture = ExtResource("2_ingmx")
+expand_mode = 1
 
-[node name="Margin" type="MarginContainer" parent="."]
+[node name="Margin" type="MarginContainer" parent="." unique_id=1046827933]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -34,83 +67,73 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Layout" type="VBoxContainer" parent="Margin"]
-layout_mode = 2
-
-[node name="Header" type="HBoxContainer" parent="Margin/Layout"]
-layout_mode = 2
-
-[node name="BackButton" type="Button" parent="Margin/Layout/Header"]
-unique_name_in_owner = true
-layout_mode = 2
-custom_minimum_size = Vector2(120, 48)
-text = "Back"
-
-[node name="Title" type="Label" parent="Margin/Layout/Header"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_colors/font_color = Color(0.95, 0.79, 0.35, 1)
-theme_override_font_sizes/font_size = 34
-text = "LEARNING OPENINGS"
-horizontal_alignment = 1
-
-[node name="OfficeMaterialLabel" type="Label" parent="Margin/Layout/Header"]
-unique_name_in_owner = true
-layout_mode = 2
-custom_minimum_size = Vector2(210, 0)
-theme_override_colors/font_color = Color(0.85, 0.9, 0.96, 1)
-theme_override_font_sizes/font_size = 18
-text = "OFFICE MATERIAL  0"
-horizontal_alignment = 2
-
-[node name="Center" type="CenterContainer" parent="Margin/Layout"]
+[node name="Center" type="CenterContainer" parent="Margin" unique_id=1644741476]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Card" type="PanelContainer" parent="Margin/Layout/Center"]
-layout_mode = 2
-custom_minimum_size = Vector2(500, 0)
-
-[node name="Content" type="VBoxContainer" parent="Margin/Layout/Center/Card"]
+[node name="Layout" type="VBoxContainer" parent="Margin/Center" unique_id=1518121484]
+custom_minimum_size = Vector2(700, 0)
 layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="ChessIcon" type="Label" parent="Margin/Layout/Center/Card/Content"]
+[node name="OfficeMaterialLabel" type="Label" parent="Margin/Center/Layout" unique_id=1317716565]
+unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.95, 0.79, 0.35, 1)
-theme_override_font_sizes/font_size = 54
-text = "♞"
+theme_override_colors/font_color = Color(0.83137256, 0.6509804, 0.2901961, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.49019608)
+theme_override_fonts/font = ExtResource("4_0rqpv")
+theme_override_font_sizes/font_size = 45
+text = "Office Materials 0"
 horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="Description" type="Label" parent="Margin/Layout/Center/Card/Content"]
+[node name="CenterContainer" type="CenterContainer" parent="Margin/Center/Layout" unique_id=277148131]
 layout_mode = 2
+
+[node name="ClaimButton" type="Button" parent="Margin/Center/Layout/CenterContainer" unique_id=969643832]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(400, 58)
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/font_color = Color(0.96862745, 0.93333334, 0.84705883, 1)
+theme_override_fonts/font = ExtResource("5_pbyw4")
 theme_override_font_sizes/font_size = 22
-text = "Study a classic opening to strengthen the office treasury."
-horizontal_alignment = 1
-autowrap_mode = 2
-
-[node name="RemainingUsesLabel" type="Label" parent="Margin/Layout/Center/Card/Content"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_font_sizes/font_size = 18
-text = "Openings studied today: 0 / 5"
-horizontal_alignment = 1
-
-[node name="ClaimButton" type="Button" parent="Margin/Layout/Center/Card/Content"]
-unique_name_in_owner = true
-layout_mode = 2
-custom_minimum_size = Vector2(0, 58)
-theme_override_font_sizes/font_size = 21
+theme_override_styles/normal = SubResource("StyleBoxFlat_0rqpv")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_w4v4b")
+theme_override_styles/hover = SubResource("StyleBoxFlat_pbyw4")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_cpeew")
 text = "Study an Opening  +1 Material"
+icon_alignment = 1
 
-[node name="StatusLabel" type="Label" parent="Margin/Layout/Center/Card/Content"]
+[node name="Control" type="Control" parent="Margin/Center/Layout/CenterContainer/ClaimButton" unique_id=1333271885]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_7ctuc")
+
+[node name="StatusLabel" type="Label" parent="Margin/Center/Layout" unique_id=1598845128]
 unique_name_in_owner = true
+custom_maximum_size = Vector2(700, -1)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.75, 0.79, 0.86, 1)
-theme_override_font_sizes/font_size = 17
+theme_override_colors/font_color = Color(0.35686275, 0.22745098, 0.13333334, 1)
+theme_override_fonts/font = ExtResource("7_pbyw4")
+theme_override_font_sizes/font_size = 20
 text = "Each study earns Office Material."
 horizontal_alignment = 1
+vertical_alignment = 1
 autowrap_mode = 2
 
-[connection signal="pressed" from="Margin/Layout/Header/BackButton" to="." method="_on_back_pressed"]
-[connection signal="pressed" from="Margin/Layout/Center/Card/Content/ClaimButton" to="." method="_on_claim_pressed"]
+[node name="RemainingUsesLabel" type="Label" parent="Margin/Center/Layout" unique_id=1415612380]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.35686275, 0.22745098, 0.13333334, 1)
+theme_override_fonts/font = ExtResource("7_pbyw4")
+theme_override_font_sizes/font_size = 20
+text = "Openings studied today: 0 of 5"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="Margin/Center/Layout/CenterContainer/ClaimButton" to="." method="_on_claim_pressed"]

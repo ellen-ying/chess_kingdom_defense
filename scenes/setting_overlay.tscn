@@ -1,0 +1,122 @@
+[gd_scene format=3 uid="uid://cjicn16a5u5qg"]
+
+[ext_resource type="Script" uid="uid://cxt8d8ee477dk" path="res://scripts/setting_overlay.gd" id="1_70yil"]
+[ext_resource type="FontFile" uid="uid://cs5wxott28qej" path="res://assets/Cinzel-SemiBold.ttf" id="1_y552m"]
+[ext_resource type="FontFile" uid="uid://b84nrgcgmfad0" path="res://assets/Lora-Medium.ttf" id="2_70yil"]
+[ext_resource type="Theme" uid="uid://bj5e21td8bmic" path="res://resources/button_theme.tres" id="2_aj2j3"]
+[ext_resource type="Script" uid="uid://dtuok8ulu60yy" path="res://scripts/button_border.gd" id="3_70yil"]
+[ext_resource type="AudioStream" uid="uid://cnc8yyu46qqa1" path="res://sounds/button.wav" id="6_k0ejf"]
+[ext_resource type="AudioStream" uid="uid://dftlhkbweb7n3" path="res://sounds/skills.wav" id="7_6c4fs"]
+
+[node name="SettingOverlay" type="Control" unique_id=503317906]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_70yil")
+
+[node name="Dim" type="ColorRect" parent="." unique_id=272809247]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.12156863, 0.1764706, 0.3019608, 0.60784316)
+
+[node name="Menu" type="VBoxContainer" parent="." unique_id=649551587]
+custom_minimum_size = Vector2(350, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
+
+[node name="Title" type="Label" parent="Menu" unique_id=28606912]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.96862745, 0.93333334, 0.84705883, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.7058824)
+theme_override_constants/shadow_offset_x = 2
+theme_override_fonts/font = ExtResource("1_y552m")
+theme_override_font_sizes/font_size = 40
+text = "Setting"
+horizontal_alignment = 1
+
+[node name="SEContainer" type="HBoxContainer" parent="Menu" unique_id=1813586470]
+layout_mode = 2
+
+[node name="SELabel" type="Label" parent="Menu/SEContainer" unique_id=499388081]
+custom_minimum_size = Vector2(150, 0)
+custom_maximum_size = Vector2(150, -1)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9411765, 0.8862745, 0.7607843, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.7058824)
+theme_override_constants/shadow_offset_x = 2
+theme_override_fonts/font = ExtResource("2_70yil")
+theme_override_font_sizes/font_size = 20
+text = "Sound Effect"
+
+[node name="SESlider" type="HSlider" parent="Menu/SEContainer" unique_id=1285006409]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+max_value = 1.0
+step = 0.1
+value = 1.0
+tick_count = 10
+ticks_position = 3
+
+[node name="MusicContainer" type="HBoxContainer" parent="Menu" unique_id=1397077985]
+layout_mode = 2
+
+[node name="MusicLabel" type="Label" parent="Menu/MusicContainer" unique_id=1280711187]
+custom_minimum_size = Vector2(150, 0)
+custom_maximum_size = Vector2(150, -1)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9411765, 0.8862745, 0.7607843, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.7058824)
+theme_override_constants/shadow_offset_x = 2
+theme_override_fonts/font = ExtResource("2_70yil")
+theme_override_font_sizes/font_size = 20
+text = "Music"
+
+[node name="MusicSlider" type="HSlider" parent="Menu/MusicContainer" unique_id=1449484322]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+max_value = 1.0
+step = 0.1
+value = 1.0
+tick_count = 10
+ticks_position = 3
+
+[node name="ReturnButton" type="Button" parent="Menu" unique_id=81974000]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme = ExtResource("2_aj2j3")
+theme_override_font_sizes/font_size = 24
+text = "Return"
+
+[node name="Control" type="Control" parent="Menu/ReturnButton" unique_id=504077771]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_70yil")
+
+[node name="SFXPreview" type="AudioStreamPlayer" parent="." unique_id=1765874639]
+stream = ExtResource("6_k0ejf")
+bus = &"SFX"
+
+[node name="MusicPreview" type="AudioStreamPlayer" parent="." unique_id=43566347]
+stream = ExtResource("7_6c4fs")
+bus = &"Music"

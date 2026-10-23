@@ -45,6 +45,7 @@ func _process(delta: float) -> void:
 	var distance = current_direction.length()
 
 	if distance <= HIT_DISTANCE:
+		
 		target.take_damage(damage, source_piece_type)
 		if target is BaseEnemy:
 			SkillManager.apply_projectile_effects(source_piece_type, target)

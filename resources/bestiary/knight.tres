@@ -1,10 +1,11 @@
-[gd_resource type="Resource" script_class="EnemyBestiaryEntry" format=3]
+[gd_resource type="Resource" script_class="EnemyBestiaryEntry" format=3 uid="uid://dyhh0vpgjdttg"]
 
-[ext_resource type="Script" path="res://scripts/enemy_bestiary_entry.gd" id="1"]
+[ext_resource type="Script" uid="uid://6l2kxin3qlbt" path="res://scripts/enemy_bestiary_entry.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://c4jjcjgu2njaj" path="res://archives/simple_version/shadow_knight.png" id="1_xlyh8"]
 
 [resource]
 script = ExtResource("1")
 enemy_type = "Knight"
 display_name = "Shadow Knight"
 movement_description = "Leaps in an L-shape, choosing the legal destination closest to the King. At close range it can immediately reach the King."
-flavor_text = ""
+illustration = ExtResource("1_xlyh8")

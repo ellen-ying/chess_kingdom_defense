@@ -26,13 +26,24 @@ const TRAY_MIN := 136.0
 const HUD_MAX := 128.0
 const TRAY_MAX := 200.0
 
+# For resclaing the sprite
+const SPRITE_SIZE = 128.0
+const SCALE_CONST = 1.2
+const SPRITE_MOVE_OFFSET_SCALE = 10.0
+const SHADOW_MOVE_OFFSET_SCALE = 1.7
+var tile_size: int
+var scale: float
+var scale_vec
+var sprite_offset
+var shadow_radius
+var shadow_offset
+
 
 func _ready() -> void:
 	get_viewport().size_changed.connect(apply_layout)
 
 
-func apply_layout() -> void:
-	var game := get_parent()
+func apply_layout(game: Node) -> void:
 
 	# This node's _ready runs before main._ready, so some @onready
 	# references may not exist yet on the very first call.
@@ -59,14 +70,14 @@ func apply_layout() -> void:
 
 	# 1. Board first: the largest integer square tile that fits the
 	#    grid plus the minimum UI reservations.
-	var tile := maxi(1, int(min(
+	tile_size = maxi(1, int(min(
 		(viewport_size.x - TRAY_MIN) / float(board.COLUMNS),
 		(viewport_size.y - HUD_MIN) / float(board.ROWS)
 	)))
 
 	# 2/3. HUD and tray absorb ALL leftover pixels: exact full-bleed.
-	var hud_height: float = viewport_size.y - board.ROWS * tile
-	var tray_width: float = viewport_size.x - board.COLUMNS * tile
+	var hud_height: float = viewport_size.y - board.ROWS * tile_size
+	var tray_width: float = viewport_size.x - board.COLUMNS * tile_size
 
 	# 4. Caps on extreme aspects; the surplus becomes symmetric
 	#    board margins rendered over the Background layer.
@@ -105,10 +116,21 @@ func apply_layout() -> void:
 		tray_width,
 		viewport_size.y - hud_height
 	)
+	
+	if tile_size == 0:
+			push_error("Tile size is zero.")
+	scale = tile_size / SPRITE_SIZE * SCALE_CONST
+	scale_vec = Vector2(scale, scale)
+	#sprite_offset = Vector2.ZERO
+	sprite_offset = Vector2(0, -tile_size / SPRITE_MOVE_OFFSET_SCALE)
+	shadow_radius = tile_size / 4.0
+	shadow_offset = Vector2(0, tile_size / (SHADOW_MOVE_OFFSET_SCALE))
 
 	_recenter_over_play_area(game.wave_banner, play_area_origin, play_area_size)
 
 	_reposition_board_entities(game, board)
+	
+	return
 
 
 func _recenter_over_play_area(
@@ -129,6 +151,7 @@ func _reposition_board_entities(game: Node, board: Node) -> void:
 	# briefly offset until they resolve).
 	if game.king != null and is_instance_valid(game.king):
 		game.king.global_position = board.cell_to_world(game.king.current_cell)
+		game.king.reposition_offset(scale_vec, sprite_offset, shadow_radius, shadow_offset)
 
 	for piece in game.piece_parent.get_children():
 		if not (piece is Node2D):
@@ -136,6 +159,7 @@ func _reposition_board_entities(game: Node, board: Node) -> void:
 		if piece.get("current_cell") == null:
 			continue
 		piece.global_position = board.cell_to_world(piece.current_cell)
+		piece.reposition_offset(scale_vec, sprite_offset, shadow_radius, shadow_offset)
 
 	for enemy in game.enemies.get_children():
 		if not (enemy is Node2D):
@@ -143,3 +167,4 @@ func _reposition_board_entities(game: Node, board: Node) -> void:
 		if enemy.get("current_cell") == null:
 			continue
 		enemy.global_position = board.cell_to_world(enemy.current_cell)
+		enemy.reposition_offset(scale_vec, sprite_offset, shadow_radius, shadow_offset)

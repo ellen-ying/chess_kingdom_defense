@@ -1,8 +1,25 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene format=3 uid="uid://c73f6rltujf6l"]
 
-[ext_resource type="Script" path="res://scripts/bestiary.gd" id="1"]
+[ext_resource type="Script" uid="uid://dd8h8acyfa67r" path="res://scripts/bestiary.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://hnm4ut53q2ye" path="res://assets/paper_texture.png" id="2_36r6s"]
+[ext_resource type="FontFile" uid="uid://dtp71uphrbgg0" path="res://assets/Cinzel-Medium.ttf" id="3_8u4y0"]
+[ext_resource type="Texture2D" uid="uid://dcoapfe73feey" path="res://archives/simple_version/shadow_pawn.png" id="4_2cel7"]
+[ext_resource type="FontFile" uid="uid://dnajiu5j3ocvp" path="res://assets/Lora-Regular.ttf" id="4_lqwxb"]
+[ext_resource type="FontFile" uid="uid://cs5wxott28qej" path="res://assets/Cinzel-SemiBold.ttf" id="5_mq4o6"]
 
-[node name="Bestiary" type="Control"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_36r6s"]
+bg_color = Color(0.9411765, 0.8862745, 0.7607843, 0.3137255)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.7647059, 0.65882355, 0.45882353, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="Bestiary" type="Control" unique_id=36241272]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,17 +28,18 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1")
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="Background" type="TextureRect" parent="." unique_id=1118659049]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.08, 0.1, 0.15, 1)
 mouse_filter = 2
+texture = ExtResource("2_36r6s")
+expand_mode = 1
 
-[node name="Margin" type="MarginContainer" parent="."]
+[node name="Margin" type="MarginContainer" parent="." unique_id=1063850934]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -33,53 +51,101 @@ offset_bottom = -30.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+theme_override_constants/margin_top = 20
 
-[node name="Layout" type="VBoxContainer" parent="Margin"]
-layout_mode = 2
-theme_override_constants/separation = 18
-
-[node name="Header" type="HBoxContainer" parent="Margin/Layout"]
+[node name="Center" type="CenterContainer" parent="Margin" unique_id=1235617600]
+custom_minimum_size = Vector2(874.2, 443.8)
 layout_mode = 2
 
-[node name="BackButton" type="Button" parent="Margin/Layout/Header"]
-unique_name_in_owner = true
+[node name="Layout" type="HBoxContainer" parent="Margin/Center" unique_id=1901214965]
+custom_minimum_size = Vector2(874.2, 360)
+custom_maximum_size = Vector2(-1, 360)
 layout_mode = 2
-custom_minimum_size = Vector2(120, 48)
-text = "Back"
+theme_override_constants/separation = 8
+alignment = 1
 
-[node name="Title" type="Label" parent="Margin/Layout/Header"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_colors/font_color = Color(0.95, 0.79, 0.35, 1)
-theme_override_font_sizes/font_size = 34
-text = "SHADOW BESTIARY"
-horizontal_alignment = 1
-
-[node name="HeaderSpacer" type="Control" parent="Margin/Layout/Header"]
-layout_mode = 2
-custom_minimum_size = Vector2(120, 0)
-mouse_filter = 2
-
-[node name="Subtitle" type="Label" parent="Margin/Layout"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.75, 0.79, 0.86, 1)
-theme_override_font_sizes/font_size = 18
-text = "Encounter shadow pieces in battle to reveal their movement."
-horizontal_alignment = 1
-
-[node name="Scroll" type="ScrollContainer" parent="Margin/Layout"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Center" type="CenterContainer" parent="Margin/Layout/Scroll"]
+[node name="LeftPanel" type="PanelContainer" parent="Margin/Center/Layout" unique_id=355597690]
+custom_maximum_size = Vector2(400, 360)
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_36r6s")
 
-[node name="EntriesGrid" type="GridContainer" parent="Margin/Layout/Scroll/Center"]
-unique_name_in_owner = true
+[node name="LeftMargin" type="MarginContainer" parent="Margin/Center/Layout/LeftPanel" unique_id=185245682]
 layout_mode = 2
-theme_override_constants/h_separation = 16
-theme_override_constants/v_separation = 16
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 10
+
+[node name="LeftContent" type="VBoxContainer" parent="Margin/Center/Layout/LeftPanel/LeftMargin" unique_id=1029218331]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="KnownFoes" type="Label" parent="Margin/Center/Layout/LeftPanel/LeftMargin/LeftContent" unique_id=13851170]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.23137255, 0.16470589, 0.11764706, 1)
+theme_override_fonts/font = ExtResource("3_8u4y0")
+theme_override_font_sizes/font_size = 20
+text = "Known Foes"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="EntriesGrid" type="GridContainer" parent="Margin/Center/Layout/LeftPanel/LeftMargin/LeftContent" unique_id=781965948]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(380, 0)
+layout_mode = 2
+theme_override_constants/h_separation = 5
+theme_override_constants/v_separation = 5
 columns = 3
 
-[connection signal="pressed" from="Margin/Layout/Header/BackButton" to="." method="_on_back_pressed"]
+[node name="RightPanel" type="PanelContainer" parent="Margin/Center/Layout" unique_id=2024016489]
+custom_maximum_size = Vector2(400, 360)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_36r6s")
+
+[node name="RightMargin" type="MarginContainer" parent="Margin/Center/Layout/RightPanel" unique_id=1626544379]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 12
+
+[node name="RightVContainer" type="VBoxContainer" parent="Margin/Center/Layout/RightPanel/RightMargin" unique_id=170634491]
+custom_maximum_size = Vector2(368, 336)
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="PieceIcon" type="TextureRect" parent="Margin/Center/Layout/RightPanel/RightMargin/RightVContainer" unique_id=1232877114]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+texture = ExtResource("4_2cel7")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PieceName" type="Label" parent="Margin/Center/Layout/RightPanel/RightMargin/RightVContainer" unique_id=1008797258]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.23137255, 0.16470589, 0.11764706, 1)
+theme_override_fonts/font = ExtResource("5_mq4o6")
+theme_override_font_sizes/font_size = 26
+text = "Shadow Pawn"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="DescriptionMargin" type="MarginContainer" parent="Margin/Center/Layout/RightPanel/RightMargin/RightVContainer" unique_id=1785753454]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 5
+
+[node name="MovementDescription" type="Label" parent="Margin/Center/Layout/RightPanel/RightMargin/RightVContainer/DescriptionMargin" unique_id=784786125]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.41960785, 0.32941177, 0.25882354, 1)
+theme_override_fonts/font = ExtResource("4_lqwxb")
+theme_override_font_sizes/font_size = 16
+text = "Takes one orthogonal step toward the King each move. When both axes are open, it chooses one at random."
+autowrap_mode = 2

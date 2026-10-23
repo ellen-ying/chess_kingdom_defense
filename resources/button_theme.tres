@@ -1,0 +1,39 @@
+[gd_resource type="Theme" format=3 uid="uid://bj5e21td8bmic"]
+
+[ext_resource type="FontFile" uid="uid://b84nrgcgmfad0" path="res://assets/Lora-Medium.ttf" id="1_54e5j"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8nq33"]
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ykge7"]
+bg_color = Color(0.16470589, 0.23137255, 0.38039216, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d7yyq"]
+bg_color = Color(0.12156863, 0.1764706, 0.3019608, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ya8b5"]
+bg_color = Color(0.12156863, 0.1764706, 0.3019608, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[resource]
+Button/colors/font_color = Color(0.96862745, 0.93333334, 0.84705883, 1)
+Button/font_sizes/font_size = 16
+Button/fonts/font = ExtResource("1_54e5j")
+Button/styles/disabled = SubResource("StyleBoxFlat_8nq33")
+Button/styles/hover = SubResource("StyleBoxFlat_ykge7")
+Button/styles/normal = SubResource("StyleBoxFlat_d7yyq")
+Button/styles/pressed = SubResource("StyleBoxFlat_ya8b5")

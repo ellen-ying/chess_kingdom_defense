@@ -180,6 +180,7 @@ func place_piece(cell: Vector2i) -> void:
 		active_piece_type, cell.x, cell.y,
 		game.wave_manager.get_current_wave_number()
 	)
+	game.get_node("PiecePlaceSound").play()
 	pieces_parent.add_child(piece)
 	piece.setup(game, cell)
 
@@ -214,6 +215,10 @@ func _create_ghost() -> void:
 	)
 
 	ghost_piece.visible = true
+	ghost_piece.reposition_offset(
+		ScreenLayout.scale_vec, ScreenLayout.sprite_offset,
+		ScreenLayout.shadow_radius, ScreenLayout.shadow_offset
+	)
 
 
 func _update_ghost() -> void:
