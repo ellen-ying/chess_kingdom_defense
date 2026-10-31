@@ -60,6 +60,16 @@ theme_override_font_sizes/font_size = 20
 text = "Materials earned: 5 points"
 horizontal_alignment = 1
 
+[node name="WavesLabel" type="Label" parent="Menu" unique_id=1609358377]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.96862745, 0.93333334, 0.84705883, 1)
+theme_override_fonts/font = ExtResource("3_3y548")
+theme_override_font_sizes/font_size = 20
+text = "Waves reached: 12 · Best: 17"
+horizontal_alignment = 1
+
 [node name="RestartButton" type="Button" parent="Menu" unique_id=889342744]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 50)

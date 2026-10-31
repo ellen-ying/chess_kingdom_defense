@@ -67,11 +67,13 @@ func complete_level(level_id: String) -> void:
 	_save_progress()
 
 
-func record_final_stand_score(waves_survived: int) -> void:
-	if waves_survived <= final_stand_high_score:
+## Best score for Final Stand (infinite): the highest wave STARTED in
+## a run, however that run ended. Only ever moves upward.
+func record_final_stand_score(waves_reached: int) -> void:
+	if waves_reached <= final_stand_high_score:
 		return
 
-	final_stand_high_score = waves_survived
+	final_stand_high_score = waves_reached
 	SaveData.set_value(SAVE_SECTION, FINAL_STAND_SCORE_KEY, final_stand_high_score)
 
 

@@ -54,7 +54,6 @@ signal enemy_changed
 @onready var pause_overlay: Control = $UILayer/PauseOverlay
 @onready var result_overlay: Control = $UILayer/ResultOverlay
 @onready var setting_overlay: Control = $UILayer/SettingOverlay
-@onready var button_sound = $ButtonSound
 
 
 func _ready() -> void:
@@ -86,6 +85,21 @@ func _ready() -> void:
 	wave_manager.setup(self, board, wave_banner)
 	max_waves = wave_manager.get_total_wave_number()
 
+	# Infinite levels show "Wave N / ∞" in the HUD. The HUD fonts
+	# are verified to contain U+221E; this is a one-time tripwire in
+	# case that ever stops being true (a missing glyph would render
+	# as an empty box in the banner).
+	if level_config != null and level_config.is_infinite():
+		var banner_font: Font = wave_label.get_theme_font("font")
+		if (
+			banner_font != null
+			and not ("∞" in banner_font.get_supported_chars())
+		):
+			push_warning(
+				"Wave label font does not contain the infinity glyph "
+				+ "(U+221E); the HUD banner may render a missing-glyph box."
+			)
+
 	CurrencyManager.currency_changed.connect(_on_currency_changed)
 
 	_on_currency_changed(CurrencyManager.current_amount)
@@ -115,10 +129,16 @@ func update_hud() -> void:
 		% [lives, max_lives]
 	)
 
-	wave_label.text = (
-		"Wave  %d / %d"
-		% [wave_manager.get_current_wave_number(), max_waves]
-	)
+	if level_config != null and level_config.is_infinite():
+		wave_label.text = (
+			"Wave  %d / ∞"
+			% wave_manager.get_current_wave_number()
+		)
+	else:
+		wave_label.text = (
+			"Wave  %d / %d"
+			% [wave_manager.get_current_wave_number(), max_waves]
+		)
 
 
 func _on_menu_button_pressed() -> void:
@@ -267,8 +287,11 @@ func _on_level_completed() -> void:
 
 func _finish_run() -> void:
 	if level_config != null and level_config.is_infinite():
+		# Final Stand best score = the highest wave STARTED (1-based
+		# wave number), tracked regardless of how the run ended
+		# (natural win/loss, abandon, bot cap/timeout).
 		LevelProgressManager.record_final_stand_score(
-			wave_manager.get_waves_survived()
+			wave_manager.get_current_wave_number()
 		)
 	RunRewardManager.finish_run()
 	if ((not outcome) or waves_survived < 0):
@@ -282,7 +305,15 @@ func _finish_run() -> void:
 	# win, natural loss, bot wave-cap/timeout, pause-menu abandon)
 	# opens the result overlay exactly once, after logging and the
 	# material conversion are complete.
-	result_overlay.open(outcome)
+	if level_config != null and level_config.is_infinite():
+		# The best above was already updated, so it reflects this run.
+		result_overlay.open(
+			outcome,
+			wave_manager.get_current_wave_number(),
+			LevelProgressManager.final_stand_high_score
+		)
+	else:
+		result_overlay.open(outcome)
 
 
 func _on_currency_changed(new_amount: int) -> void:

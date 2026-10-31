@@ -33,6 +33,13 @@ var embedded := false
 @export var path_width: float = 5.0
 @export var node_size: Vector2 = Vector2(64.0, 64.0)
 
+## The single live Start-button listener. _config_level_details runs
+## once per level click (plus once from _ready), so a plain connect
+## accumulates one listener per click — pressing Start would launch
+## every previously selected level in sequence. Disconnect the old
+## callable before connecting the new one.
+var _start_level_callable := Callable()
+
 @onready var progression_area: Control = %ProgressionArea
 @onready var path_line: Node2D = %PathLine
 @onready var level_nodes: Control = %Levels
@@ -113,7 +120,14 @@ func _layout_progression() -> void:
 		
 		var unlocked = LevelProgressManager.is_level_unlocked(level_id)
 		button.disabled = not unlocked
-		if unlocked:
+		# Guard: _layout_progression re-runs on every resize; an
+		# unguarded connect would duplicate the listener each time.
+		if (
+			unlocked
+			and not button.pressed.is_connected(
+				_config_level_details.bind(level_id)
+			)
+		):
 			button.pressed.connect(_config_level_details.bind(level_id))
 		
 		i += 1
@@ -207,5 +221,23 @@ func _config_level_details(level_id: String) -> void:
 	level_title.text = config.display_name
 	wave_number.text = str(config.wave_count) if config.wave_count > 0 else "∞"
 	enemy_pieces.text = " · ".join(config.allowed_enemy_pieces)
-	status_info.text = "Complete" if LevelProgressManager.is_level_completed(level_id) else "Incomplete"
-	start_button.pressed.connect(_on_level_pressed.bind(level_id))
+
+	if level_id == "final_stand":
+		# Final Stand is never "Complete": its status line is the
+		# best wave reached (highest wave started in any run).
+		var best := LevelProgressManager.final_stand_high_score
+		status_info.text = (
+			("Best: Wave %d" % best) if best > 0 else "Not yet attempted"
+		)
+	else:
+		status_info.text = (
+			"Complete" if LevelProgressManager.is_level_completed(level_id) else "Incomplete"
+		)
+
+	# Listener-accumulation fix: keep exactly one Start listener bound
+	# to the currently selected level, no matter how many times this
+	# runs (level clicks, _ready, resize-driven re-layouts).
+	if not _start_level_callable.is_null():
+		start_button.pressed.disconnect(_start_level_callable)
+	_start_level_callable = _on_level_pressed.bind(level_id)
+	start_button.pressed.connect(_start_level_callable)

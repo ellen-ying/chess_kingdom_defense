@@ -13,6 +13,7 @@ config_version=5
 config/name="ChessDefense"
 run/main_scene="res://scenes/title_screen.tscn"
 config/features=PackedStringArray("4.7", "Mobile")
+boot_splash/show_image=false
 config/icon="res://icon.svg"
 
 [audio]

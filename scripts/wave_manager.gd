@@ -59,6 +59,27 @@ func configure_level(config: LevelConfig) -> void:
 		level_config.decrease_spawn_interval()
 
 
+## Debug-only test affordance (Final Stand task, Stage 5): a
+## `--start-wave=N` command-line user arg (after `--`) overrides the
+## exported debug_start_wave for this session. Unlike the export, it
+## has NO 100 cap — any wave of an infinite level (e.g. 500) can be
+## jumped to for verification, because waves are a pure function of
+## their number (Stage 1). Parsed inside setup(), i.e. before the
+## first start_new_wave(), so there is no race with main._ready().
+## Never surfaced in normal UI; the `=` form matches AutoplayBot's
+## argument style.
+func _parse_start_wave_arg() -> int:
+	for token in OS.get_cmdline_user_args():
+		if token.begins_with("--start-wave="):
+			var value := token.substr("--start-wave=".length())
+			if value.is_valid_int():
+				return value.to_int()
+			push_warning(
+				"WaveManager: --start-wave needs an integer; ignoring."
+			)
+	return debug_start_wave
+
+
 func setup(
 	game_reference: Node,
 	board_reference: Node,
@@ -72,16 +93,18 @@ func setup(
 	board = board_reference
 	wave_banner = wave_benner_reference
 	game.enemy_changed.connect(notify_enemy_count_changed)
-	var starting_wave := debug_start_wave
+	var starting_wave := _parse_start_wave_arg()
 
 	if starting_wave < 1:
 		starting_wave = 1
 
-	# Only clamp against the wave list when one exists: infinite
-	# levels (Final Stand) begin with no pre-built waves and grow
-	# on demand, so clamping to waves.size() here would zero the
-	# start wave and no wave would ever begin.
-	if waves.size() > 0:
+	# Clamp to the authored wave list for FINITE levels (as before).
+	# Infinite levels (Final Stand) never clamp: waves beyond the
+	# authored table are generated on demand with that wave number's
+	# true parameters, so --start-wave 500 genuinely starts wave 500.
+	if (
+		level_config == null or not level_config.is_infinite()
+	) and waves.size() > 0:
 		starting_wave = min(starting_wave, waves.size())
 
 	current_wave_index = starting_wave - 2
@@ -95,7 +118,17 @@ func start_new_wave() -> void:
 
 	current_wave_index += 1
 	if level_config != null and level_config.is_infinite() and current_wave_index >= waves.size():
-		waves.append(_create_generated_wave(current_wave_index + 1))
+		# A jump start (debug --start-wave=N with N far beyond the
+		# authored table) must not "complete" the level: appending a
+		# single wave would still leave current_wave_index >=
+		# waves.size(), and the bounds check below would end the run
+		# instantly with a phantom result. Fill the gap so the new
+		# wave lands at its true index; gap entries are past waves
+		# (indices below current_wave_index) and are never started.
+		# They share one config instance: nothing ever reads them.
+		var generated_wave := _create_generated_wave(current_wave_index + 1)
+		while waves.size() <= current_wave_index:
+			waves.append(generated_wave)
 	
 	if (current_wave_index < 0
 		or current_wave_index >= waves.size()):
@@ -129,24 +162,31 @@ func get_current_wave_number() -> int:
 	return current_wave_index + 1
 	
 func get_total_wave_number() -> int:
+	# Infinite levels have no total. Return the sentinel -1 (not the
+	# current list size, which keeps growing) so callers never treat
+	# a growing wave list as a denominator.
+	if level_config != null and level_config.is_infinite():
+		return -1
+
 	if waves == null:
 		return 0
-		
+
 	return waves.size()
 
-func _create_generated_wave(_wave_number: int) -> WaveConfig:
+func _create_generated_wave(wave_number: int) -> WaveConfig:
+	# A wave's parameters are a pure function of its (1-based) wave
+	# number. This makes on-demand generation independent of any
+	# running state: starting an infinite level at ANY wave (a debug
+	# start wave, a future resumed run) yields that wave's true
+	# parameters, and generated waves are exactly what the pre-built
+	# stepping produces (proven by tests/curve_equivalence_check.gd).
 	var wave := WaveConfig.new()
 	wave.configure_wave(
-		level_config.get_wave_duration(),
-		level_config.get_spawn_interval(),
-		level_config.allowed_enemy_pieces
+		level_config.duration_for_wave(wave_number),
+		level_config.spawn_interval_for_wave(wave_number),
+		level_config.roster_for_wave(wave_number)
 	)
-	# Advance the difficulty curve so the next generated wave is
-	# harder, mirroring how configure_level steps pre-built waves.
-	level_config.increase_wave_duration()
-	level_config.decrease_spawn_interval()
 	return wave
-	
 func _process(delta: float) -> void:
 	if game.game_over:
 		return 
